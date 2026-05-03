@@ -1,15 +1,13 @@
 {
-  "name": "寶寶日記 Baby Diary",
-  "short_name": "寶寶日記",
-  "description": "全方位育兒記錄 App — 餵奶、睡眠、成長、健康、家族共同照顧",
-  "start_url": "/index.html",
+  "name": "收納管家",
+  "short_name": "收納管家",
+  "description": "家庭收納庫存管理 APP",
+  "start_url": "./index.html",
   "display": "standalone",
-  "background_color": "#FFF8F5",
-  "theme_color": "#FF7B6B",
+  "background_color": "#f6f0e8",
+  "theme_color": "#bf3a00",
   "orientation": "portrait",
-  "scope": "/",
   "lang": "zh-TW",
-  "categories": ["health", "lifestyle", "parenting"],
   "icons": [
     {
       "src": "icon-192.png",
@@ -24,28 +22,6 @@
       "purpose": "any maskable"
     }
   ],
-  "shortcuts": [
-    {
-      "name": "記錄餵奶",
-      "short_name": "餵奶",
-      "description": "快速記錄餵奶",
-      "url": "/index.html#feeding",
-      "icons": [{ "src": "icon-192.png", "sizes": "192x192" }]
-    },
-    {
-      "name": "記錄睡眠",
-      "short_name": "睡眠",
-      "description": "開始睡眠計時",
-      "url": "/index.html#sleep",
-      "icons": [{ "src": "icon-192.png", "sizes": "192x192" }]
-    }
-  ],
-  "related_applications": [],
-  "prefer_related_applications": false,
-  "permissions": [
-    "camera",
-    "microphone",
-    "notifications",
-    "vibrate"
-  ]
+  "categories": ["utilities", "productivity"],
+  "screenshots": []
 }
