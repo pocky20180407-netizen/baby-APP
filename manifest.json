@@ -1,15 +1,14 @@
 {
-  "name": "寶貝日記 Baby Diary",
-  "short_name": "寶貝日記",
-  "description": "台灣寶寶育兒全記錄 APP — 餵奶、睡眠、副食品、疫苗、生長曲線、日常護理一站搞定",
-  "start_url": "./index.html",
-  "scope": "./",
+  "name": "寶寶日記 Baby Diary",
+  "short_name": "寶寶日記",
+  "description": "全方位育兒記錄 App — 餵奶、睡眠、成長、健康、家族共同照顧",
+  "start_url": "/index.html",
   "display": "standalone",
+  "background_color": "#FFF8F5",
+  "theme_color": "#FF7B6B",
   "orientation": "portrait",
-  "theme_color": "#FF8FAB",
-  "background_color": "#FFFBF8",
+  "scope": "/",
   "lang": "zh-TW",
-  "dir": "ltr",
   "categories": ["health", "lifestyle", "parenting"],
   "icons": [
     {
@@ -25,23 +24,28 @@
       "purpose": "any maskable"
     }
   ],
-  "screenshots": [],
   "shortcuts": [
     {
-      "name": "記錄喝奶",
-      "short_name": "喝奶",
-      "description": "快速記錄寶寶喝奶",
-      "url": "./index.html#milk",
+      "name": "記錄餵奶",
+      "short_name": "餵奶",
+      "description": "快速記錄餵奶",
+      "url": "/index.html#feeding",
       "icons": [{ "src": "icon-192.png", "sizes": "192x192" }]
     },
     {
       "name": "記錄睡眠",
       "short_name": "睡眠",
       "description": "開始睡眠計時",
-      "url": "./index.html#sleep",
+      "url": "/index.html#sleep",
       "icons": [{ "src": "icon-192.png", "sizes": "192x192" }]
     }
   ],
+  "related_applications": [],
   "prefer_related_applications": false,
-  "handle_links": "preferred"
+  "permissions": [
+    "camera",
+    "microphone",
+    "notifications",
+    "vibrate"
+  ]
 }
