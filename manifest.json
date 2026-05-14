@@ -1,15 +1,15 @@
 {
-  "name": "寶寶日記 Baby Diary",
+  "name": "寶寶成長日記",
   "short_name": "寶寶日記",
-  "description": "全方位育兒記錄 App — 餵奶、睡眠、成長、健康、家族共同照顧",
+  "description": "一站式寶寶生活紀錄：喝奶、睡眠、換尿布、副食品、成長曲線，讓育兒更輕鬆！",
   "start_url": "/index.html",
-  "display": "standalone",
-  "background_color": "#FFF8F5",
-  "theme_color": "#FF7B6B",
-  "orientation": "portrait",
   "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#FFF0F5",
+  "theme_color": "#C040A0",
   "lang": "zh-TW",
-  "categories": ["health", "lifestyle", "parenting"],
+  "categories": ["health", "lifestyle"],
   "icons": [
     {
       "src": "icon-192.png",
@@ -26,10 +26,10 @@
   ],
   "shortcuts": [
     {
-      "name": "記錄餵奶",
-      "short_name": "餵奶",
-      "description": "快速記錄餵奶",
-      "url": "/index.html#feeding",
+      "name": "記錄喝奶",
+      "short_name": "喝奶",
+      "description": "快速記錄一次喝奶",
+      "url": "/index.html#milk",
       "icons": [{ "src": "icon-192.png", "sizes": "192x192" }]
     },
     {
@@ -40,12 +40,7 @@
       "icons": [{ "src": "icon-192.png", "sizes": "192x192" }]
     }
   ],
+  "screenshots": [],
   "related_applications": [],
-  "prefer_related_applications": false,
-  "permissions": [
-    "camera",
-    "microphone",
-    "notifications",
-    "vibrate"
-  ]
+  "prefer_related_applications": false
 }

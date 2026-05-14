@@ -4,6 +4,19 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>寶貝日記 🍼</title>
+
+<!-- ══ PWA 必要標籤 ══════════════════════════════════════════ -->
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#C040A0">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="寶寶日記">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="apple-touch-startup-image" href="icon-512.png">
+<meta name="description" content="一站式寶寶生活紀錄：喝奶、睡眠、換尿布、副食品、成長曲線">
+<meta http-equiv="Permissions-Policy" content="camera=self, microphone=self">
+<!-- ══════════════════════════════════════════════════════════ -->
 <!-- Suppress console output so debug panels stay empty -->
 <script>
 (function(){
@@ -101,6 +114,7 @@
     animation: bounce 2s infinite;
   }
   @keyframes bounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
+  @keyframes spin { 0%{transform:rotate(0deg)} 100%{transform:rotate(360deg)} }
   .app-name {
     font-size: 2rem; font-weight: 900; color: var(--text-dark);
     letter-spacing: 1px;
@@ -2221,10 +2235,11 @@
       <div>
         <div class="baby-info-name">小寶貝</div>
         <div class="baby-info-sub">今天 <span id="baby-age-days">92</span> 天大 · 3 個月寶寶</div>
-        <div class="baby-info-tags">
-          <span class="baby-tag">⚖️ 6.2 kg</span>
-          <span class="baby-tag">📏 61 cm</span>
-          <span class="baby-tag">🩸 B型</span>
+        <div class="baby-info-tags" id="home-baby-tags">
+          <span class="baby-tag" id="home-tag-weight" style="display:none;">⚖️ --</span>
+          <span class="baby-tag" id="home-tag-height" style="display:none;">📏 --</span>
+          <span class="baby-tag" id="home-tag-blood"  style="display:none;">🩸 --</span>
+          <span class="baby-tag" id="home-tag-growth" style="display:none;background:linear-gradient(135deg,#E8F5FF,#D0ECFF);color:#1A5A8A;">📈 最新量測</span>
         </div>
       </div>
     </div>
@@ -2232,14 +2247,14 @@
     <div class="today-strip">
       <div class="today-title">📊 今天的紀錄</div>
       <div class="today-stats">
-        <div class="stat-item">
+        <div class="stat-item" onclick="goPage('page-milk')" style="cursor:pointer;">
           <div class="stat-emoji">🍼</div>
-          <div class="stat-val">750cc</div>
+          <div class="stat-val" id="home-milk-today">-</div>
           <div class="stat-lab">今日奶量</div>
         </div>
-        <div class="stat-item">
+        <div class="stat-item" onclick="goPage('page-sleep')" style="cursor:pointer;">
           <div class="stat-emoji">😴</div>
-          <div class="stat-val">14.5h</div>
+          <div class="stat-val" id="home-sleep-today">-</div>
           <div class="stat-lab">睡眠時間</div>
         </div>
         <div class="stat-item" onclick="goPage('page-diaper')" style="cursor:pointer;">
@@ -2472,6 +2487,13 @@
         </div>
       </div>
 
+      <div class="bottle-card" style="margin-top:0;background:linear-gradient(135deg,#FFF0E8,#FFE4D0);">
+        <div class="bottle-row">
+          <div class="bottle-label">🕐 記錄時間</div>
+          <input type="datetime-local" class="bottle-input" id="breast-time" style="max-width:220px;">
+        </div>
+      </div>
+
       <button class="save-btn" onclick="saveBreastfeed()">💾 儲存這次親餵紀錄</button>
     </div>
 
@@ -2568,110 +2590,178 @@
 <div class="page" id="page-profile">
   <div class="topbar">
     <button class="back-btn" onclick="goPage('page-home')">←</button>
-    <div class="topbar-title">👤 我的寶貝資料</div>
+    <div class="topbar-title">👤 我的</div>
     <div style="width:38px"></div>
   </div>
-  <div class="scroll-content" style="padding-bottom:100px;">
-    <!-- Baby card editable -->
-    <div style="margin:20px 20px 16px; background:linear-gradient(135deg,var(--pink),var(--peach),var(--yellow)); border-radius:var(--radius); padding:24px; text-align:center; box-shadow:var(--card-shadow);">
-      <div style="font-size:3.5rem; margin-bottom:8px;" id="profile-avatar">👶</div>
-      <div style="font-size:1.4rem; font-weight:900; color:white;" id="profile-name-display">小寶貝</div>
-      <div style="font-size:0.85rem; color:rgba(255,255,255,0.9); margin-top:4px;" id="profile-age-display">計算中...</div>
-      <div style="font-size:0.8rem; color:rgba(255,255,255,0.85); margin-top:3px;" id="profile-blood-display"></div>
+  <div class="scroll-content" style="padding-bottom:100px;background:#FBF5FF;">
+
+    <!-- Baby card -->
+    <div style="margin:16px 16px 0;background:linear-gradient(135deg,var(--pink),var(--peach));border-radius:var(--radius);padding:20px;text-align:center;box-shadow:var(--card-shadow);">
+      <div style="font-size:3rem;margin-bottom:6px;" id="profile-avatar">👶</div>
+      <div style="font-size:1.3rem;font-weight:900;color:white;" id="profile-name-display">小寶貝</div>
+      <div style="font-size:0.8rem;color:rgba(255,255,255,.9);margin-top:4px;" id="profile-age-display">設定生日後顯示月齡</div>
     </div>
 
-    <!-- Edit form -->
-    <div style="margin:0 20px 16px; background:white; border-radius:var(--radius); padding:24px; box-shadow:var(--card-shadow);">
-      <div style="font-size:0.9rem; font-weight:800; color:var(--text-dark); margin-bottom:16px;">✏️ 編輯寶寶資料</div>
-
-      <div style="margin-bottom:14px;">
-        <div style="font-size:0.8rem; font-weight:700; color:var(--text-light); margin-bottom:6px;">寶寶名字</div>
-        <input id="edit-name" type="text" maxlength="10"
-          style="width:100%; border:2px solid var(--peach); border-radius:12px; padding:11px 14px; font-size:0.95rem; font-family:inherit; font-weight:600;">
-      </div>
-      <div style="margin-bottom:14px;">
-        <div style="font-size:0.8rem; font-weight:700; color:var(--text-light); margin-bottom:6px;">生日</div>
-        <input id="edit-birthday" type="date"
-          style="width:100%; border:2px solid var(--peach); border-radius:12px; padding:11px 14px; font-size:0.95rem; font-family:inherit; font-weight:600;">
-      </div>
-      <div style="margin-bottom:14px;">
-        <div style="font-size:0.8rem; font-weight:700; color:var(--text-light); margin-bottom:8px;">性別</div>
-        <div style="display:flex; gap:10px;">
-          <label style="flex:1; display:flex; align-items:center; gap:8px; padding:10px; border:2px solid var(--peach); border-radius:12px; cursor:pointer; font-weight:700; font-size:0.85rem;">
-            <input type="radio" name="edit-gender" value="boy"> 👦 男寶寶
+    <!-- 寶寶資訊 -->
+    <div style="margin:12px 16px 0;">
+      <div style="font-size:11px;font-weight:800;color:#9A8A90;padding:8px 4px 4px;letter-spacing:1px;">🐣 寶寶資訊</div>
+      <div style="background:white;border-radius:16px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.06);">
+        <div style="display:flex;align-items:center;padding:14px 16px;border-bottom:1px solid #F5EFF8;">
+          <div style="font-size:1.1rem;margin-right:12px;">🐣</div>
+          <div style="flex:1;font-size:14px;font-weight:700;color:var(--text-dark);">寶寶的名字</div>
+          <input id="edit-name" type="text" maxlength="10" placeholder="未設定" style="border:none;background:transparent;font-size:13px;font-weight:700;color:#9A8A90;text-align:right;outline:none;font-family:inherit;width:120px;">
+        </div>
+        <div style="display:flex;align-items:center;padding:14px 16px;border-bottom:1px solid #F5EFF8;">
+          <div style="font-size:1.1rem;margin-right:12px;">🎂</div>
+          <div style="flex:1;font-size:14px;font-weight:700;color:var(--text-dark);">出生日期</div>
+          <input id="edit-birthday" type="date" style="border:none;background:transparent;font-size:13px;font-weight:700;color:#9A8A90;text-align:right;outline:none;font-family:inherit;">
+        </div>
+        <!-- Blood type -->
+        <div style="display:flex;align-items:center;padding:14px 16px;border-bottom:1px solid #F5EFF8;">
+          <div style="font-size:1.1rem;margin-right:12px;">🩸</div>
+          <div style="flex:1;font-size:14px;font-weight:700;color:var(--text-dark);">血型</div>
+          <select id="edit-bloodtype" style="border:none;background:transparent;font-size:13px;font-weight:700;color:#9A8A90;text-align:right;outline:none;font-family:inherit;">
+            <option value="">未知</option>
+            <option value="A">A 型</option>
+            <option value="B">B 型</option>
+            <option value="AB">AB 型</option>
+            <option value="O">O 型</option>
+          </select>
+        </div>
+        <!-- Gender -->
+        <div style="display:flex;align-items:center;padding:14px 16px;border-bottom:1px solid #F5EFF8;">
+          <div style="font-size:1.1rem;margin-right:12px;">👶</div>
+          <div style="flex:1;font-size:14px;font-weight:700;color:var(--text-dark);">性別</div>
+          <label style="display:flex;align-items:center;gap:4px;font-size:13px;font-weight:700;color:#9A8A90;cursor:pointer;margin-right:10px;">
+            <input type="radio" name="edit-gender" value="girl" style="accent-color:#E060A0;"> 女
           </label>
-          <label style="flex:1; display:flex; align-items:center; gap:8px; padding:10px; border:2px solid var(--peach); border-radius:12px; cursor:pointer; font-weight:700; font-size:0.85rem;">
-            <input type="radio" name="edit-gender" value="girl"> 👧 女寶寶
+          <label style="display:flex;align-items:center;gap:4px;font-size:13px;font-weight:700;color:#9A8A90;cursor:pointer;">
+            <input type="radio" name="edit-gender" value="boy" style="accent-color:#4080E0;"> 男
           </label>
         </div>
-      </div>
-      <div style="margin-bottom:20px;">
-        <div style="font-size:0.8rem; font-weight:700; color:var(--text-light); margin-bottom:8px;">🩸 血型</div>
-        <select id="edit-bloodtype" style="width:100%; border:2px solid var(--peach); border-radius:12px; padding:11px 14px; font-size:0.9rem; font-family:inherit; font-weight:700; background:white; outline:none;">
-          <option value="">未知 / 未測</option>
-          <option value="A">A 型</option>
-          <option value="B">B 型</option>
-          <option value="O">O 型</option>
-          <option value="AB">AB 型</option>
-        </select>
-      </div>
-      <button onclick="saveProfile()" class="save-btn" style="margin:0;">💾 儲存修改</button>
-    </div>
-
-    <!-- Stats from growth (placeholder) -->
-    <div style="margin:0 20px; background:white; border-radius:var(--radius); padding:20px; box-shadow:var(--card-shadow);">
-      <div style="font-size:0.9rem; font-weight:800; color:var(--text-dark); margin-bottom:14px;">📊 最新生長數據</div>
-      <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:10px; text-align:center;">
-        <div style="background:var(--cream); border-radius:14px; padding:14px 8px;">
-          <div style="font-size:1.2rem;">⚖️</div>
-          <div style="font-size:1.1rem; font-weight:900; color:var(--text-dark);" id="profile-weight">6.2 kg</div>
-          <div style="font-size:0.7rem; color:var(--text-light);">體重</div>
-        </div>
-        <div style="background:var(--cream); border-radius:14px; padding:14px 8px;">
-          <div style="font-size:1.2rem;">📏</div>
-          <div style="font-size:1.1rem; font-weight:900; color:var(--text-dark);" id="profile-height">61 cm</div>
-          <div style="font-size:0.7rem; color:var(--text-light);">身長</div>
-        </div>
-        <div style="background:var(--cream); border-radius:14px; padding:14px 8px;">
-          <div style="font-size:1.2rem;">🩺</div>
-          <div style="font-size:1.1rem; font-weight:900; color:var(--text-dark);" id="profile-head">40 cm</div>
-          <div style="font-size:0.7rem; color:var(--text-light);">頭圍</div>
+        <div onclick="saveProfile()" style="display:flex;align-items:center;padding:14px 16px;cursor:pointer;">
+          <div style="font-size:1.1rem;margin-right:12px;">💾</div>
+          <div style="flex:1;font-size:14px;font-weight:800;color:#C040A0;">儲存變更</div>
+          <div style="font-size:1.1rem;color:#D0C0D0;">›</div>
         </div>
       </div>
-      <div style="margin-top:10px; font-size:0.75rem; color:var(--text-light); text-align:center;">數據同步自「健康寶寶 → 生長曲線」</div>
     </div>
 
-    <!-- Notifications quick link -->
-    <div style="margin:12px 20px 0;background:linear-gradient(135deg,#FFF3EA,#FFE0C8);border-radius:var(--radius);padding:15px 18px;box-shadow:var(--card-shadow);cursor:pointer;" onclick="goPage('page-notify')">
-      <div style="display:flex;align-items:center;gap:12px;">
-        <div style="font-size:1.8rem;">🔔</div>
-        <div style="flex:1;"><div style="font-size:14px;font-weight:900;color:#B04010;">個人化推播設定</div>
-        <div style="font-size:11px;font-weight:600;color:#C06020;margin-top:2px;" id="profile-nfy-hint">餵奶提醒・疫苗通知・每日小結</div></div>
-        <div style="font-size:1.3rem;color:#C06020;">›</div>
+    <!-- 最新成長數據 (synced from growth chart) -->
+    <div style="margin:12px 16px 0;" id="profile-growth-card">
+      <div style="font-size:11px;font-weight:800;color:#9A8A90;padding:8px 4px 4px;letter-spacing:1px;">📈 最新成長數據</div>
+      <div style="background:white;border-radius:16px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.06);">
+        <div style="display:flex;align-items:center;padding:14px 16px;border-bottom:1px solid #F0F8FF;">
+          <div style="font-size:1.1rem;margin-right:12px;">📅</div>
+          <div style="flex:1;font-size:13px;font-weight:700;color:var(--text-light);">量測日期</div>
+          <div style="font-size:13px;font-weight:800;color:var(--text-dark);" id="profile-gr-date">尚無紀錄</div>
+        </div>
+        <div style="display:flex;align-items:center;padding:14px 16px;border-bottom:1px solid #F0F8FF;">
+          <div style="font-size:1.1rem;margin-right:12px;">⚖️</div>
+          <div style="flex:1;font-size:13px;font-weight:700;color:var(--text-light);">體重</div>
+          <div style="font-size:13px;font-weight:800;color:#2A80C0;" id="profile-gr-weight">--</div>
+        </div>
+        <div style="display:flex;align-items:center;padding:14px 16px;border-bottom:1px solid #F0F8FF;">
+          <div style="font-size:1.1rem;margin-right:12px;">📏</div>
+          <div style="flex:1;font-size:13px;font-weight:700;color:var(--text-light);">身高</div>
+          <div style="font-size:13px;font-weight:800;color:#2A80C0;" id="profile-gr-height">--</div>
+        </div>
+        <div style="display:flex;align-items:center;padding:14px 16px;cursor:pointer;" onclick="goPage('page-growth')">
+          <div style="font-size:1.1rem;margin-right:12px;">📊</div>
+          <div style="flex:1;font-size:13px;font-weight:800;color:#4060C0;">查看完整生長曲線</div>
+          <div style="font-size:1.1rem;color:#D0C0D0;">›</div>
+        </div>
       </div>
     </div>
 
-    <!-- Export quick link -->
-    <div style="margin:10px 20px 0;background:linear-gradient(135deg,#E8EEFF,#D0D8FF);border-radius:var(--radius);padding:15px 18px;box-shadow:var(--card-shadow);cursor:pointer;" onclick="goPage('page-export')">
-      <div style="display:flex;align-items:center;gap:12px;">
-        <div style="font-size:1.8rem;">📤</div>
-        <div style="flex:1;"><div style="font-size:14px;font-weight:900;color:#304080;">匯出 / 備份資料</div>
-        <div style="font-size:11px;font-weight:600;color:#4050A0;margin-top:2px;">CSV・PDF・備份還原</div></div>
-        <div style="font-size:1.3rem;color:#4050A0;">›</div>
+    <!-- 📦 資料備份與還原 -->
+    <div style="margin:12px 16px 0;">
+      <div style="font-size:11px;font-weight:800;color:#9A8A90;padding:8px 4px 4px;letter-spacing:1px;">📦 資料備份與還原</div>
+      <div style="background:white;border-radius:16px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.06);">
+
+        <!-- Export -->
+        <div onclick="dbExport()" style="display:flex;align-items:center;padding:16px 16px;border-bottom:1px solid #F0FFF4;cursor:pointer;active:opacity:.7;">
+          <div style="width:40px;height:40px;border-radius:12px;background:linear-gradient(135deg,#A8F0C0,#60D090);display:flex;align-items:center;justify-content:center;font-size:20px;margin-right:14px;flex-shrink:0;">📤</div>
+          <div style="flex:1;">
+            <div style="font-size:14px;font-weight:800;color:#1A7A40;">匯出全部資料</div>
+            <div style="font-size:11px;color:#5A9A70;font-weight:600;margin-top:2px;">儲存成 .json 檔案到手機</div>
+          </div>
+          <div style="font-size:1.2rem;color:#A0D0B0;">›</div>
+        </div>
+
+        <!-- Import -->
+        <div onclick="dbImportTrigger()" style="display:flex;align-items:center;padding:16px 16px;cursor:pointer;">
+          <div style="width:40px;height:40px;border-radius:12px;background:linear-gradient(135deg,#A0C8FF,#6090E0);display:flex;align-items:center;justify-content:center;font-size:20px;margin-right:14px;flex-shrink:0;">📥</div>
+          <div style="flex:1;">
+            <div style="font-size:14px;font-weight:800;color:#1A4A8A;">匯入備份資料</div>
+            <div style="font-size:11px;color:#5A70A0;font-weight:600;margin-top:2px;">從 .json 檔案還原所有記錄</div>
+          </div>
+          <div style="font-size:1.2rem;color:#A0B8D0;">›</div>
+        </div>
+        <!-- Hidden file input -->
+        <input type="file" id="db-import-file" accept=".json,application/json" style="display:none;" onchange="dbImportFile(this)">
+      </div>
+
+      <!-- Last backup info -->
+      <div style="font-size:11px;color:#B0A0C0;font-weight:600;text-align:center;padding:8px 0 0;" id="db-last-export-label"></div>
+    </div>
+
+    <!-- 應用設定 -->
+    <div style="margin:12px 16px 0;">
+      <div style="font-size:11px;font-weight:800;color:#9A8A90;padding:8px 4px 4px;letter-spacing:1px;">⚙️ 應用設定</div>
+      <div style="background:white;border-radius:16px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.06);">
+        <div style="display:flex;align-items:center;padding:14px 16px;border-bottom:1px solid #F5EFF8;">
+          <div style="font-size:1.1rem;margin-right:12px;">🎯</div>
+          <div style="flex:1;font-size:14px;font-weight:700;color:var(--text-dark);">每日喝水目標</div>
+          <input id="profile-water-goal" type="number" min="100" max="2000" step="50" value="500" style="border:none;background:transparent;font-size:13px;font-weight:700;color:#9A8A90;text-align:right;outline:none;font-family:inherit;width:60px;">
+          <span style="font-size:12px;color:#9A8A90;margin-left:4px;">ml</span>
+        </div>
+        <div onclick="goPage('page-notify')" style="display:flex;align-items:center;padding:14px 16px;cursor:pointer;">
+          <div style="font-size:1.1rem;margin-right:12px;">🔔</div>
+          <div style="flex:1;font-size:14px;font-weight:700;color:var(--text-dark);">推播設定</div>
+          <div style="font-size:11px;color:#9A8A90;margin-right:6px;">餵奶・疫苗・每日小結</div>
+          <div style="font-size:1.1rem;color:#D0C0D0;">›</div>
+        </div>
       </div>
     </div>
 
-    <!-- Family quick link -->
-    <div style="margin:10px 20px 16px;background:linear-gradient(135deg,#F3EAFF,#E8D0FF);border-radius:var(--radius);padding:15px 18px;box-shadow:var(--card-shadow);cursor:pointer;" onclick="goPage('page-family')">
-      <div style="display:flex;align-items:center;gap:12px;">
-        <div style="font-size:1.8rem;">👨‍👩‍👦</div>
-        <div style="flex:1;"><div style="font-size:14px;font-weight:900;color:#7030A0;">家庭共同照護</div>
-        <div style="font-size:11px;font-weight:600;color:#9050B0;margin-top:2px;">成員管理・每日小結・邀請碼</div></div>
-        <div style="font-size:1.3rem;color:#9050B0;">›</div>
+    <!-- 資料管理 -->
+    <div style="margin:12px 16px 0;">
+      <div style="font-size:11px;font-weight:800;color:#9A8A90;padding:8px 4px 4px;letter-spacing:1px;">💾 資料管理</div>
+      <div style="background:white;border-radius:16px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.06);">
+        <div onclick="goPage('page-export')" style="display:flex;align-items:center;padding:14px 16px;border-bottom:1px solid #F5EFF8;cursor:pointer;">
+          <div style="font-size:1.1rem;margin-right:12px;">📤</div>
+          <div style="flex:1;font-size:14px;font-weight:700;color:var(--text-dark);">匯出所有紀錄</div>
+          <div style="font-size:11px;color:#9A8A90;margin-right:6px;">JSON</div>
+          <div style="font-size:1.1rem;color:#D0C0D0;">›</div>
+        </div>
+        <div onclick="expClearAll()" style="display:flex;align-items:center;padding:14px 16px;cursor:pointer;">
+          <div style="font-size:1.1rem;margin-right:12px;">🗑️</div>
+          <div style="flex:1;font-size:14px;font-weight:800;color:#D03030;">清除所有資料</div>
+          <div style="font-size:1.1rem;color:#D0C0D0;">›</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 關於 -->
+    <div style="margin:12px 16px 16px;">
+      <div style="font-size:11px;font-weight:800;color:#9A8A90;padding:8px 4px 4px;letter-spacing:1px;">ℹ️ 關於</div>
+      <div style="background:white;border-radius:16px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.06);">
+        <div style="display:flex;align-items:center;padding:14px 16px;border-bottom:1px solid #F5EFF8;">
+          <div style="font-size:1.1rem;margin-right:12px;">🍼</div>
+          <div style="flex:1;font-size:14px;font-weight:700;color:var(--text-dark);">寶寶日記</div>
+          <div style="font-size:13px;color:#9A8A90;">v4.0</div>
+        </div>
+        <div style="display:flex;align-items:center;padding:14px 16px;">
+          <div style="font-size:1.1rem;margin-right:12px;">💾</div>
+          <div style="flex:1;font-size:14px;font-weight:700;color:var(--text-dark);">資料儲存方式</div>
+          <div style="font-size:13px;color:#9A8A90;">本機瀏覽器</div>
+        </div>
       </div>
     </div>
   </div>
 </div>
+
 
 <!-- ===== FOOD SUB PAGE 2: 副食品食材庫 V2 ===== -->
 <div class="page" id="page-solids">
@@ -2810,9 +2900,12 @@
       <button onclick="sChangeMl(5)" style="width:36px;height:36px;border-radius:50%;border:2px solid var(--mint);background:white;font-size:1.2rem;font-weight:900;cursor:pointer;color:var(--text-dark);">＋</button>
     </div>
 
-    <!-- Date -->
-    <div class="bm-sec">📅 嘗試日期</div>
-    <input class="d-inp" type="date" id="s-trial-date">
+    <!-- Date + Time -->
+    <div class="bm-sec">📅 嘗試日期 & 時間</div>
+    <div style="display:flex;gap:8px;margin-bottom:4px;">
+      <input class="d-inp" type="date" id="s-trial-date" style="flex:1;">
+      <input class="d-inp" type="time" id="s-trial-time" value="12:00" style="flex:0 0 120px;">
+    </div>
 
     <!-- Notes -->
     <div class="bm-sec">📝 備註（選填）</div>
@@ -3266,6 +3359,14 @@
         <button class="sl-quick-btn" style="color:#2D1B69;border-color:#A090D0;" onclick="slQuickAdd(540,'night')">長睡9hr</button>
         <button class="sl-quick-btn" style="color:#2D1B69;border-color:#A090D0;" onclick="slQuickAdd(600,'night')">長睡10hr</button>
       </div>
+      <!-- Manual past sleep entry -->
+      <div style="margin-top:14px;padding:12px 16px;background:rgba(100,60,200,.08);border-radius:16px;border:1.5px dashed #A090D0;">
+        <div style="font-size:12px;font-weight:800;color:#6B3FA0;margin-bottom:8px;">📝 補登過去的睡眠紀錄</div>
+        <div style="font-size:11px;color:#9A80CC;font-weight:600;margin-bottom:8px;">忘了按計時器？手動輸入已結束的睡眠時段</div>
+        <button onclick="slOpenManualAdd()" style="width:100%;padding:10px;border-radius:50px;border:2px solid #A090D0;background:white;font-size:12px;font-weight:800;color:#6B3FA0;cursor:pointer;font-family:inherit;display:flex;align-items:center;justify-content:center;gap:6px;">
+          ＋ 手動補登睡眠
+        </button>
+      </div>
     </div>
 
     <!-- Sweet Spot card -->
@@ -3384,6 +3485,34 @@
 
       <button class="save-btn-g" onclick="slSaveEdit()" style="margin-bottom:10px;">💾 儲存修改</button>
       <button onclick="slDeleteEditing()" style="width:100%;padding:12px;border-radius:50px;border:2px solid #FFB0A0;background:white;color:#C04040;font-size:14px;font-weight:800;cursor:pointer;margin-bottom:10px;">🗑️ 刪除這筆紀錄</button>
+    </div>
+  </div>
+
+  <!-- ===== MANUAL SLEEP ADD MODAL ===== -->
+  <div style="position:fixed;inset:0;background:rgba(20,10,50,.6);z-index:600;display:flex;align-items:flex-end;justify-content:center;opacity:0;pointer-events:none;transition:opacity .25s;" id="sl-manual-modal" onclick="slManualBgClick(event)">
+    <div style="background:white;border-radius:36px 36px 0 0;width:100%;max-width:480px;max-height:85vh;overflow-y:auto;padding:0 20px calc(28px + env(safe-area-inset-bottom));transform:translateY(100%);transition:transform .3s cubic-bezier(.4,0,.2,1);scrollbar-width:none;" id="sl-manual-box">
+      <div style="width:40px;height:4px;background:#C8B4F0;border-radius:50px;margin:14px auto 18px;"></div>
+      <div style="font-size:18px;font-weight:900;color:#2D1B69;margin-bottom:6px;text-align:center;">📝 補登睡眠紀錄</div>
+      <div style="font-size:12px;color:#9A80CC;font-weight:600;text-align:center;margin-bottom:16px;">手動輸入已結束的睡眠時段</div>
+
+      <div style="font-size:13px;font-weight:800;color:var(--text-dark);margin-bottom:6px;">🌙 睡眠類型</div>
+      <div style="display:flex;gap:8px;margin-bottom:16px;">
+        <button class="sl-type-btn on" id="sm-nap"   onclick="smSetType('nap')">🌤️ 小睡 Nap</button>
+        <button class="sl-type-btn"    id="sm-night" onclick="smSetType('night')">🌙 夜間長睡</button>
+      </div>
+
+      <div style="font-size:13px;font-weight:800;color:var(--text-dark);margin-bottom:6px;">⏰ 睡著時間（開始）</div>
+      <input type="datetime-local" id="sm-start" class="d-inp" style="margin-bottom:12px;">
+
+      <div style="font-size:13px;font-weight:800;color:var(--text-dark);margin-bottom:6px;">☀️ 醒來時間（結束）</div>
+      <input type="datetime-local" id="sm-end" class="d-inp" style="margin-bottom:4px;">
+      <div style="font-size:11px;color:#9A80CC;font-weight:600;margin-bottom:14px;" id="sm-duration-preview">⏱️ 時長：--</div>
+
+      <div style="font-size:13px;font-weight:800;color:var(--text-dark);margin-bottom:6px;">📝 備註（選填）</div>
+      <textarea class="n-area" id="sm-note" rows="2" placeholder="例如：睡得不深、因哭聲提早醒…" style="margin-bottom:16px;"></textarea>
+
+      <button onclick="slSaveManual()" style="width:100%;padding:14px;border-radius:50px;border:none;background:linear-gradient(135deg,#6B3FA0,#A070D0);color:white;font-size:15px;font-weight:900;cursor:pointer;font-family:inherit;box-shadow:0 6px 20px rgba(100,60,180,.3);margin-bottom:10px;">💾 補登這段睡眠</button>
+      <button onclick="slCloseManual()" style="width:100%;padding:12px;border-radius:50px;border:2px solid #D0C0F0;background:white;color:#8060C0;font-size:13px;font-weight:800;cursor:pointer;margin-bottom:10px;">取消</button>
     </div>
   </div>
 
@@ -4901,6 +5030,67 @@
   </div>
 </div>
 
+<!-- ===== BOARD COMPOSE MODAL ===== -->
+<div style="position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:620;display:flex;align-items:flex-end;justify-content:center;opacity:0;pointer-events:none;transition:opacity .25s;" id="board-compose-modal" onclick="boardComposeClose(event)">
+  <div style="background:white;border-radius:36px 36px 0 0;width:100%;max-width:480px;max-height:92vh;overflow-y:auto;padding:0 20px calc(28px + env(safe-area-inset-bottom));transform:translateY(100%);transition:transform .3s cubic-bezier(.4,0,.2,1);scrollbar-width:none;" id="board-compose-box">
+    <div style="width:40px;height:4px;background:#F0C0A0;border-radius:50px;margin:14px auto 14px;"></div>
+    <div style="font-size:17px;font-weight:900;color:#A05000;margin-bottom:4px;text-align:center;">💬 新增留言</div>
+    <div style="font-size:11px;color:var(--text-light);font-weight:600;text-align:center;margin-bottom:14px;">和家人分享寶寶的點點滴滴</div>
+    <div style="font-size:12px;font-weight:800;color:var(--text-dark);margin-bottom:8px;">👤 發文者</div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px;" id="board-poster-chips"></div>
+    <div style="font-size:12px;font-weight:800;color:var(--text-dark);margin-bottom:6px;">🏷️ 留言類型</div>
+    <div style="display:flex;gap:7px;flex-wrap:wrap;margin-bottom:12px;">
+      <button onclick="boardSelType('general',this)"  class="btype-btn on"  style="padding:7px 13px;border-radius:50px;border:2px solid #FFA040;background:#FFA040;color:white;font-size:11px;font-weight:800;cursor:pointer;font-family:inherit;">💬 一般</button>
+      <button onclick="boardSelType('reminder',this)" class="btype-btn"     style="padding:7px 13px;border-radius:50px;border:2px solid #E0D0F0;background:white;color:#6A40A0;font-size:11px;font-weight:800;cursor:pointer;font-family:inherit;">🔔 提醒</button>
+      <button onclick="boardSelType('urgent',this)"   class="btype-btn"     style="padding:7px 13px;border-radius:50px;border:2px solid #FFD0D0;background:white;color:#C03030;font-size:11px;font-weight:800;cursor:pointer;font-family:inherit;">🚨 緊急</button>
+      <button onclick="boardSelType('good',this)"     class="btype-btn"     style="padding:7px 13px;border-radius:50px;border:2px solid #C8E8C0;background:white;color:#2A7A30;font-size:11px;font-weight:800;cursor:pointer;font-family:inherit;">🎉 好消息</button>
+      <button onclick="boardSelType('question',this)" class="btype-btn"     style="padding:7px 13px;border-radius:50px;border:2px solid #C8D8F0;background:white;color:#1A40A0;font-size:11px;font-weight:800;cursor:pointer;font-family:inherit;">❓ 問題</button>
+      <button onclick="boardSelType('milestone',this)"class="btype-btn"     style="padding:7px 13px;border-radius:50px;border:2px solid #F0D080;background:white;color:#A08000;font-size:11px;font-weight:800;cursor:pointer;font-family:inherit;">🌟 里程碑</button>
+    </div>
+    <div style="font-size:12px;font-weight:800;color:var(--text-dark);margin-bottom:6px;">✍️ 留言內容</div>
+    <textarea id="board-msg-inp" rows="4" placeholder="例如：寶寶今天第一次說「媽媽」！😭 趕快回來看！"
+      style="width:100%;padding:12px 14px;border:2px solid #F0C0A0;border-radius:14px;font-family:inherit;font-size:13px;font-weight:600;resize:none;outline:none;background:#FFFBF5;margin-bottom:8px;"></textarea>
+    <div style="font-size:12px;font-weight:800;color:var(--text-dark);margin-bottom:6px;">⚡ 快速範本</div>
+    <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px;">
+      <button onclick="boardTemplate('喝奶紀錄')" style="padding:5px 10px;border-radius:50px;border:1.5px solid #F0C0A0;background:#FFF8F0;font-size:11px;font-weight:700;cursor:pointer;font-family:inherit;color:#A07000;">🍼 喝奶紀錄</button>
+      <button onclick="boardTemplate('換尿布')"   style="padding:5px 10px;border-radius:50px;border:1.5px solid #F0C0A0;background:#FFF8F0;font-size:11px;font-weight:700;cursor:pointer;font-family:inherit;color:#A07000;">💩 換尿布</button>
+      <button onclick="boardTemplate('入睡通知')" style="padding:5px 10px;border-radius:50px;border:1.5px solid #F0C0A0;background:#FFF8F0;font-size:11px;font-weight:700;cursor:pointer;font-family:inherit;color:#A07000;">😴 入睡</button>
+      <button onclick="boardTemplate('體溫通知')" style="padding:5px 10px;border-radius:50px;border:1.5px solid #F0C0A0;background:#FFF8F0;font-size:11px;font-weight:700;cursor:pointer;font-family:inherit;color:#A07000;">🌡️ 體溫</button>
+      <button onclick="boardTemplate('提醒事項')" style="padding:5px 10px;border-radius:50px;border:1.5px solid #F0C0A0;background:#FFF8F0;font-size:11px;font-weight:700;cursor:pointer;font-family:inherit;color:#A07000;">⚠️ 提醒</button>
+      <button onclick="boardTemplate('里程碑')"   style="padding:5px 10px;border-radius:50px;border:1.5px solid #F0C0A0;background:#FFF8F0;font-size:11px;font-weight:700;cursor:pointer;font-family:inherit;color:#A07000;">🌟 里程碑</button>
+    </div>
+    <div style="font-size:12px;font-weight:800;color:var(--text-dark);margin-bottom:6px;">🏷️ 標籤（選填）</div>
+    <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px;" id="board-tag-chips">
+      <div class="sym-chip" onclick="boardToggleTag(this,'喝奶')">🍼 喝奶</div>
+      <div class="sym-chip" onclick="boardToggleTag(this,'睡眠')">😴 睡眠</div>
+      <div class="sym-chip" onclick="boardToggleTag(this,'尿布')">💩 尿布</div>
+      <div class="sym-chip" onclick="boardToggleTag(this,'健康')">🏥 健康</div>
+      <div class="sym-chip" onclick="boardToggleTag(this,'副食品')">🥕 副食品</div>
+      <div class="sym-chip" onclick="boardToggleTag(this,'里程碑')">🌟 里程碑</div>
+      <div class="sym-chip" onclick="boardToggleTag(this,'提醒')">🔔 提醒</div>
+      <div class="sym-chip" onclick="boardToggleTag(this,'心情')">❤️ 心情</div>
+    </div>
+    <div style="font-size:12px;font-weight:800;color:var(--text-dark);margin-bottom:6px;">📸 附圖（選填）</div>
+    <label style="display:inline-flex;align-items:center;justify-content:center;width:70px;height:70px;border-radius:14px;border:2px dashed #F0C0A0;background:#FFF8F0;cursor:pointer;font-size:1.6rem;margin-bottom:12px;">
+      📷<input type="file" accept="image/*" onchange="boardPhotoSelect(this)" style="display:none;">
+    </label>
+    <div id="board-photo-preview" style="display:none;margin-bottom:12px;position:relative;">
+      <img id="board-photo-img" style="width:100%;border-radius:12px;max-height:140px;object-fit:cover;">
+      <button onclick="boardPhotoRemove()" style="position:absolute;top:5px;right:5px;width:26px;height:26px;border-radius:50%;border:none;background:rgba(0,0,0,.5);color:white;font-size:12px;cursor:pointer;">✕</button>
+    </div>
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 14px;background:#FFF8F0;border-radius:12px;margin-bottom:14px;">
+      <div style="font-size:13px;font-weight:700;color:#A05000;">📌 置頂此留言</div>
+      <div id="board-pin-toggle" onclick="boardTogglePin()" style="width:44px;height:26px;border-radius:50px;background:#E0D0C0;cursor:pointer;position:relative;transition:background .2s;">
+        <div id="board-pin-knob" style="position:absolute;width:20px;height:20px;border-radius:50%;background:white;top:3px;left:3px;transition:left .2s;box-shadow:0 1px 4px rgba(0,0,0,.2);"></div>
+      </div>
+    </div>
+    <div style="display:flex;gap:10px;">
+      <button onclick="boardComposeClose(true)" style="flex:1;padding:13px;border-radius:50px;border:2px solid #E8D0C0;background:white;font-size:13px;font-weight:800;cursor:pointer;color:#9A8A80;font-family:inherit;">取消</button>
+      <button onclick="boardPostMsg()" style="flex:2;padding:13px;border-radius:50px;border:none;background:linear-gradient(135deg,#FFA040,#C06000);color:white;font-size:14px;font-weight:900;cursor:pointer;font-family:inherit;">🚀 發傳留言</button>
+    </div>
+  </div>
+</div>
+
 <!-- ===== ADD MED MODAL ===== -->
 <div class="ill-modal-bg" id="med-add-modal" onclick="medAddBgClick(event)">
   <div class="ill-modal" id="med-add-box">
@@ -6347,6 +6537,13 @@
       <input id="cloth-inp-note" placeholder="例如：生日禮物、二手、還太大…"
         style="width:100%;padding:10px 14px;border:2px solid #F0C0E0;border-radius:12px;font-family:inherit;font-size:13px;font-weight:700;background:#FFF8FD;outline:none;margin-bottom:10px;">
 
+      <div style="font-size:12px;font-weight:800;color:var(--text-dark);margin-bottom:6px;">📐 實際衣長（選填，cm）</div>
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
+        <input type="number" id="cloth-inp-length" min="10" max="200" step="0.5" placeholder="例如：52.5"
+          style="flex:1;padding:10px 14px;border:2px solid #F0C0E0;border-radius:12px;font-family:inherit;font-size:13px;font-weight:700;background:#FFF8FD;outline:none;">
+        <span style="font-size:13px;font-weight:700;color:#C840A0;white-space:nowrap;">cm</span>
+      </div>
+
       <!-- Photo upload -->
       <div style="font-size:12px;font-weight:800;color:var(--text-dark);margin-bottom:6px;">📷 衣物照片（選填）</div>
       <label id="cloth-photo-label" style="display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:11px;border:2px dashed #F0C0E0;border-radius:12px;background:#FFF8FD;cursor:pointer;font-size:12px;font-weight:700;color:#C840A0;margin-bottom:6px;">
@@ -6819,42 +7016,22 @@
   </div>
 
   <!-- FAMILY MESSAGE BOARD PANEL -->
-  <div id="fam-panel-board" style="display:none;flex:1;overflow-y:auto;padding:12px 16px calc(80px + env(safe-area-inset-bottom));scrollbar-width:none;">
-    <!-- Header -->
-    <div style="background:linear-gradient(135deg,#FFF0E8,#FFE0D0);border-radius:20px;padding:14px 16px;margin-bottom:12px;">
-      <div style="font-size:14px;font-weight:900;color:#A05000;margin-bottom:4px;">💬 家族留言板</div>
-      <div style="font-size:11px;font-weight:600;color:#C07000;">讓家人一起分享育兒的點點滴滴 🌸</div>
-    </div>
-
-    <!-- Post message -->
-    <div style="background:white;border-radius:20px;padding:14px 18px;box-shadow:0 4px 14px rgba(160,80,0,.07);margin-bottom:12px;">
-      <div style="font-size:13px;font-weight:800;color:var(--text-dark);margin-bottom:8px;">✍️ 新增留言</div>
-      <!-- Poster name selector -->
-      <div style="font-size:11px;font-weight:700;color:var(--text-light);margin-bottom:6px;">以誰的名義留言：</div>
-      <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px;" id="board-poster-chips"></div>
-      <textarea id="board-msg-inp" rows="3" placeholder="今天寶寶第一次說「媽媽」了！好感動 😭❤️"
-        style="width:100%;padding:11px 14px;border:2px solid #F0C0A0;border-radius:14px;font-family:inherit;font-size:13px;font-weight:600;resize:none;outline:none;background:#FFFBF5;margin-bottom:10px;"></textarea>
-      <!-- Emoji quick insert -->
-      <div style="display:flex;gap:8px;margin-bottom:10px;flex-wrap:wrap;">
-        <span style="cursor:pointer;font-size:1.4rem;" onclick="boardAddEmoji('🍼')">🍼</span>
-        <span style="cursor:pointer;font-size:1.4rem;" onclick="boardAddEmoji('😍')">😍</span>
-        <span style="cursor:pointer;font-size:1.4rem;" onclick="boardAddEmoji('🎉')">🎉</span>
-        <span style="cursor:pointer;font-size:1.4rem;" onclick="boardAddEmoji('😭')">😭</span>
-        <span style="cursor:pointer;font-size:1.4rem;" onclick="boardAddEmoji('💪')">💪</span>
-        <span style="cursor:pointer;font-size:1.4rem;" onclick="boardAddEmoji('❤️')">❤️</span>
-        <span style="cursor:pointer;font-size:1.4rem;" onclick="boardAddEmoji('🌟')">🌟</span>
-        <span style="cursor:pointer;font-size:1.4rem;" onclick="boardAddEmoji('😴')">😴</span>
+  <div id="fam-panel-board" style="display:none;flex:1;overflow-y:auto;padding-bottom:calc(80px + env(safe-area-inset-bottom));scrollbar-width:none;">
+    <div style="padding:12px 16px 0;">
+      <button onclick="boardOpenNew()" style="width:100%;padding:12px;border-radius:16px;border:2px dashed #F0C0A0;background:white;font-size:13px;font-weight:800;color:#C07000;cursor:pointer;font-family:inherit;display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:10px;">💬 新增留言</button>
+      <div style="display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;padding-bottom:2px;" id="board-type-filter">
+        <button onclick="boardFilterType('all',this)" style="flex-shrink:0;padding:5px 12px;border-radius:50px;border:2px solid #FFA040;background:#FFA040;color:white;font-size:11px;font-weight:800;cursor:pointer;font-family:inherit;">全部</button>
+        <button onclick="boardFilterType('general',this)" style="flex-shrink:0;padding:5px 12px;border-radius:50px;border:2px solid #E0D0F0;background:white;color:#6A40A0;font-size:11px;font-weight:800;cursor:pointer;font-family:inherit;">💬 一般</button>
+        <button onclick="boardFilterType('reminder',this)" style="flex-shrink:0;padding:5px 12px;border-radius:50px;border:2px solid #E0D0F0;background:white;color:#6A40A0;font-size:11px;font-weight:800;cursor:pointer;font-family:inherit;">🔔 提醒</button>
+        <button onclick="boardFilterType('urgent',this)" style="flex-shrink:0;padding:5px 12px;border-radius:50px;border:2px solid #FFD0D0;background:white;color:#C03030;font-size:11px;font-weight:800;cursor:pointer;font-family:inherit;">🚨 緊急</button>
+        <button onclick="boardFilterType('good',this)" style="flex-shrink:0;padding:5px 12px;border-radius:50px;border:2px solid #C8E8C0;background:white;color:#2A7A30;font-size:11px;font-weight:800;cursor:pointer;font-family:inherit;">🎉 好消息</button>
+        <button onclick="boardFilterType('milestone',this)" style="flex-shrink:0;padding:5px 12px;border-radius:50px;border:2px solid #F0D080;background:white;color:#A08000;font-size:11px;font-weight:800;cursor:pointer;font-family:inherit;">🌟 里程碑</button>
       </div>
-      <button onclick="boardPostMsg()" style="width:100%;padding:13px;border-radius:50px;border:none;background:linear-gradient(135deg,#FFA040,#C06000);color:white;font-size:14px;font-weight:900;cursor:pointer;font-family:inherit;box-shadow:0 5px 14px rgba(160,80,0,.3);">
-        💬 張貼留言
-      </button>
     </div>
-
-    <!-- Messages list -->
-    <div id="board-msgs-list"></div>
+    <div style="padding:8px 16px 0;" id="board-msgs-list"></div>
   </div>
 
-  <!-- PARENTING KNOWLEDGE PANEL -->
+
   <div id="fam-panel-knowledge" style="display:none;flex:1;overflow-y:auto;padding:12px 16px calc(80px + env(safe-area-inset-bottom));scrollbar-width:none;">
     <div style="background:linear-gradient(135deg,#EDFAF3,#D0F0E0);border-radius:20px;padding:14px 16px;margin-bottom:12px;">
       <div style="font-size:14px;font-weight:900;color:#1A6A30;margin-bottom:4px;">📚 育兒知識</div>
@@ -7474,7 +7651,7 @@ function goPage(id) {
   // always sync growth data on any page open
   updateHomeDisplay();
   if (id === 'page-sleep-section') { if(typeof slUpdateWW==='function') slUpdateWW(); }
-  if (id === 'page-profile') { updateProfileForm(); nfyUpdatePills(); }
+  if (id === 'page-profile') { updateProfileForm(); nfyUpdatePills(); dbUpdateExportLabel(); }
   if (id === 'page-solids') { sRender(); buildStarFilterChips(); }
   if (id === 'page-milk')   { renderMilkLog(); renderChart(); updateMilkRecommendation(); }
   if (id === 'page-records') {
@@ -7556,23 +7733,60 @@ function updateHomeDisplay() {
   const poEl = document.getElementById('home-poop-count');
   if(peEl) peEl.textContent = pee || '-';
   if(poEl) poEl.textContent = poop || '-';
+
+  // ── Today milk total ──────────────────────────────────────────
+  const todayMilk = milkLogs.filter(l => l.dateStr === todayStr);
+  const totalCc = todayMilk.reduce((s, l) => s + (l.cc || 0), 0);
+  const mlEl = document.getElementById('home-milk-today');
+  if (mlEl) mlEl.textContent = totalCc > 0 ? totalCc + 'cc' : '-';
+
+  // ── Today sleep total ─────────────────────────────────────────
+  const todayStart = new Date(todayStr).getTime();
+  const todayEnd   = todayStart + 86400000;
+  const todaySleepMs = (typeof slLogs !== 'undefined' ? slLogs : [])
+    .filter(l => l.startMs >= todayStart && l.startMs < todayEnd && l.endMs)
+    .reduce((s, l) => s + (l.endMs - l.startMs), 0);
+  const slEl = document.getElementById('home-sleep-today');
+  if (slEl) {
+    if (todaySleepMs > 0) {
+      const h = Math.floor(todaySleepMs / 3600000);
+      const m = Math.floor((todaySleepMs % 3600000) / 60000);
+      slEl.textContent = h > 0 ? h + 'h' + (m > 0 ? m + 'm' : '') : m + 'm';
+    } else {
+      slEl.textContent = '-';
+    }
+  }
+
+  // ── Resolve latest growth data FIRST (used in tags below) ──
+  const latestGrowth = (typeof growthLogs!=='undefined' && growthLogs.length)
+    ? growthLogs.reduce((a,b) => new Date(a.date) > new Date(b.date) ? a : b) : null;
+  const w  = (latestGrowth && latestGrowth.weight) || babyData.weight;
+  const h  = (latestGrowth && latestGrowth.height) || babyData.height;
+  const hd = (latestGrowth && latestGrowth.head)   || babyData.head;
+
   const age = calcAge(babyData.birthday);
   const avatar = babyData.gender === 'boy' ? '👦' : '👧';
   const avatarEl = document.querySelector('.baby-avatar');
   if(avatarEl) avatarEl.textContent = babyData.name ? avatar : '👶';
   const nameEl = document.querySelector('.baby-info-name');
   if(nameEl) nameEl.textContent = babyData.name || '小寶貝';
+
+  // ── Home baby-info tags (weight / height / blood type) ──────
+  const tagW = document.getElementById('home-tag-weight');
+  const tagH = document.getElementById('home-tag-height');
+  const tagB = document.getElementById('home-tag-blood');
+  const tagG = document.getElementById('home-tag-growth');
+  if (tagW) { if(w){tagW.textContent='⚖️ '+w+'kg'; tagW.style.display='';}else tagW.style.display='none'; }
+  if (tagH) { if(h){tagH.textContent='📏 '+h+'cm'; tagH.style.display='';}else tagH.style.display='none'; }
+  if (tagB) { if(babyData.bloodType){tagB.textContent='🩸 '+babyData.bloodType+'型'; tagB.style.display='';}else tagB.style.display='none'; }
+  if (tagG && latestGrowth) { tagG.style.display=''; tagG.title='最新：'+latestGrowth.date; } else if(tagG) tagG.style.display='none';
+
   const daysEl = document.getElementById('baby-age-days');
   if(daysEl) daysEl.textContent = age.days || 0;
   const subEl = document.querySelector('.baby-info-sub');
   if(subEl) subEl.innerHTML = '今天 <span id="baby-age-days">' + (age.days||0) + '</span> 天大 · ' + age.text + (babyData.bloodType?' · 🩸'+babyData.bloodType:'');
 
-  // ── Sync growth data to profile card ──
-  const latestGrowth = (typeof growthLogs!=='undefined'&&growthLogs.length)
-    ? growthLogs.reduce((a,b)=>new Date(a.date)>new Date(b.date)?a:b) : null;
-  const w  = (latestGrowth && latestGrowth.weight) || babyData.weight;
-  const h  = (latestGrowth && latestGrowth.height) || babyData.height;
-  const hd = (latestGrowth && latestGrowth.head)   || babyData.head;
+  // ── Sync growth data to profile stat elements ──
   const setEl = (id,v,unit) => { const el=document.getElementById(id); if(el&&v) el.textContent=v+' '+unit; };
   setEl('profile-weight', w,  'kg');
   setEl('profile-height', h,  'cm');
@@ -7641,6 +7855,21 @@ function updateProfileForm() {
   document.getElementById('profile-age-display').textContent = age.text;
   const bldEl = document.getElementById('profile-blood-display');
   if (bldEl) bldEl.textContent = babyData.bloodType ? '🩸 血型 ' + babyData.bloodType + ' 型' : '';
+  // Sync latest growth to profile card
+  const latestGr = (typeof growthLogs!=='undefined'&&growthLogs.length)
+    ? growthLogs.reduce((a,b)=>new Date(a.date)>new Date(b.date)?a:b) : null;
+  const grDate  = document.getElementById('profile-gr-date');
+  const grW     = document.getElementById('profile-gr-weight');
+  const grH     = document.getElementById('profile-gr-height');
+  if (latestGr) {
+    if(grDate)  grDate.textContent  = latestGr.date + ' (' + (latestGr.ageMonths||'?') + '個月)';
+    if(grW)     grW.textContent     = latestGr.weight!=null ? latestGr.weight+'kg' : '--';
+    if(grH)     grH.textContent     = latestGr.height!=null ? latestGr.height+'cm' : '--';
+  } else {
+    if(grDate) grDate.textContent='尚無量測紀錄';
+    if(grW) grW.textContent='--';
+    if(grH) grH.textContent='--';
+  }
 }
 
 function saveProfile() {
@@ -7650,13 +7879,14 @@ function saveProfile() {
   if (g) babyData.gender = g.value;
   const bt = document.getElementById('edit-bloodtype');
   if (bt) babyData.bloodType = bt.value;
-  // Sync manual weight/height to babyData if growth log empty
   updateHomeDisplay();
   updateProfileForm();
-  if(typeof szInit==='function') szUpdateCurrentSize();
-  if(typeof updateMilkRecommendation==='function') updateMilkRecommendation();
-  if(typeof slUpdateWW==='function') slUpdateWW();
-  if(typeof grUpdatePills==='function') grUpdatePills();
+  if (typeof szUpdateCurrentSize === 'function') szUpdateCurrentSize();
+  if (typeof updateMilkRecommendation === 'function') updateMilkRecommendation();
+  if (typeof slUpdateWW === 'function') slUpdateWW();
+  if (typeof grUpdatePills === 'function') grUpdatePills();
+  dbAutosave();
+  sShowToast('✅ 寶寶資料已儲存！');
   showVoice('寶寶資料已更新囉！' + (babyData.name ? babyData.name + ' 加油！🌟' : ''));
 }
 
@@ -7707,10 +7937,14 @@ let milkLogs = [
 function saveBreastfeed() {
   const ls=timers.left.secs, rs=timers.right.secs;
   if(ls===0&&rs===0){sShowToast('請先開始計時再儲存喔！');return;}
-  const now=new Date();
+  const timeEl=document.getElementById('breast-time');
+  let ts=Date.now();
+  if(timeEl&&timeEl.value){ts=new Date(timeEl.value).getTime()||ts;}
+  const now=new Date(ts);
   const rec={id:Date.now(),type:'breast',leftSecs:ls,rightSecs:rs,ts:now.getTime(),dateStr:now.toDateString(),note:''};
   milkLogs.unshift(rec);
   renderMilkLog();
+  renderChart();
   ['left','right'].forEach(s=>{clearInterval(timers[s].interval);timers[s]={running:false,secs:0,interval:null};document.getElementById('timer-'+s).textContent='00:00';document.getElementById('btn-'+s).textContent='▶ 開始';document.getElementById('btn-'+s).className='bf-side-btn start';});
   document.getElementById('bf-total-display').textContent='00:00';
   showVoice('親餵紀錄存好囉 🤱 左邊'+fmt(ls)+'，右邊'+fmt(rs)+'，超棒媽咪！💪');
@@ -7718,7 +7952,9 @@ function saveBreastfeed() {
 function saveBottlefeed() {
   const cc=currentCC, brand=document.getElementById('formula-brand').value, time=document.getElementById('bottle-time').value;
   const now=new Date();
-  const rec={id:Date.now(),type:'bottle',cc,brand,ts:now.getTime(),dateStr:now.toDateString(),note:''};
+  let ts=now.getTime();
+  if(time){const[hh,mm]=time.split(':').map(Number);const d=new Date();d.setHours(hh,mm,0,0);ts=d.getTime();}
+  const rec={id:Date.now(),type:'bottle',cc,brand,ts,dateStr:new Date(ts).toDateString(),note:''};
   milkLogs.unshift(rec);
   renderMilkLog();
   showVoice('記錄到喝了 '+cc+'cc '+brand+' ～繼續加油！🍼✨');
@@ -7779,10 +8015,16 @@ function renderMilkLog() {
 let milkEditId = null;
 function deleteMilkLog(id) {
   customConfirm('確定刪除這筆喝奶紀錄？', () => {
-    milkLogs = milkLogs.filter(x => x.id !== id);
-    renderMilkLog(); renderChart(); updateHomeDisplay();
-    dbAutosave();
-    sShowToast('🗑️ 已刪除喝奶紀錄');
+    try {
+      milkLogs = milkLogs.filter(x => x.id !== id);
+      renderMilkLog();
+      renderChart();
+      updateHomeDisplay();
+      dbAutosave();
+      sShowToast('🗑️ 已刪除喝奶紀錄');
+    } catch(e) {
+      sShowToast('⚠️ 刪除時發生錯誤，請再試一次');
+    }
   }, '🍼');
 }
 function openMilkEdit(id) { openMilkEditModal(id); } // compat
@@ -7852,10 +8094,39 @@ function saveMilkEdit(id, type) {
 
 // ===== CHART =====
 function renderChart() {
-  const logs=[{label:'06:30',val:120},{label:'10:15',val:150},{label:'14:00',val:180},{label:'17:45',val:200},{label:'21:00',val:120}];
-  const maxVal=Math.max(...logs.map(l=>l.val));
-  const c=document.getElementById('milk-chart'); c.innerHTML='';
-  logs.forEach(l=>{const w=document.createElement('div');w.className='chart-bar-wrap';const pct=Math.round((l.val/maxVal)*80);w.innerHTML=`<div class="chart-bar-val">${l.val}</div><div class="chart-bar-fill" style="height:${pct}px;"></div><div class="chart-bar-label">${l.label}</div>`;c.appendChild(w);});
+  const c = document.getElementById('milk-chart');
+  if (!c) return;
+  const today = new Date().toDateString();
+  const todayLogs = milkLogs
+    .filter(l => l.dateStr === today && (l.cc || (l.leftSecs || l.rightSecs)))
+    .sort((a, b) => a.ts - b.ts);
+
+  if (!todayLogs.length) {
+    c.innerHTML = '<div style="font-size:12px;color:var(--text-light);font-weight:600;text-align:center;padding:20px 0;">今天還沒有喝奶紀錄</div>';
+    return;
+  }
+
+  const logs = todayLogs.map(l => {
+    const t = new Date(l.ts);
+    const hh = String(t.getHours()).padStart(2,'0');
+    const mm = String(t.getMinutes()).padStart(2,'0');
+    let val = 0;
+    if (l.type === 'bottle') val = l.cc || 0;
+    else if (l.type === 'breast') val = Math.round(((l.leftSecs||0) + (l.rightSecs||0)) / 60);
+    return { label: `${hh}:${mm}`, val, type: l.type };
+  });
+
+  const maxVal = Math.max(...logs.map(l => l.val), 1);
+  c.innerHTML = '';
+  logs.forEach(l => {
+    const w = document.createElement('div');
+    w.className = 'chart-bar-wrap';
+    const pct = Math.max(4, Math.round((l.val / maxVal) * 80));
+    const color = l.type === 'breast' ? 'linear-gradient(180deg,#FFB0C8,#FF8FAB)' : 'linear-gradient(180deg,#90CBF9,#4A90E2)';
+    const unit  = l.type === 'breast' ? '分' : 'cc';
+    w.innerHTML = `<div class="chart-bar-val">${l.val}${unit}</div><div class="chart-bar-fill" style="height:${pct}px;background:${color};border-radius:6px 6px 0 0;"></div><div class="chart-bar-label">${l.label}</div>`;
+    c.appendChild(w);
+  });
 }
 
 // ===== SOLIDS V2 ENGINE =====
@@ -8164,17 +8435,18 @@ function sPickPor(p,el){sMPortion=p;document.querySelectorAll('.por-btn').forEac
 function sSaveRecord(){
   if(!sCurFoodId)return;
   const date=document.getElementById('s-trial-date').value||new Date().toISOString().slice(0,10);
+  const timeVal=document.getElementById('s-trial-time')?.value||'12:00';
   const notes=document.getElementById('s-trial-notes').value.trim();
   const mlVal = parseInt(document.getElementById('s-ml-input')?.value)||sMlAmount;
   if(sEditingTrialId) {
     const idx = sTrials.findIndex(t=>t.id===sEditingTrialId);
-    if(idx>=0) sTrials[idx] = {...sTrials[idx], date, reaction:sMReaction, stars:sMStars, ml:mlVal, symptoms:[...sMSymptoms], notes};
+    if(idx>=0) sTrials[idx] = {...sTrials[idx], date, time:timeVal, reaction:sMReaction, stars:sMStars, ml:mlVal, symptoms:[...sMSymptoms], notes};
     sEditingTrialId = null;
     document.getElementById('s-modal').classList.remove('open');
     sRender(); sShowToast('✅ 紀錄已更新！'); showVoice('紀錄修改完成囉 ✨');
     return;
   }
-  sTrials.push({id:Date.now(),foodId:sCurFoodId,date,reaction:sMReaction,stars:sMStars,ml:mlVal,symptoms:[...sMSymptoms],notes});
+  sTrials.push({id:Date.now(),foodId:sCurFoodId,date,time:timeVal,reaction:sMReaction,stars:sMStars,ml:mlVal,symptoms:[...sMSymptoms],notes});
   document.getElementById('s-modal').classList.remove('open');
   sRender();
   const msgs={safe:'🟢 安全食材解鎖 ✨',caution:'🟡 輕微反應已記錄，繼續觀察中…',allergic:'🔴 嚴重過敏已記錄，暫停此食材並諮詢醫師！'};
@@ -8226,6 +8498,7 @@ function sEditTrial(id){
     sMlAmount = ml;
     if(document.getElementById('s-ml-input')) document.getElementById('s-ml-input').value = ml;
     document.getElementById('s-trial-date').value = t.date;
+    if(document.getElementById('s-trial-time')) document.getElementById('s-trial-time').value = t.time||'12:00';
     document.getElementById('s-trial-notes').value = t.notes||'';
     document.getElementById('s-modal-box').querySelector('.save-btn-g').textContent = '💾 儲存修改';
   }, 80);
@@ -8831,6 +9104,64 @@ function slDeleteEditing() {
   sShowToast('已刪除紀錄');
 }
 
+// ---- Manual sleep add ----
+let smType = 'nap';
+function smSetType(t) {
+  smType = t;
+  document.getElementById('sm-nap').classList.toggle('on', t==='nap');
+  document.getElementById('sm-night').classList.toggle('on', t==='night');
+}
+function slOpenManualAdd() {
+  const now = new Date();
+  const pad = n => String(n).padStart(2,'0');
+  const toLocal = ms => { const d=new Date(ms); return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`; };
+  const endMs = now.getTime();
+  const startMs = endMs - 60*60000; // default 1hr ago
+  document.getElementById('sm-start').value = toLocal(startMs);
+  document.getElementById('sm-end').value   = toLocal(endMs);
+  document.getElementById('sm-note').value  = '';
+  document.getElementById('sm-duration-preview').textContent = '⏱️ 時長：1小時';
+  smType = 'nap';
+  document.getElementById('sm-nap').classList.add('on');
+  document.getElementById('sm-night').classList.remove('on');
+  const modal = document.getElementById('sl-manual-modal');
+  modal.style.opacity='1'; modal.style.pointerEvents='auto';
+  document.getElementById('sl-manual-box').style.transform='translateY(0)';
+  // live duration preview
+  ['sm-start','sm-end'].forEach(id => {
+    document.getElementById(id).addEventListener('change', smUpdateDuration);
+  });
+}
+function smUpdateDuration() {
+  const s = new Date(document.getElementById('sm-start').value).getTime();
+  const e = new Date(document.getElementById('sm-end').value).getTime();
+  const el = document.getElementById('sm-duration-preview');
+  if (isNaN(s)||isNaN(e)||e<=s) { el.textContent='⏱️ 時長：請確認時間'; el.style.color='#E04040'; return; }
+  el.style.color='#6B3FA0';
+  const m = Math.round((e-s)/60000);
+  el.textContent = '⏱️ 時長：' + slFmtDur(m);
+}
+function slCloseManual() {
+  const modal = document.getElementById('sl-manual-modal');
+  modal.style.opacity='0'; modal.style.pointerEvents='none';
+  document.getElementById('sl-manual-box').style.transform='translateY(100%)';
+}
+function slManualBgClick(e) { if(e.target.id==='sl-manual-modal') slCloseManual(); }
+function slSaveManual() {
+  const startMs = new Date(document.getElementById('sm-start').value).getTime();
+  const endMs   = new Date(document.getElementById('sm-end').value).getTime();
+  if (isNaN(startMs)||isNaN(endMs)||endMs<=startMs) { sShowToast('請確認時間正確（結束需晚於開始）'); return; }
+  const durationMins = Math.round((endMs-startMs)/60000);
+  const note = document.getElementById('sm-note').value.trim();
+  slLogs.unshift({ id: Date.now(), type: smType, startMs, endMs, durationMins, note });
+  slLastWakeMs = endMs;
+  slCloseManual();
+  slRenderLog(); slRenderTimeline(); slUpdatePills(); slUpdateSweetSpot();
+  sShowToast(`✅ 補登成功！${smType==='nap'?'小睡':'長睡'} ${slFmtDur(durationMins)}`);
+  showVoice(`補登了 ${slFmtDur(durationMins)} 的${smType==='nap'?'小睡':'長睡'}！`);
+  dbAutosave();
+}
+
 // ---- Timeline ----
 function slRenderTimeline() {
   const isToday = slCurrentRange === 'today';
@@ -9145,20 +9476,37 @@ function rcGetAllRecords() {
     recs.push({ id:l.id, cat:'milk', ts:l.ts, title: l.type==='bottle'?`🍼 ${l.cc}cc`:`🤱 親餵`, detail, note:l.note||'', raw:l });
   });
 
-  // Solid food
-  sTrials.filter(t => rcFilterByRange(new Date(t.date).getTime()+12*3600000)).forEach(t => {
-    const f = SFOODS.find(x=>x.id===t.foodId);
-    const stars = '⭐'.repeat(t.stars||1);
-    recs.push({ id:t.id, cat:'solid', ts:new Date(t.date).getTime()+12*3600000,
-      title:`${f?f.emoji:'🥕'} ${f?f.name:'副食品'}`,
-      detail:`${t.ml||'-'}ml · ${stars} · ${t.reaction==='safe'?'🟢安全':t.reaction==='caution'?'🟡注意':'🔴過敏'}`,
-      note:t.notes||'', raw:t });
+  // Solid food — use t.time if available, else default to noon
+  sTrials.forEach(t => {
+    let ts;
+    if (t.time) {
+      const [hh, mm] = t.time.split(':').map(Number);
+      const d = new Date(t.date + 'T00:00:00'); d.setHours(hh, mm, 0, 0);
+      ts = d.getTime();
+    } else {
+      ts = new Date(t.date).getTime() + 12 * 3600000;
+    }
+    if (!rcFilterByRange(ts)) return;
+    const f = SFOODS.find(x => x.id === t.foodId);
+    const stars = '⭐'.repeat(t.stars || 1);
+    recs.push({ id: t.id, cat: 'solid', ts,
+      title: `${f ? f.emoji : '🥕'} ${f ? f.name : '副食品'}`,
+      detail: `${t.ml || '-'}ml · ${stars} · ${t.reaction==='safe'?'🟢安全':t.reaction==='caution'?'🟡注意':'🔴過敏'}`,
+      note: t.notes || '', raw: t });
   });
 
-  // Water
-  wgLogs.filter(l => rcFilterByRange(Date.now() - 3600000)).forEach((l,i) => {
-    recs.push({ id:'w'+i, cat:'water', ts:Date.now()-i*60000,
-      title:`💧 ${l.cc}cc`, detail:`飲水 ${l.time}`, note:'', raw:l });
+  // Water — use each entry's own ts (fall back to parsing l.time today if missing)
+  wgLogs.forEach((l, i) => {
+    let ts = l.ts;
+    if (!ts && l.time) {
+      const [hh, mm] = l.time.split(':').map(Number);
+      const d = new Date(); d.setHours(hh, mm, 0, 0);
+      ts = d.getTime();
+    }
+    if (!ts) ts = Date.now() - i * 60000;
+    if (!rcFilterByRange(ts)) return;
+    recs.push({ id: 'w' + i, cat: 'water', ts,
+      title: `💧 ${l.cc}cc`, detail: `飲水 ${l.time || ''}`, note: '', raw: l });
   });
 
   // Supplements
@@ -9254,10 +9602,23 @@ function rcRenderChart(recs) {
   };
 
   const allRecs = rcGetAllRecords();
-  chartEl.innerHTML = days.map(day => {
-    const dayRecs = allRecs.filter(r => {
-      const d = new Date(r.ts); return d.toDateString() === new Date(day.ts).toDateString();
-    });
+  chartEl.innerHTML = days.map((day, idx) => {
+    let dayRecs;
+    if (rcRange === 'today') {
+      // Each bucket covers a 4-hour window
+      const bucketStart = day.ts;
+      const bucketEnd   = bucketStart + 4 * 3600000;
+      dayRecs = allRecs.filter(r => r.ts >= bucketStart && r.ts < bucketEnd);
+    } else if (rcRange === 'month') {
+      // Each bucket covers 7 days
+      const bucketStart = day.ts;
+      const bucketEnd   = bucketStart + 7 * 86400000;
+      dayRecs = allRecs.filter(r => r.ts >= bucketStart && r.ts < bucketEnd);
+    } else {
+      // Week / 7days / custom: each bucket = one calendar day
+      const bucketDate = new Date(day.ts).toDateString();
+      dayRecs = allRecs.filter(r => new Date(r.ts).toDateString() === bucketDate);
+    }
     const segments = activeCats.map(cat => {
       const score = getScore(dayRecs, cat);
       return score > 0 ? `<div class="rc-bar-seg" style="height:${Math.round(score*7)}px;background:${CAT_INFO[cat].color};"></div>` : '';
@@ -9275,9 +9636,9 @@ function rcGetDayBuckets() {
   const now = new Date();
   const days = [];
   if (rcRange==='today') {
-    // hours 0–23 split into 6 blocks
+    // hours 0–23 split into 6 blocks of 4h each
     for (let h=0; h<24; h+=4) {
-      days.push({ label:`${h}`, ts: new Date(now.getFullYear(),now.getMonth(),now.getDate(),h).getTime() });
+      days.push({ label:`${h}時`, ts: new Date(now.getFullYear(),now.getMonth(),now.getDate(),h).getTime() });
     }
   } else if (rcRange==='week') {
     const dow = now.getDay()===0?6:now.getDay()-1;
@@ -9603,11 +9964,19 @@ function rcWeekRender() {
 
     <div style="background:white;border-radius:18px;padding:14px 16px;box-shadow:0 4px 14px rgba(74,42,128,.08);margin-bottom:12px;">
       <div style="font-size:13px;font-weight:900;color:#4A2A80;margin-bottom:10px;">💡 本週作息分析</div>
-      ${rcWeekAnalysis(dayStats)}
+      <div id="rc-week-static-tips">${rcWeekStaticTips(dayStats)}</div>
+    </div>
+    <div style="background:linear-gradient(135deg,#F0EAFF,#E8E0FF);border-radius:18px;padding:14px 16px;box-shadow:0 4px 14px rgba(74,42,128,.08);margin-bottom:12px;" id="rc-week-ai-card">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
+        <div style="font-size:20px;">🤖</div>
+        <div style="font-size:13px;font-weight:900;color:#4A2A80;">AI 個人化作息建議</div>
+        <button onclick="rcLoadWeekAI()" id="rc-week-ai-btn" style="margin-left:auto;padding:5px 12px;border-radius:50px;border:none;background:#6B3FA0;color:white;font-size:11px;font-weight:800;cursor:pointer;font-family:inherit;">✨ 生成建議</button>
+      </div>
+      <div id="rc-week-ai-content" style="font-size:12px;color:#6040A0;font-weight:600;line-height:1.8;min-height:40px;">點擊「生成建議」，讓 AI 根據本週數據提供個人化建議！</div>
     </div>`;
 }
 
-function rcWeekAnalysis(dayStats) {
+function rcWeekStaticTips(dayStats) {
   const tips = [];
   const avgMilk  = dayStats.reduce((s,d)=>s+d.milkCc,0)/7;
   const avgSleep  = dayStats.reduce((s,d)=>s+d.sleepH,0)/7;
@@ -9702,11 +10071,19 @@ function rcMonthRender() {
 
     <div style="background:white;border-radius:18px;padding:14px 16px;box-shadow:0 4px 14px rgba(26,90,138,.08);margin-bottom:12px;">
       <div style="font-size:13px;font-weight:900;color:#1A5A8A;margin-bottom:10px;">💡 本月作息分析</div>
-      ${rcMonthAnalysis(monthStats, daysWithData)}
+      <div id="rc-month-static-tips">${rcMonthStaticTips(monthStats, daysWithData)}</div>
+    </div>
+    <div style="background:linear-gradient(135deg,#E8F4FF,#D8ECFF);border-radius:18px;padding:14px 16px;box-shadow:0 4px 14px rgba(26,90,138,.08);margin-bottom:12px;" id="rc-month-ai-card">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
+        <div style="font-size:20px;">🤖</div>
+        <div style="font-size:13px;font-weight:900;color:#1A5A8A;">AI 個人化作息建議</div>
+        <button onclick="rcLoadMonthAI()" id="rc-month-ai-btn" style="margin-left:auto;padding:5px 12px;border-radius:50px;border:none;background:#1A7ABA;color:white;font-size:11px;font-weight:800;cursor:pointer;font-family:inherit;">✨ 生成建議</button>
+      </div>
+      <div id="rc-month-ai-content" style="font-size:12px;color:#1A5080;font-weight:600;line-height:1.8;min-height:40px;">點擊「生成建議」，讓 AI 根據本月數據提供個人化建議！</div>
     </div>`;
 }
 
-function rcMonthAnalysis(monthStats, daysWithData) {
+function rcMonthStaticTips(monthStats, daysWithData) {
   if (!daysWithData.length) return '<div style="font-size:12px;color:var(--text-light);padding:10px 0;text-align:center;">本月紀錄不足，請繼續記錄</div>';
   const tips = [];
   const avgMilk  = daysWithData.reduce((s,d)=>s+d.milkCc,0)/daysWithData.length;
@@ -9720,6 +10097,107 @@ function rcMonthAnalysis(monthStats, daysWithData) {
   if (noRecordDays > 7) tips.push(`📝 還有 ${noRecordDays} 天沒有紀錄，完整記錄有助於掌握寶寶規律`);
   if (avgSleep >= 12) tips.push('✅ 本月睡眠整體良好！繼續保持穩定的作息規律');
   return tips.map(t => `<div style="font-size:12px;font-weight:600;color:var(--text-dark);padding:6px 0;border-bottom:1px solid #F0E8FF;line-height:1.7;">${t}</div>`).join('');
+}
+
+// ── AI Analysis ────────────────────────────────────────
+function rcBuildWeekPrompt(dayStats) {
+  const age = typeof calcAge==='function' && babyData.birthday ? calcAge(babyData.birthday) : null;
+  const ageStr = age ? age.text : '月齡未知';
+  const rows = dayStats.map(d => `${d.label.replace('\n','/')}：奶量${d.milkCc||0}ml，睡眠${d.sleepH.toFixed(1)}h，便便${d.poopCnt}次`).join('；');
+  return `你是專業嬰幼兒照護顧問，請用繁體中文針對以下資料提供作息分析與建議。\n寶寶月齡：${ageStr}\n本週每日紀錄：${rows}\n請提供3-5點個人化建議，包含具體可操作的改善方向，語氣溫馨親切。每點一行，用emoji開頭。只回答建議內容，不要加額外說明。`;
+}
+
+function rcBuildMonthPrompt(monthStats, daysWithData) {
+  const age = typeof calcAge==='function' && babyData.birthday ? calcAge(babyData.birthday) : null;
+  const ageStr = age ? age.text : '月齡未知';
+  const avgMilk = daysWithData.length ? Math.round(daysWithData.reduce((s,d)=>s+d.milkCc,0)/daysWithData.length) : 0;
+  const avgSleep = daysWithData.length ? (daysWithData.reduce((s,d)=>s+d.sleepH,0)/daysWithData.length).toFixed(1) : 0;
+  const recordDays = daysWithData.length;
+  const lowMilkDays = daysWithData.filter(d=>d.milkCc>0&&d.milkCc<400).length;
+  const lowSleepDays = daysWithData.filter(d=>d.sleepH>0&&d.sleepH<10).length;
+  return `你是專業嬰幼兒照護顧問，請用繁體中文針對以下月度資料提供作息分析與建議。\n寶寶月齡：${ageStr}\n本月紀錄天數：${recordDays}天\n日均奶量：${avgMilk}ml，日均睡眠：${avgSleep}h\n奶量偏低天數：${lowMilkDays}天，睡眠不足天數：${lowSleepDays}天\n請提供4-6點個人化月度總結與下月改善方向，語氣溫馨親切。每點一行，用emoji開頭。只回答建議內容，不要加額外說明。`;
+}
+
+async function rcLoadWeekAI() {
+  const btn = document.getElementById('rc-week-ai-btn');
+  const content = document.getElementById('rc-week-ai-content');
+  if (!content) return;
+  btn.disabled = true; btn.textContent = '⏳ 分析中…';
+  content.innerHTML = '<div style="display:flex;align-items:center;gap:8px;color:#8060C0;"><span style="animation:spin 1s linear infinite;display:inline-block;">⏳</span> AI 正在分析本週作息數據，請稍候…</div>';
+  // Rebuild dayStats for the current week
+  const now = new Date();
+  const days = [];
+  for (let i=6;i>=0;i--) { const d=new Date(now);d.setDate(now.getDate()-i);days.push(`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`); }
+  const dayLabels = ['日','一','二','三','四','五','六'];
+  const dayStats = days.map(ds => {
+    const dayStart=new Date(ds+'T00:00:00').getTime(), dayEnd=dayStart+86400000;
+    const milkCc=milkLogs.filter(l=>l.ts>=dayStart&&l.ts<dayEnd).reduce((s,l)=>s+(l.cc||0),0);
+    const milkCnt=milkLogs.filter(l=>l.ts>=dayStart&&l.ts<dayEnd).length;
+    const sleepMs=slLogs.filter(l=>l.startMs>=dayStart&&l.startMs<dayEnd&&l.endMs).reduce((s,l)=>s+(l.endMs-l.startMs),0);
+    const poopCnt=diaperLogs.filter(l=>l.ts>=dayStart&&l.ts<dayEnd&&l.type==='poop').length;
+    const d=new Date(ds+'T12:00:00');
+    return {ds, label:`${d.getMonth()+1}/${d.getDate()}\n週${dayLabels[d.getDay()]}`, milkCc, milkCnt, sleepH:sleepMs/3600000, poopCnt};
+  });
+  try {
+    const prompt = rcBuildWeekPrompt(dayStats);
+    const resp = await fetch('https://api.anthropic.com/v1/messages', {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({
+        model:'claude-sonnet-4-20250514',
+        max_tokens:800,
+        messages:[{role:'user',content:prompt}]
+      })
+    });
+    const data = await resp.json();
+    const text = data.content?.map(c=>c.text||'').join('') || '';
+    if (!text) throw new Error('empty');
+    content.innerHTML = text.split('\n').filter(l=>l.trim()).map(l=>`<div style="padding:5px 0;border-bottom:1px solid rgba(100,60,200,.1);line-height:1.7;">${l}</div>`).join('');
+    btn.textContent = '🔄 重新生成'; btn.disabled = false;
+  } catch(e) {
+    content.innerHTML = '<div style="color:#C04040;font-size:12px;">⚠️ AI 分析暫時無法使用，請稍後再試。<br><span style="color:#9A80CC;">您仍可參考上方的靜態分析建議。</span></div>';
+    btn.textContent = '🔄 重試'; btn.disabled = false;
+  }
+}
+
+async function rcLoadMonthAI() {
+  const btn = document.getElementById('rc-month-ai-btn');
+  const content = document.getElementById('rc-month-ai-content');
+  if (!content) return;
+  btn.disabled = true; btn.textContent = '⏳ 分析中…';
+  content.innerHTML = '<div style="display:flex;align-items:center;gap:8px;color:#1A5080;"><span style="animation:spin 1s linear infinite;display:inline-block;">⏳</span> AI 正在分析本月作息數據，請稍候…</div>';
+  const now = new Date();
+  const year = now.getFullYear(), month = now.getMonth();
+  const daysInMonth = new Date(year, month+1, 0).getDate();
+  const monthStats = [];
+  for (let day=1;day<=daysInMonth;day++) {
+    const ds=`${year}-${String(month+1).padStart(2,'0')}-${String(day).padStart(2,'0')}`;
+    const dayStart=new Date(ds+'T00:00:00').getTime(), dayEnd=dayStart+86400000;
+    const milkCc=milkLogs.filter(l=>l.ts>=dayStart&&l.ts<dayEnd).reduce((s,l)=>s+(l.cc||0),0);
+    const sleepMs=slLogs.filter(l=>l.startMs>=dayStart&&l.startMs<dayEnd&&l.endMs).reduce((s,l)=>s+(l.endMs-l.startMs),0);
+    monthStats.push({day,ds,milkCc,sleepH:sleepMs/3600000});
+  }
+  const daysWithData = monthStats.filter(d=>d.milkCc>0||d.sleepH>0);
+  try {
+    const prompt = rcBuildMonthPrompt(monthStats, daysWithData);
+    const resp = await fetch('https://api.anthropic.com/v1/messages', {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({
+        model:'claude-sonnet-4-20250514',
+        max_tokens:1000,
+        messages:[{role:'user',content:prompt}]
+      })
+    });
+    const data = await resp.json();
+    const text = data.content?.map(c=>c.text||'').join('') || '';
+    if (!text) throw new Error('empty');
+    content.innerHTML = text.split('\n').filter(l=>l.trim()).map(l=>`<div style="padding:5px 0;border-bottom:1px solid rgba(26,90,138,.1);line-height:1.7;">${l}</div>`).join('');
+    btn.textContent = '🔄 重新生成'; btn.disabled = false;
+  } catch(e) {
+    content.innerHTML = '<div style="color:#C04040;font-size:12px;">⚠️ AI 分析暫時無法使用，請稍後再試。<br><span style="color:#2A7AAA;">您仍可參考上方的靜態分析建議。</span></div>';
+    btn.textContent = '🔄 重試'; btn.disabled = false;
+  }
 }
 
 function rcJumpToDay(ds) {
@@ -9737,12 +10215,16 @@ function rcOpenEdit(cat, id) {
   const fieldsEl = document.getElementById('rc-edit-fields');
   document.getElementById('rc-edit-title').textContent = `✏️ 修改${CAT_INFO[cat]?.label||''}紀錄`;
 
+  const toLocal = ms => { if(!ms)return''; const d=new Date(ms); const p=n=>String(n).padStart(2,'0'); return `${d.getFullYear()}-${p(d.getMonth()+1)}-${p(d.getDate())}T${p(d.getHours())}:${p(d.getMinutes())}`; };
+  const timeRow = ts => `<div style="font-size:13px;font-weight:800;color:var(--text-dark);margin-bottom:6px;">🕐 記錄時間</div>
+    <input class="sm-inp" type="datetime-local" id="rce-ts" value="${toLocal(ts)}" style="margin-bottom:12px;">`;
+
   let fieldsHtml = '';
   if (cat==='milk') {
     const l = milkLogs.find(x=>x.id===rcEditingRec.id);
     if (!l) return;
     if (l.type==='bottle') {
-      fieldsHtml = `
+      fieldsHtml = timeRow(l.ts) + `
         <div style="font-size:13px;font-weight:800;color:var(--text-dark);margin-bottom:6px;">🍼 奶量 (cc)</div>
         <input class="sm-inp" type="number" id="rce-cc" value="${l.cc}" min="1" max="500">
         <div style="font-size:13px;font-weight:800;color:var(--text-dark);margin-bottom:6px;">🥛 品牌</div>
@@ -9750,7 +10232,7 @@ function rcOpenEdit(cat, id) {
         <div style="font-size:13px;font-weight:800;color:var(--text-dark);margin-bottom:6px;">📝 備註</div>
         <input class="sm-inp" id="rce-note" value="${l.note||''}" placeholder="備註…">`;
     } else {
-      fieldsHtml = `<div style="font-size:13px;color:var(--text-mid);padding:10px 0;">親餵紀錄：左邊 ${fmt(l.leftSecs)}，右邊 ${fmt(l.rightSecs)}</div>
+      fieldsHtml = timeRow(l.ts) + `<div style="font-size:13px;color:var(--text-mid);padding:10px 0;">親餵紀錄：左邊 ${fmt(l.leftSecs)}，右邊 ${fmt(l.rightSecs)}</div>
         <div style="font-size:13px;font-weight:800;color:var(--text-dark);margin-bottom:6px;">📝 備註</div>
         <input class="sm-inp" id="rce-note" value="${l.note||''}" placeholder="備註…">`;
     }
@@ -9760,23 +10242,22 @@ function rcOpenEdit(cat, id) {
     const f = SFOODS.find(x=>x.id===t.foodId);
     fieldsHtml = `
       <div style="font-size:13px;font-weight:800;color:var(--text-dark);margin-bottom:6px;">🥕 食材：${f?f.name:'副食品'}</div>
+      <div style="font-size:13px;font-weight:800;color:var(--text-dark);margin-bottom:6px;">📅 日期 & 時間</div>
+      <input class="sm-inp" type="datetime-local" id="rce-ts" value="${t.date ? t.date+'T08:00' : ''}" style="margin-bottom:12px;">
       <div style="font-size:13px;font-weight:800;color:var(--text-dark);margin-bottom:6px;">🥄 食量 (ml)</div>
       <input class="sm-inp" type="number" id="rce-ml" value="${t.ml||0}" min="0" max="500">
-      <div style="font-size:13px;font-weight:800;color:var(--text-dark);margin-bottom:6px;">📅 日期</div>
-      <input class="sm-inp" type="date" id="rce-date" value="${t.date}">
       <div style="font-size:13px;font-weight:800;color:var(--text-dark);margin-bottom:6px;">📝 備註</div>
       <input class="sm-inp" id="rce-note" value="${t.notes||''}" placeholder="備註…">`;
   } else if (cat==='water') {
     const idx = parseInt(String(rcEditingRec.id).replace('w',''));
     const l = wgLogs[idx];
     if (!l) return;
-    fieldsHtml = `
+    fieldsHtml = timeRow(l.ts) + `
       <div style="font-size:13px;font-weight:800;color:var(--text-dark);margin-bottom:6px;">💧 飲水量 (cc)</div>
       <input class="sm-inp" type="number" id="rce-cc" value="${l.cc}" min="1" max="999">`;
   } else if (cat==='sleep') {
     const l = slLogs.find(x=>x.id===rcEditingRec.id);
     if (!l) return;
-    const toLocal = ms => { const d=new Date(ms); const p=n=>String(n).padStart(2,'0'); return `${d.getFullYear()}-${p(d.getMonth()+1)}-${p(d.getDate())}T${p(d.getHours())}:${p(d.getMinutes())}`; };
     fieldsHtml = `
       <div style="font-size:13px;font-weight:800;color:var(--text-dark);margin-bottom:6px;">⏰ 開始時間</div>
       <input class="sm-inp" type="datetime-local" id="rce-start" value="${toLocal(l.startMs)}" style="margin-bottom:12px;">
@@ -9784,15 +10265,22 @@ function rcOpenEdit(cat, id) {
       <input class="sm-inp" type="datetime-local" id="rce-end" value="${toLocal(l.endMs)}" style="margin-bottom:12px;">
       <div style="font-size:13px;font-weight:800;color:var(--text-dark);margin-bottom:6px;">📝 備註</div>
       <input class="sm-inp" id="rce-note" value="${l.note||''}" placeholder="備註…">`;
+  } else if (cat==='diaper') {
+    const l = diaperLogs.find(x=>x.id===rcEditingRec.id);
+    if (!l) return;
+    fieldsHtml = timeRow(l.ts) + `
+      <div style="font-size:13px;font-weight:800;color:var(--text-dark);margin-bottom:6px;">💩 類型：${l.type==='poop'?'便便':l.type==='mixed'?'混合':'尿尿'}</div>
+      <div style="font-size:13px;font-weight:800;color:var(--text-dark);margin-bottom:6px;">📝 備註</div>
+      <input class="sm-inp" id="rce-note" value="${l.note||''}" placeholder="備註…">`;
   } else if (cat==='supp') {
     const l = suppLogs.find(x=>x.id===rcEditingRec.id);
     if (!l) return;
-    fieldsHtml = `<div style="font-size:13px;color:var(--text-mid);padding:10px 0;">${l.suppIcon} ${l.suppName} · ${l.dose||''}<br>保健品補充紀錄（不可更改補充時間）</div>`;
+    fieldsHtml = timeRow(l.ts) + `<div style="font-size:13px;color:var(--text-mid);padding:8px 0;">${l.suppIcon||'💊'} ${l.suppName} · ${l.dose||''}</div>`;
   } else if (cat==='care') {
     const l = careLogs.find(x=>x.id===rcEditingRec.id);
     if (!l) return;
     const item = careAllItems().find(x=>x.id===l.itemId);
-    fieldsHtml = `
+    fieldsHtml = timeRow(l.ts) + `
       <div style="font-size:13px;font-weight:800;color:var(--text-dark);margin-bottom:6px;">${item?item.icon+' '+item.name:'護理項目'}</div>
       <div style="font-size:13px;font-weight:800;color:var(--text-dark);margin-bottom:6px;">📝 備註</div>
       <input class="sm-inp" id="rce-note" value="${l.note||''}" placeholder="備註…">`;
@@ -9809,9 +10297,17 @@ function rcCloseEdit() { document.getElementById('rc-edit-modal').classList.remo
 function rcSaveEdit() {
   const { cat, id } = rcEditingRec || {};
   if (!cat) return;
+  const getTsFromField = () => {
+    const el = document.getElementById('rce-ts');
+    if (!el || !el.value) return null;
+    const ts = new Date(el.value).getTime();
+    return isNaN(ts) ? null : ts;
+  };
   if (cat==='milk') {
     const l = milkLogs.find(x=>x.id===id);
     if (l) {
+      const newTs = getTsFromField();
+      if (newTs) { l.ts = newTs; l.dateStr = new Date(newTs).toDateString(); }
       if (l.type==='bottle') { const cc=parseInt(document.getElementById('rce-cc')?.value); if(!isNaN(cc)&&cc>0) l.cc=cc; const b=document.getElementById('rce-brand'); if(b) l.brand=b.value.trim(); }
       const n=document.getElementById('rce-note'); if(n) l.note=n.value.trim();
     }
@@ -9820,13 +10316,22 @@ function rcSaveEdit() {
     const t = sTrials.find(x=>x.id===id);
     if (t) {
       const ml=parseInt(document.getElementById('rce-ml')?.value); if(!isNaN(ml)) t.ml=ml;
-      const dt=document.getElementById('rce-date'); if(dt) t.date=dt.value;
+      const tsEl=document.getElementById('rce-ts');
+      if(tsEl&&tsEl.value){
+        const d=new Date(tsEl.value);
+        if(!isNaN(d.getTime())){
+          t.date=`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+          t.time=`${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`;
+        }
+      }
       const n=document.getElementById('rce-note'); if(n) t.notes=n.value.trim();
     }
   } else if (cat==='water') {
     const idx=parseInt(String(id).replace('w',''));
     const cc=parseInt(document.getElementById('rce-cc')?.value);
     if(!isNaN(cc)&&cc>0&&wgLogs[idx]) { wgTotal -= wgLogs[idx].cc; wgLogs[idx].cc=cc; wgTotal+=cc; wgUpdateUI(); }
+    const newTs = getTsFromField();
+    if (newTs && wgLogs[idx]) { wgLogs[idx].ts = newTs; }
   } else if (cat==='sleep') {
     const l = slLogs.find(x=>x.id===id);
     if (l) {
@@ -9836,6 +10341,21 @@ function rcSaveEdit() {
       const n=document.getElementById('rce-note'); if(n) l.note=n.value.trim();
     }
     slUpdatePills();
+  } else if (cat==='diaper') {
+    const l = diaperLogs.find(x=>x.id===id);
+    if (l) {
+      const newTs = getTsFromField();
+      if (newTs) { l.ts = newTs; l.dateStr = new Date(newTs).toDateString(); }
+      const n=document.getElementById('rce-note'); if(n) l.note=n.value.trim();
+    }
+  } else if (cat==='care') {
+    const l = careLogs.find(x=>x.id===id);
+    if (l) {
+      const newTs = getTsFromField();
+      if (newTs) { l.ts = newTs; l.dateStr = new Date(newTs).toDateString(); }
+      const n=document.getElementById('rce-note'); if(n) l.note=n.value.trim();
+    }
+    careBuildToday();
   }
   rcCloseEdit();
   rcRender();
@@ -9995,9 +10515,11 @@ function dpPickAmount(amt, el) {
 // --- Save ---
 function dpSavePoop() {
   const note = document.getElementById('dp-note').value.trim();
-  const now = new Date();
+  const dtEl = document.getElementById('dp-change-time');
+  const ts = (dtEl && dtEl.value) ? new Date(dtEl.value).getTime() : Date.now();
+  const tsDate = new Date(ts);
   const rec = {
-    id: Date.now(), type:'poop', ts:now.getTime(), dateStr:now.toDateString(),
+    id: Date.now(), type:'poop', ts, dateStr:tsDate.toDateString(),
     bristolType: dpBristol, poopColor: dpPoopColor, amount: dpAmount, note,
     peeColor: null
   };
@@ -10020,9 +10542,11 @@ function dpSavePoop() {
 
 function dpSavePee() {
   const note = document.getElementById('dp-pee-note').value.trim();
-  const now = new Date();
+  const dtEl = document.getElementById('dp-change-time');
+  const ts = (dtEl && dtEl.value) ? new Date(dtEl.value).getTime() : Date.now();
+  const tsDate = new Date(ts);
   const rec = {
-    id: Date.now(), type:'pee', ts:now.getTime(), dateStr:now.toDateString(),
+    id: Date.now(), type:'pee', ts, dateStr:tsDate.toDateString(),
     peeColor: dpPeeColor, note, bristolType:null, poopColor:null, amount:null
   };
   diaperLogs.unshift(rec);
@@ -11772,6 +12296,7 @@ function grAddRecord() {
   if (typeof szUpdateCurrentSize === 'function') szUpdateCurrentSize();
 
   grRenderChart(); grUpdatePills(); grRenderLog();
+  if(typeof updateProfileForm==='function') updateProfileForm();
   sShowToast('✅ 測量數據已儲存！');
   showVoice('成長紀錄存好囉 📈 ' + (babyData.name||'寶寶') + ' 繼續長大長高！💪');
 
@@ -11939,21 +12464,38 @@ function grRenderChart() {
   // X axis label
   grid += `<text x="${padL+chartW/2}" y="${H-2}" text-anchor="middle" font-size="9" fill="#9AA8B8" font-family="Nunito,sans-serif">月齡 (月)</text>`;
 
-  // Baby's data points
+  // Baby's data points — interactive
   let babyPath = '';
   let babyDots = '';
   const validLogs = growthLogs.filter(r => r[grMetric] !== null && r.ageMonths <= 24);
   if (validLogs.length > 0) {
     const pts2 = validLogs.map(r => `${xScale(r.ageMonths).toFixed(1)},${yScale(r[grMetric]).toFixed(1)}`).join(' ');
     babyPath = `<polyline points="${pts2}" fill="none" stroke="#2060C0" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>`;
-    babyDots = validLogs.map(r => {
-      const cx = xScale(r.ageMonths).toFixed(1);
-      const cy = yScale(r[grMetric]).toFixed(1);
-      return `<circle cx="${cx}" cy="${cy}" r="4" fill="#2060C0" stroke="white" stroke-width="1.5"/>`;
+    const unit = unitMap[grMetric];
+    babyDots = validLogs.map((r, i) => {
+      const cx = parseFloat(xScale(r.ageMonths).toFixed(1));
+      const cy = parseFloat(yScale(r[grMetric]).toFixed(1));
+      const val = r[grMetric];
+      const pct = grCalcPercentile(val, r.ageMonths, grMetric);
+      const pctTxt = pct ? `P${pct.rank}` : '';
+      // Tooltip box: flip to left if near right edge
+      const tipX = cx + (cx > W - 120 ? -130 : 12);
+      const tipY = Math.max(padT + 4, cy - 40);
+      const tip = `<g id="gr-tip-${i}" style="display:none;">
+        <rect x="${tipX}" y="${tipY}" width="124" height="54" rx="10" fill="white" stroke="#2060C0" stroke-width="1.5" filter="url(#gr-shadow)"/>
+        <text x="${tipX+10}" y="${tipY+17}" font-size="10" font-weight="800" fill="#2060C0" font-family="Nunito,sans-serif">${r.date}</text>
+        <text x="${tipX+10}" y="${tipY+31}" font-size="10" font-weight="700" fill="#3D2B1F" font-family="Nunito,sans-serif">${val} ${unit}${pctTxt?' · '+pctTxt:''}</text>
+        <text x="${tipX+10}" y="${tipY+44}" font-size="9" font-weight="600" fill="#9AA8B8" font-family="Nunito,sans-serif">${r.ageMonths} 個月</text>
+      </g>`;
+      return `<circle cx="${cx}" cy="${cy}" r="5" fill="#2060C0" stroke="white" stroke-width="2" style="cursor:pointer;" onclick="grDotClick(event,${i})"/>
+        <circle cx="${cx}" cy="${cy}" r="14" fill="transparent" style="cursor:pointer;" onclick="grDotClick(event,${i})"/>
+        ${tip}`;
     }).join('');
   }
 
-  svg.innerHTML = grid + band +
+  const shadow = `<defs><filter id="gr-shadow"><feDropShadow dx="1" dy="2" stdDeviation="3" flood-color="#00000026"/></filter></defs>`;
+
+  svg.innerHTML = shadow + grid + band +
     polyline(1,'#E03030',1.2,'4 3') +  // P3
     polyline(2,'#E8A000',1.2,'4 3') +  // P15
     polyline(3,'#2A9C50',2)   +         // P50
@@ -11961,6 +12503,34 @@ function grRenderChart() {
     polyline(5,'#E03030',1.2,'4 3') +  // P97
     babyPath + babyDots;
 }
+
+// ── Growth dot click tooltip ──────────────────────────────────
+let grActiveTip = null;
+function grDotClick(event, idx) {
+  event.stopPropagation();
+  const svg = document.getElementById('gr-svg');
+  if (!svg) return;
+  // Hide previous tip
+  if (grActiveTip !== null && grActiveTip !== idx) {
+    const prev = document.getElementById('gr-tip-' + grActiveTip);
+    if (prev) prev.style.display = 'none';
+  }
+  const tip = document.getElementById('gr-tip-' + idx);
+  if (!tip) return;
+  const isVisible = tip.style.display !== 'none';
+  tip.style.display = isVisible ? 'none' : '';
+  grActiveTip = isVisible ? null : idx;
+}
+// Click anywhere on SVG to dismiss tooltip
+document.addEventListener('click', function(e) {
+  if (!e.target.closest || !e.target.closest('#gr-svg')) {
+    if (grActiveTip !== null) {
+      const tip = document.getElementById('gr-tip-' + grActiveTip);
+      if (tip) tip.style.display = 'none';
+      grActiveTip = null;
+    }
+  }
+});
 
 // ── Log list ─────────────────────────────────────────────────
 function grRenderLog() {
@@ -14325,16 +14895,31 @@ function szGetCurrentSize() {
   // Use latest measurement or babyData
   const meas = szMeasurements.length ?
     szMeasurements.reduce((a,b) => new Date(a.date)>new Date(b.date)?a:b) : null;
-  const h = meas?.height || babyData.height;
-  if (!h) return null;
-  const hNum = parseFloat(h);
-  // Find matching TW size by height
-  for (let i = SIZE_TABLE_TW.length-1; i >= 0; i--) {
-    const row = SIZE_TABLE_TW[i];
-    const [hMin] = row.h.split('–').map(Number);
-    if (hNum >= hMin) return {row, idx:i};
+  const h = parseFloat(meas?.height || babyData.height || 0);
+  const w = parseFloat(meas?.weight || babyData.weight || 0);
+  if (!h && !w) return null;
+
+  // Find size index by height
+  let hIdx = 0;
+  if (h) {
+    for (let i = SIZE_TABLE_TW.length-1; i >= 0; i--) {
+      const hMin = parseFloat(SIZE_TABLE_TW[i].h.split('–')[0]);
+      if (h >= hMin) { hIdx = i; break; }
+    }
   }
-  return {row: SIZE_TABLE_TW[0], idx:0};
+  // Find size index by weight — choose the LARGER index (more conservative fit)
+  let wIdx = 0;
+  if (w) {
+    for (let i = SIZE_TABLE_TW.length-1; i >= 0; i--) {
+      const wMin = parseFloat(SIZE_TABLE_TW[i].w.split('–')[0]);
+      if (w >= wMin) { wIdx = i; break; }
+    }
+  }
+  // Use whichever dimension gives the bigger size
+  const idx = Math.max(hIdx, wIdx);
+  const row = SIZE_TABLE_TW[idx];
+  const dominatedBy = (h && w) ? (wIdx >= hIdx ? 'weight' : 'height') : (h ? 'height' : 'weight');
+  return { row, idx, dominatedBy };
 }
 
 function szUpdateCurrentSize() {
@@ -14347,7 +14932,7 @@ function szUpdateCurrentSize() {
     if (nextPill) nextPill.textContent = '--';
     return;
   }
-  const {row, idx} = result;
+  const {row, idx, dominatedBy} = result;
   if (pill) pill.textContent = row.sz;
   const next = SIZE_TABLE_TW[idx+1];
   if (nextPill) nextPill.textContent = next ? next.sz : '🎉';
@@ -14356,8 +14941,11 @@ function szUpdateCurrentSize() {
       const m = Math.floor((new Date()-new Date(babyData.birthday))/(30.44*86400000));
       return `${babyData.name||'寶寶'}現在 ${m} 個月・`;
     })() : '';
+    const domLabel = dominatedBy === 'weight'
+      ? '<span style="color:#E06040;font-size:11px;">（以體重為主 ⚖️ 較保守）</span>'
+      : '<span style="color:#2A80C0;font-size:11px;">（以身高為主 📏）</span>';
     el.querySelector('#sz-current-desc').innerHTML =
-      `${ageText}推薦穿 <b style="font-size:1.4rem;color:#A02080;">${row.sz}</b> 號<br>` +
+      `${ageText}推薦穿 <b style="font-size:1.4rem;color:#A02080;">${row.sz}</b> 號 ${domLabel}<br>` +
       `適合身高 ${row.h} cm・體重 ${row.w} kg<br>` +
       (next ? `<span style="color:#8A4080;">下一個尺寸：${next.sz}（${next.h} cm 時換）</span>` : '');
   }
@@ -14553,6 +15141,7 @@ function szRenderWardrobe() {
         <div style="font-size:14px;font-weight:900;color:var(--text-dark);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${item.name || type?.name || '衣物'}</div>
         <div style="font-size:11px;color:var(--text-light);font-weight:600;margin-top:2px;">${type?.name||''}${item.brand?' · '+item.brand:''}</div>
         ${item.note ? `<div style="font-size:10px;color:var(--text-light);margin-top:1px;">${item.note}</div>` : ''}
+        ${item.clothLength ? `<div style="font-size:10px;color:#A040A0;font-weight:700;margin-top:1px;">📐 衣長 ${item.clothLength}cm</div>` : ''}
       </div>
       <div style="display:flex;flex-direction:column;align-items:flex-end;gap:5px;flex-shrink:0;">
         <span style="font-size:13px;font-weight:900;color:#A02080;background:#FFF0F8;padding:3px 9px;border-radius:50px;">${item.size}</span>
@@ -14613,6 +15202,8 @@ function openClothModal(editId) {
       document.getElementById('cloth-inp-name').value  = item.name||'';
       document.getElementById('cloth-inp-brand').value = item.brand||'';
       document.getElementById('cloth-inp-note').value  = item.note||'';
+      const lenInp = document.getElementById('cloth-inp-length');
+      if (lenInp) lenInp.value = item.clothLength!=null ? item.clothLength : '';
       szClothPhoto = item.photo || null;
       const img  = document.getElementById('cloth-photo-img');
       const prev = document.getElementById('cloth-photo-preview');
@@ -14625,6 +15216,8 @@ function openClothModal(editId) {
     document.getElementById('cloth-inp-name').value  = '';
     document.getElementById('cloth-inp-brand').value = '';
     document.getElementById('cloth-inp-note').value  = '';
+    const lenInpNew = document.getElementById('cloth-inp-length');
+    if (lenInpNew) lenInpNew.value = '';
     const prev = document.getElementById('cloth-photo-preview');
     if (prev) prev.style.display = 'none';
     titleEl.textContent = '👕 新增衣物';
@@ -14669,6 +15262,7 @@ function szSaveCloth() {
     size: szSelClothSize,
     brand: document.getElementById('cloth-inp-brand').value.trim(),
     note:  document.getElementById('cloth-inp-note').value.trim(),
+    clothLength: parseFloat(document.getElementById('cloth-inp-length')?.value) || null,
     photo: szClothPhoto || null,
     addedDate: today,
   };
@@ -18313,70 +18907,142 @@ function fam7RenderStats() {
 }
 
 // ===== FAMILY MESSAGE BOARD FUNCTIONS =====
-function boardRender() {
-  const el = document.getElementById('board-msgs-list');
-  if (!el) return;
-  // Build poster chips
-  const chipEl = document.getElementById('board-poster-chips');
-  const allNames = [famSelf.name||'主要照護者', ...famMembers.map(m=>m.name)].filter(Boolean);
-  if (!boardPosterName && allNames.length) boardPosterName = allNames[0];
-  if (chipEl) {
-    chipEl.innerHTML = allNames.map(n => {
-      const isActive = n === boardPosterName;
-      return `<button onclick="boardSetPoster('${n}')" style="padding:6px 12px;border-radius:50px;border:2px solid ${isActive?'#C86000':'#E0C080'};background:${isActive?'#F0B040':'white'};color:${isActive?'white':'#8A6000'};font-size:11px;font-weight:800;cursor:pointer;font-family:inherit;">${n}</button>`;
-    }).join('');
+// ── Board state ───────────────────────────────────────
+let boardSelMsgType = 'general';
+let boardSelTags    = [];
+let boardPinState   = false;
+let boardComposePhoto = null;
+let boardFilterTypeCur = 'all';
+
+const BOARD_TYPE_LABELS = {general:'💬 一般',reminder:'🔔 提醒',urgent:'🚨 緊急',good:'🎉 好消息',question:'❓ 問題',milestone:'🌟 里程碑'};
+const BOARD_TYPE_COLORS = {general:'#FFA040',reminder:'#6A40A0',urgent:'#C03030',good:'#2A7A30',question:'#1A40A0',milestone:'#A08000'};
+const BOARD_TYPE_BG    = {general:'#FFF8F0',reminder:'#F5F0FF',urgent:'#FFF0F0',good:'#EDFAF3',question:'#EEF4FF',milestone:'#FFFBEE'};
+const BOARD_TEMPLATES = {
+  '喝奶紀錄':`寶寶 ${new Date().getHours()}:${String(new Date().getMinutes()).padStart(2,'0')} 喝了 __cc，狀況良好！`,
+  '換尿布':`已幫寶寶換尿布，便便狀況：___`,
+  '入睡通知':`寶寶 ${new Date().getHours()}:${String(new Date().getMinutes()).padStart(2,'0')} 入睡了，請保持安靜～`,
+  '體溫通知':`寶寶體溫：___°C，請留意！`,
+  '提醒事項':`提醒：___`,
+  '里程碑':`🌟 里程碑！寶寶今天第一次___！`,
+};
+
+function boardOpenNew() {
+  boardSelMsgType='general'; boardSelTags=[]; boardPinState=false; boardComposePhoto=null;
+  const inp=document.getElementById('board-msg-inp'); if(inp) inp.value='';
+  const prev=document.getElementById('board-photo-preview'); if(prev) prev.style.display='none';
+  document.querySelectorAll('.btype-btn').forEach(b=>{b.style.background='white';b.classList.remove('on');});
+  const first=document.querySelector('.btype-btn'); if(first){first.style.background='#FFA040';first.style.color='white';first.classList.add('on');}
+  document.querySelectorAll('#board-tag-chips .sym-chip').forEach(c=>{c.classList.remove('on');c.style.background='white';});
+  boardUpdatePinUI();
+  // Poster chips
+  const allNames=[famSelf.name||'主要照護者',...famMembers.map(m=>m.name)].filter(Boolean);
+  if(!boardPosterName&&allNames.length) boardPosterName=allNames[0];
+  const chipEl=document.getElementById('board-poster-chips');
+  if(chipEl) chipEl.innerHTML=allNames.map(n=>`<div onclick="boardSetPoster('${n}')" style="width:44px;height:44px;border-radius:10px;border:3px solid ${n===boardPosterName?'#FFA040':'#E8D0C0'};background:${n===boardPosterName?'#FFF0E0':'#F8F5F0'};display:flex;align-items:center;justify-content:center;font-size:1.2rem;cursor:pointer;font-weight:900;color:#A06000;">${n.slice(0,1)}</div>`).join('');
+  const m=document.getElementById('board-compose-modal');const b=document.getElementById('board-compose-box');
+  if(m){m.style.opacity='1';m.style.pointerEvents='auto';}
+  if(b) b.style.transform='translateY(0)';
+}
+function boardComposeClose(e){
+  if(!e||e===true||e.target===document.getElementById('board-compose-modal')){
+    const m=document.getElementById('board-compose-modal');const b=document.getElementById('board-compose-box');
+    if(m){m.style.opacity='0';m.style.pointerEvents='none';}
+    if(b) b.style.transform='translateY(100%)';
   }
-  if (!boardMessages.length) {
-    el.innerHTML = `<div style="text-align:center;padding:32px;color:var(--text-light);">
-      <div style="font-size:2.5rem;margin-bottom:8px;">💬</div>
-      <div style="font-size:13px;font-weight:700;">還沒有留言</div>
-      <div style="font-size:11px;margin-top:4px;">第一個留下美好瞬間吧！</div>
-    </div>`;
+}
+function boardSelType(type,btn){
+  boardSelMsgType=type;
+  document.querySelectorAll('.btype-btn').forEach(b=>{b.style.background='white';b.style.color='';b.classList.remove('on');});
+  if(btn){btn.style.background=BOARD_TYPE_COLORS[type]||'#FFA040';btn.style.color='white';btn.classList.add('on');}
+}
+function boardToggleTag(btn,tag){
+  const idx=boardSelTags.indexOf(tag);
+  if(idx>=0){boardSelTags.splice(idx,1);btn.classList.remove('on');btn.style.background='white';}
+  else{boardSelTags.push(tag);btn.classList.add('on');btn.style.background='#FFE0B0';}
+}
+function boardTemplate(name){const inp=document.getElementById('board-msg-inp');if(inp)inp.value=BOARD_TEMPLATES[name]||name;}
+function boardTogglePin(){boardPinState=!boardPinState;boardUpdatePinUI();}
+function boardUpdatePinUI(){
+  const t=document.getElementById('board-pin-toggle');const k=document.getElementById('board-pin-knob');
+  if(t)t.style.background=boardPinState?'#FFA040':'#E0D0C0';
+  if(k)k.style.left=boardPinState?'21px':'3px';
+}
+function boardPhotoSelect(input){
+  const file=input.files[0];if(!file)return;
+  const reader=new FileReader();
+  reader.onload=e=>{
+    boardComposePhoto=e.target.result;
+    const img=document.getElementById('board-photo-img');const prev=document.getElementById('board-photo-preview');
+    if(img)img.src=boardComposePhoto;if(prev)prev.style.display='';
+  };
+  reader.readAsDataURL(file);
+}
+function boardPhotoRemove(){boardComposePhoto=null;const prev=document.getElementById('board-photo-preview');if(prev)prev.style.display='none';}
+function boardSetPoster(name){
+  boardPosterName=name;
+  const allNames=[famSelf.name||'主要照護者',...famMembers.map(m=>m.name)].filter(Boolean);
+  const chipEl=document.getElementById('board-poster-chips');
+  if(chipEl)chipEl.innerHTML=allNames.map(n=>`<div onclick="boardSetPoster('${n}')" style="width:44px;height:44px;border-radius:10px;border:3px solid ${n===name?'#FFA040':'#E8D0C0'};background:${n===name?'#FFF0E0':'#F8F5F0'};display:flex;align-items:center;justify-content:center;font-size:1.2rem;cursor:pointer;font-weight:900;color:#A06000;">${n.slice(0,1)}</div>`).join('');
+}
+function boardAddEmoji(em){const inp=document.getElementById('board-msg-inp');if(inp){inp.value+=em;inp.focus();}}
+function boardFilterType(type,btn){
+  boardFilterTypeCur=type;
+  document.querySelectorAll('#board-type-filter button').forEach(b=>{b.style.background='white';b.style.borderColor='#E0D0F0';});
+  if(btn){btn.style.background='#FFA040';btn.style.color='white';btn.style.borderColor='#FFA040';}
+  boardRender();
+}
+function boardPostMsg(){
+  const inp=document.getElementById('board-msg-inp');
+  if(!inp||!inp.value.trim()){sShowToast('請先寫下留言內容！');return;}
+  const msg={id:Date.now(),ts:Date.now(),poster:boardPosterName||'家人',msg:inp.value.trim(),
+    type:boardSelMsgType,tags:[...boardSelTags],pinned:boardPinState,photo:boardComposePhoto||null};
+  if(boardPinState){boardMessages=boardMessages.filter(m=>!m.pinned);boardMessages.unshift(msg);}
+  else boardMessages.unshift(msg);
+  boardComposeClose(true);boardRender();dbAutosave();sShowToast('💬 留言發送成功！');
+}
+function boardDelete(id){
+  customConfirm('刪除這則留言？',()=>{boardMessages=boardMessages.filter(m=>m.id!==id);boardRender();dbAutosave();sShowToast('🗑️ 留言已刪除');},'💬');
+}
+function boardRender(){
+  const el=document.getElementById('board-msgs-list');if(!el)return;
+  let msgs=boardFilterTypeCur==='all'?boardMessages:boardMessages.filter(m=>m.type===boardFilterTypeCur);
+  const sorted=[...msgs.filter(m=>m.pinned),...msgs.filter(m=>!m.pinned)];
+  if(!sorted.length){
+    el.innerHTML=`<div style="text-align:center;padding:32px;color:var(--text-light);"><div style="font-size:2.5rem;margin-bottom:8px;">💬</div><div style="font-size:13px;font-weight:700;">還沒有留言</div><div style="font-size:11px;margin-top:4px;">點擊「新增留言」分享今天的育兒故事！</div></div>`;
     return;
   }
-  el.innerHTML = boardMessages.map(m => {
-    const d = new Date(m.ts);
-    const timeStr = d.toLocaleDateString('zh-TW') + ' ' + d.toLocaleTimeString('zh-TW',{hour:'2-digit',minute:'2-digit'});
-    return `<div style="background:white;border-radius:20px;padding:14px 18px;box-shadow:0 4px 14px rgba(160,80,0,.07);margin-bottom:10px;">
-      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
-        <div style="font-size:13px;font-weight:900;color:#A05000;">${m.poster}</div>
+  el.innerHTML=sorted.map(m=>{
+    const d=new Date(m.ts);
+    const timeStr=d.toLocaleDateString('zh-TW',{month:'2-digit',day:'2-digit'})+' '+d.toLocaleTimeString('zh-TW',{hour:'2-digit',minute:'2-digit'});
+    const typeLabel=BOARD_TYPE_LABELS[m.type]||'💬 一般';
+    const typeBg=BOARD_TYPE_BG[m.type]||'#FFF8F0';
+    const typeColor=BOARD_TYPE_COLORS[m.type]||'#FFA040';
+    const tagHtml=(m.tags||[]).map(t=>`<span style="font-size:10px;font-weight:700;padding:2px 7px;background:${typeBg};color:${typeColor};border-radius:50px;">${t}</span>`).join('');
+    return `<div style="background:white;border-radius:20px;padding:14px 16px;box-shadow:0 4px 14px rgba(160,80,0,.07);margin-bottom:10px;${m.pinned?'border-left:4px solid #FFA040;':''}">
+      ${m.pinned?'<div style="font-size:10px;font-weight:800;color:#FFA040;margin-bottom:4px;">📌 置頂</div>':''}
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;">
         <div style="display:flex;align-items:center;gap:8px;">
-          <div style="font-size:10px;font-weight:600;color:var(--text-light);">${timeStr}</div>
-          <button onclick="boardDelete(${m.id})" style="font-size:14px;color:var(--text-light);background:none;border:none;cursor:pointer;">🗑️</button>
+          <div style="width:30px;height:30px;border-radius:50%;background:${typeBg};border:2px solid ${typeColor};display:flex;align-items:center;justify-content:center;font-size:0.85rem;font-weight:900;color:${typeColor};">${(m.poster||'家')[0]}</div>
+          <div><div style="font-size:12px;font-weight:900;color:#A05000;">${m.poster||'家人'}</div><div style="font-size:10px;color:var(--text-light);">${timeStr}</div></div>
+        </div>
+        <div style="display:flex;align-items:center;gap:6px;">
+          <span style="font-size:10px;font-weight:800;padding:3px 8px;border-radius:50px;background:${typeBg};color:${typeColor};">${typeLabel}</span>
+          <button onclick="boardDelete(${m.id})" style="background:none;border:none;font-size:14px;color:#DCC0C0;cursor:pointer;">🗑️</button>
         </div>
       </div>
+      ${m.photo?`<img src="${m.photo}" style="width:100%;border-radius:12px;max-height:160px;object-fit:cover;margin-bottom:8px;">`:''}
       <div style="font-size:13px;font-weight:600;color:var(--text-dark);line-height:1.7;white-space:pre-wrap;">${m.msg}</div>
+      ${tagHtml?`<div style="display:flex;gap:5px;flex-wrap:wrap;margin-top:8px;">${tagHtml}</div>`:''}
     </div>`;
   }).join('');
 }
 
-function boardSetPoster(name) {
-  boardPosterName = name;
-  boardRender();
-}
-
-function boardAddEmoji(em) {
-  const inp = document.getElementById('board-msg-inp');
-  if (inp) { inp.value += em; inp.focus(); }
-}
-
-function boardPostMsg() {
-  const inp = document.getElementById('board-msg-inp');
-  if (!inp || !inp.value.trim()) { sShowToast('請先寫下留言內容！'); return; }
-  boardMessages.unshift({id:Date.now(), ts:Date.now(), poster:boardPosterName, msg:inp.value.trim()});
-  inp.value = '';
-  boardRender();
-  dbAutosave();
-  sShowToast('💬 留言發送成功！');
-}
-
-function boardDelete(id) {
-  customConfirm('刪除這則留言？', () => {
-    boardMessages = boardMessages.filter(m=>m.id!==id);
-    boardRender();
-    dbAutosave();
-    sShowToast('🗑️ 留言已刪除');
-  }, '💬');
+function expClearAll() {
+  customConfirm('確定清除所有資料？此動作無法復原！', () => {
+    try { localStorage.removeItem('baby_diary_v2'); } catch(e) {}
+    sShowToast('✅ 資料已清除，頁面將重新載入');
+    setTimeout(() => location.reload(), 1200);
+  }, '🗑️');
 }
 
 // ===== PARENTING KNOWLEDGE FUNCTIONS =====
@@ -18540,6 +19206,194 @@ function showVoice(text) {
 })();
 
 // =====================================================
+// EXPORT / IMPORT — 一鍵備份與還原
+// =====================================================
+
+function dbExport() {
+  try {
+    // Build the same payload as dbSave
+    const safe = v => (typeof v !== 'undefined') ? v : undefined;
+    const data = {
+      _version: 'baby_diary_v2',
+      _exportedAt: new Date().toISOString(),
+      _appName: '寶貝日記',
+      babyData: safe(babyData),
+      milkLogs: safe(milkLogs), sTrials: safe(sTrials),
+      wgLogs: safe(wgLogs), suppLogs: safe(suppLogs),
+      slLogs: safe(slLogs), diaperLogs: safe(diaperLogs), careLogs: safe(careLogs),
+      illEpisodes: safe(illEpisodes), illFeverLogs: safe(illFeverLogs), illMeds: safe(illMeds),
+      growthLogs: safe(growthLogs), vaxRecords: safe(vaxRecords), vaxSkipped: safe(vaxSkipped),
+      allergyRecords: safe(allergyRecords), dentalRecords: safe(dentalRecords),
+      vaxAppointments: safe(vaxAppointments),
+      toothRecords: safe(toothRecords), badgeRecords: safe(badgeRecords),
+      msRecords: safe(msRecords), msCustomItems: safe(msCustomItems),
+      assHistory: safe(assHistory),
+      outActivities: safe(outActivities), assResults: safe(assResults),
+      szWardrobeItems: safe(szWardrobeItems), szMeasurements: safe(szMeasurements),
+      szShoppingList: safe(szShoppingList),
+      invItems: safe(invItems), bgtExpenses: safe(bgtExpenses),
+      bgtMonthBudget: safe(bgtMonthBudget), bgtCatBudgets: safe(bgtCatBudgets),
+      famMembers: safe(famMembers), famSelf: safe(famSelf), famInviteCode: safe(famInviteCode),
+      nfySettings: safe(nfySettings), nfyHistory: safe(nfyHistory),
+      fsMealLogs: safe(fsMealLogs), fsCurrentStage: safe(fsCurrentStage),
+      glCustomItems: safe(glCustomItems), glGeneratedItems: safe(glGeneratedItems),
+      diaryEntries: safe(diaryEntries), boardMessages: safe(boardMessages),
+      outChecklistItems: safe(outChecklistItems), outChecklistChecked: safe(outChecklistChecked),
+      packChecked: safe(packChecked), packCustomItems: safe(packCustomItems), packFavorites: safe(packFavorites),
+    };
+
+    const json = JSON.stringify(data, null, 2);
+    const blob = new Blob([json], { type: 'application/json' });
+    const url  = URL.createObjectURL(blob);
+
+    // Generate filename with date
+    const d = new Date();
+    const pad = n => String(n).padStart(2, '0');
+    const fname = `寶貝日記備份_${d.getFullYear()}${pad(d.getMonth()+1)}${pad(d.getDate())}_${pad(d.getHours())}${pad(d.getMinutes())}.json`;
+
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = fname;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    setTimeout(() => URL.revokeObjectURL(url), 3000);
+
+    // Update last export label
+    expLastExport = new Date().toISOString();
+    dbAutosave();
+    dbUpdateExportLabel();
+    sShowToast('✅ 備份成功！檔案已儲存到手機');
+    if (navigator.vibrate) navigator.vibrate([50, 30, 50]);
+
+  } catch(e) {
+    sShowToast('⚠️ 匯出失敗：' + e.message);
+  }
+}
+
+function dbImportTrigger() {
+  document.getElementById('db-import-file').value = '';
+  document.getElementById('db-import-file').click();
+}
+
+function dbImportFile(input) {
+  const file = input.files[0];
+  if (!file) return;
+
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    try {
+      const d = JSON.parse(e.target.result);
+
+      // Validate it's our backup file
+      if (!d._version || !d.babyData) {
+        sShowToast('⚠️ 檔案格式不對，請選擇寶貝日記的備份檔');
+        return;
+      }
+
+      // Count records for confirmation message
+      const milkCount  = (d.milkLogs  || []).length;
+      const sleepCount = (d.slLogs    || []).length;
+      const dpCount    = (d.diaperLogs|| []).length;
+      const grCount    = (d.growthLogs|| []).length;
+      const exportDate = d._exportedAt ? new Date(d._exportedAt).toLocaleString('zh-TW') : '未知';
+
+      const msg = `確定要還原這份備份嗎？\n\n` +
+        `📅 備份時間：${exportDate}\n` +
+        `🍼 喝奶：${milkCount} 筆\n` +
+        `😴 睡眠：${sleepCount} 筆\n` +
+        `💧 尿布：${dpCount} 筆\n` +
+        `📈 成長：${grCount} 筆\n\n` +
+        `⚠️ 這會覆蓋目前手機裡的所有資料！`;
+
+      customConfirm(msg, () => {
+        try {
+          // Restore all fields using dbLoad logic
+          if (d.babyData && typeof d.babyData === 'object') Object.assign(babyData, d.babyData);
+          if (babyData.bloodType === undefined) babyData.bloodType = '';
+          if (d.milkLogs)      milkLogs      = d.milkLogs;
+          if (d.sTrials)       sTrials       = d.sTrials;
+          if (d.wgLogs)        wgLogs        = d.wgLogs;
+          if (d.suppLogs)      suppLogs      = d.suppLogs;
+          if (d.slLogs)        slLogs        = d.slLogs;
+          if (d.diaperLogs)    diaperLogs    = d.diaperLogs;
+          if (d.careLogs)      careLogs      = d.careLogs;
+          if (d.illEpisodes)   illEpisodes   = d.illEpisodes;
+          if (d.illFeverLogs)  illFeverLogs  = d.illFeverLogs;
+          if (d.illMeds)       illMeds       = d.illMeds;
+          if (d.growthLogs)    growthLogs    = d.growthLogs;
+          if (d.vaxRecords)    vaxRecords    = d.vaxRecords;
+          if (d.vaxSkipped && typeof d.vaxSkipped === 'object') Object.assign(vaxSkipped, d.vaxSkipped);
+          if (d.allergyRecords)  allergyRecords  = d.allergyRecords;
+          if (d.dentalRecords)   dentalRecords   = d.dentalRecords;
+          if (d.vaxAppointments && typeof d.vaxAppointments === 'object') Object.assign(vaxAppointments, d.vaxAppointments);
+          if (d.toothRecords)    toothRecords    = d.toothRecords;
+          if (d.badgeRecords)    badgeRecords    = d.badgeRecords;
+          if (d.msRecords && typeof d.msRecords === 'object') Object.assign(msRecords, d.msRecords);
+          if (d.msCustomItems)   msCustomItems   = d.msCustomItems;
+          if (d.assHistory)      assHistory      = d.assHistory;
+          if (d.outActivities)   outActivities   = d.outActivities;
+          if (d.assResults)      assResults      = d.assResults;
+          if (d.szWardrobeItems) szWardrobeItems = d.szWardrobeItems;
+          if (d.szMeasurements)  szMeasurements  = d.szMeasurements;
+          if (d.szShoppingList)  szShoppingList  = d.szShoppingList;
+          if (d.invItems)        invItems        = d.invItems;
+          if (d.bgtExpenses)     bgtExpenses     = d.bgtExpenses;
+          if (d.bgtMonthBudget)  bgtMonthBudget  = d.bgtMonthBudget;
+          if (d.bgtCatBudgets)   bgtCatBudgets   = d.bgtCatBudgets;
+          if (d.famMembers)      famMembers      = d.famMembers;
+          if (d.famSelf && typeof d.famSelf === 'object') Object.assign(famSelf, d.famSelf);
+          if (d.famInviteCode)   famInviteCode   = d.famInviteCode;
+          if (d.nfySettings && typeof d.nfySettings === 'object') Object.assign(nfySettings, d.nfySettings);
+          if (d.nfyHistory)      nfyHistory      = d.nfyHistory;
+          if (d.fsMealLogs)      fsMealLogs      = d.fsMealLogs;
+          if (d.fsCurrentStage)  fsCurrentStage  = d.fsCurrentStage;
+          if (d.glCustomItems)   glCustomItems   = d.glCustomItems;
+          if (d.glGeneratedItems) glGeneratedItems = d.glGeneratedItems;
+          if (d.diaryEntries)    diaryEntries    = d.diaryEntries;
+          if (d.boardMessages)   boardMessages   = d.boardMessages;
+          if (d.outChecklistItems) outChecklistItems = d.outChecklistItems;
+          if (d.outChecklistChecked && typeof d.outChecklistChecked === 'object') Object.assign(outChecklistChecked, d.outChecklistChecked);
+          if (d.packChecked && typeof d.packChecked === 'object') Object.assign(packChecked, d.packChecked);
+          if (d.packCustomItems) packCustomItems = d.packCustomItems;
+          if (d.packFavorites)   packFavorites   = d.packFavorites;
+
+          // Persist and refresh UI
+          dbSave();
+          updateHomeDisplay();
+          updateProfileForm();
+          try { renderMilkLog(); } catch(e){}
+          try { renderChart();   } catch(e){}
+          try { grUpdatePills(); grRenderChart(); grRenderLog(); } catch(e){}
+          try { slUpdatePills(); } catch(e){}
+          try { szUpdateCurrentSize(); } catch(e){}
+          if (navigator.vibrate) navigator.vibrate([50, 30, 100]);
+          sShowToast('✅ 資料還原成功！共 ' + (milkCount + sleepCount + dpCount) + ' 筆紀錄已恢復');
+          showVoice('備份資料還原完成！所有紀錄都回來了 🎉');
+        } catch(err) {
+          sShowToast('⚠️ 還原失敗：' + err.message);
+        }
+      }, '📥');
+
+    } catch(err) {
+      sShowToast('⚠️ 讀取檔案失敗，請確認是正確的備份檔');
+    }
+  };
+  reader.readAsText(file, 'UTF-8');
+}
+
+function dbUpdateExportLabel() {
+  const el = document.getElementById('db-last-export-label');
+  if (!el) return;
+  if (typeof expLastExport !== 'undefined' && expLastExport) {
+    const d = new Date(expLastExport);
+    el.textContent = '上次備份：' + d.toLocaleString('zh-TW');
+  } else {
+    el.textContent = '尚未備份過';
+  }
+}
+
+// =====================================================
 // DATA PERSISTENCE — localStorage
 // =====================================================
 const DB_KEY = 'baby_diary_v2';
@@ -18657,11 +19511,14 @@ window.onload = function() {
   try {
   // ── Load persisted data first ──
   const hadData = dbLoad();
+  try { dbUpdateExportLabel(); } catch(e) {}
 
   const now = new Date();
   const pad = n => String(n).padStart(2,'0');
   const bottleEl = document.getElementById('bottle-time');
   if (bottleEl) bottleEl.value = pad(now.getHours())+':'+pad(now.getMinutes());
+  const breastEl = document.getElementById('breast-time');
+  if (breastEl) breastEl.value = `${now.getFullYear()}-${pad(now.getMonth()+1)}-${pad(now.getDate())}T${pad(now.getHours())}:${pad(now.getMinutes())}`;
 
   try { renderChart(); } catch(e) { console.warn('renderChart:', e); }
   try { sRender(); } catch(e) { console.warn('sRender:', e); }
@@ -18688,5 +19545,29 @@ window.onload = function() {
   } catch(e) { console.error('onload error:', e); }
 };
 </script>
+
+<!-- ══ Service Worker（離線功能）══════════════════════════════ -->
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./sw.js')
+      .then(reg => {
+        reg.addEventListener('updatefound', () => {
+          const w = reg.installing;
+          w.addEventListener('statechange', () => {
+            if (w.state === 'installed' && navigator.serviceWorker.controller) {
+              if (confirm('💡 App 有新版本！點確定重新整理以更新')) window.location.reload();
+            }
+          });
+        });
+      }).catch(() => {});
+  });
+}
+let __deferredInstall = null;
+window.addEventListener('beforeinstallprompt', e => { e.preventDefault(); __deferredInstall = e; });
+window.__triggerInstall = () => { if(__deferredInstall){ __deferredInstall.prompt(); __deferredInstall=null; } };
+document.addEventListener('touchmove', e => { if(e.target===document.body) e.preventDefault(); }, {passive:false});
+</script>
+<!-- ══════════════════════════════════════════════════════════ -->
 </body>
 </html>
