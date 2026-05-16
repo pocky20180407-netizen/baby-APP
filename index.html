@@ -4,19 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>寶貝日記 🍼</title>
-
-<!-- ══ PWA 必要標籤 ══════════════════════════════════════════ -->
-<link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#C040A0">
-<meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="apple-mobile-web-app-title" content="寶寶日記">
-<link rel="apple-touch-icon" href="icon-192.png">
-<link rel="apple-touch-startup-image" href="icon-512.png">
-<meta name="description" content="一站式寶寶生活紀錄：喝奶、睡眠、換尿布、副食品、成長曲線">
-<meta http-equiv="Permissions-Policy" content="camera=self, microphone=self">
-<!-- ══════════════════════════════════════════════════════════ -->
 <!-- Suppress console output so debug panels stay empty -->
 <script>
 (function(){
@@ -113,6 +100,13 @@
     font-size: 3.2rem; margin-bottom: 6px; display: block;
     animation: bounce 2s infinite;
   }
+  .advice-disclaimer {
+    display: flex; align-items: flex-start; gap: 7px;
+    background: #FFFBEA; border: 1px solid #F0D060; border-radius: 10px;
+    padding: 8px 11px; margin-top: 10px; margin-bottom: 2px;
+    font-size: 10px; font-weight: 700; color: #7A5800; line-height: 1.6;
+  }
+  .advice-disclaimer::before { content: '⚠️'; flex-shrink: 0; font-size: 12px; margin-top: 1px; }
   @keyframes bounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
   @keyframes spin { 0%{transform:rotate(0deg)} 100%{transform:rotate(360deg)} }
   .app-name {
@@ -2247,27 +2241,29 @@
     <div class="today-strip">
       <div class="today-title">📊 今天的紀錄</div>
       <div class="today-stats">
-        <div class="stat-item" onclick="goPage('page-milk')" style="cursor:pointer;">
+        <div class="stat-item" onclick="goPage('page-milk')" style="cursor:pointer;" title="點擊記錄喝奶">
           <div class="stat-emoji">🍼</div>
           <div class="stat-val" id="home-milk-today">-</div>
           <div class="stat-lab">今日奶量</div>
         </div>
-        <div class="stat-item" onclick="goPage('page-sleep')" style="cursor:pointer;">
+        <div class="stat-item" onclick="goPage('page-sleep')" style="cursor:pointer;" title="點擊記錄睡眠">
           <div class="stat-emoji">😴</div>
           <div class="stat-val" id="home-sleep-today">-</div>
           <div class="stat-lab">睡眠時間</div>
         </div>
-        <div class="stat-item" onclick="goPage('page-diaper')" style="cursor:pointer;">
+        <div class="stat-item" onclick="goPage('page-diaper')" style="cursor:pointer;" title="點擊記錄換尿布">
           <div class="stat-emoji">💧</div>
           <div class="stat-val" id="home-pee-count">-</div>
           <div class="stat-lab">換尿布</div>
         </div>
-        <div class="stat-item" onclick="goPage('page-diaper')" style="cursor:pointer;">
+        <div class="stat-item" onclick="goPage('page-diaper')" style="cursor:pointer;" title="點擊記錄便便">
           <div class="stat-emoji">💩</div>
           <div class="stat-val" id="home-poop-count">-</div>
           <div class="stat-lab">便便</div>
         </div>
       </div>
+      <!-- Quick add hint -->
+      <div style="text-align:center;font-size:10px;color:#C0A8C0;font-weight:600;padding:4px 0 2px;">👆 點擊數字可快速跳轉紀錄</div>
     </div>
 
     <!-- Low Stock Alert Banner (auto-generated) -->
@@ -2275,37 +2271,37 @@
 
     <div class="menu-label">📌 功能選單</div>
     <div class="menu-grid">
-      <div class="menu-card card-food" onclick="goPage('page-food-section')">
+      <div class="menu-card card-food"   data-feat="food"    onclick="goPage('page-food-section')">
         <div class="menu-card-deco">🥕</div>
         <div class="menu-card-emoji">🍎</div>
         <div class="menu-card-title">吃飯飯<br>營養紀錄</div>
         <div class="menu-card-sub">奶量・副食品・保健品</div>
       </div>
-      <div class="menu-card card-sleep" onclick="goPage('page-sleep-section')">
+      <div class="menu-card card-sleep"  data-feat="sleep"   onclick="goPage('page-sleep-section')">
         <div class="menu-card-deco">⭐</div>
         <div class="menu-card-emoji">😴</div>
         <div class="menu-card-title">睡覺覺<br>作息管理</div>
         <div class="menu-card-sub">睡眠追蹤・便便寶寶</div>
       </div>
-      <div class="menu-card card-health" onclick="goPage('page-health-section')">
+      <div class="menu-card card-health" data-feat="health"  onclick="goPage('page-health-section')">
         <div class="menu-card-deco">💊</div>
         <div class="menu-card-emoji">🏥</div>
         <div class="menu-card-title">健康寶寶<br>醫療紀錄</div>
         <div class="menu-card-sub">疫苗・生長曲線・用藥</div>
       </div>
-      <div class="menu-card card-grow" onclick="goPage('page-develop-section')">
+      <div class="menu-card card-grow"   data-feat="develop"  onclick="goPage('page-develop-section')">
         <div class="menu-card-deco">🌈</div>
         <div class="menu-card-emoji">🌱</div>
         <div class="menu-card-title">成長成長<br>發展評估</div>
         <div class="menu-card-sub">里程碑・發展指標・活動</div>
       </div>
-      <div class="menu-card card-cloth" onclick="goPage('page-cloth-section')">
+      <div class="menu-card card-cloth"  data-feat="cloth"   onclick="goPage('page-cloth-section')">
         <div class="menu-card-deco">👗</div>
         <div class="menu-card-emoji">👕</div>
         <div class="menu-card-title">穿穿美美<br>用品管理</div>
         <div class="menu-card-sub">尺寸・庫存・記帳</div>
       </div>
-      <div class="menu-card card-family" onclick="goPage('page-family')">
+      <div class="menu-card card-family" data-feat="family"  onclick="goPage('page-family')">
         <div class="menu-card-deco">💝</div>
         <div class="menu-card-emoji">👨‍👩‍👦</div>
         <div class="menu-card-title">一家人<br>共享空間</div>
@@ -2331,7 +2327,7 @@
         <div style="font-size:2rem;">👨‍👩‍👦</div>
         <div style="flex:1;">
           <div style="font-size:14px;font-weight:900;color:#7030A0;">家庭共同照護</div>
-          <div style="font-size:11px;font-weight:600;color:#9050B0;margin-top:2px;">成員管理・每日小結・邀請碼</div>
+          <div style="font-size:11px;font-weight:600;color:#9050B0;margin-top:2px;">成員管理・每日小結・紀錄共享</div>
         </div>
         <div style="font-size:1.3rem;color:#9050B0;">›</div>
       </div>
@@ -2354,7 +2350,7 @@
       <div class="section-sub">記錄寶寶每一口，讓成長看得見！</div>
     </div>
     <div class="sub-list">
-      <div class="sub-card" onclick="goPage('page-milk')">
+      <div class="sub-card" data-feat-sub="food_milk"    onclick="goPage('page-milk')">
         <div class="sub-icon" style="background:#FFF0E8;">🍼</div>
         <div class="sub-card-info">
           <div class="sub-card-title">喝奶奶紀錄</div>
@@ -2362,7 +2358,7 @@
         </div>
         <div class="sub-card-arrow">›</div>
       </div>
-      <div class="sub-card" onclick="goPage('page-solids')">
+      <div class="sub-card" data-feat-sub="food_solid"   onclick="goPage('page-solids')">
         <div class="sub-icon" style="background:#F0FFF8;">🥕</div>
         <div class="sub-card-info">
           <div class="sub-card-title">副食品食材庫</div>
@@ -2370,7 +2366,7 @@
         </div>
         <div class="sub-card-arrow">›</div>
       </div>
-      <div class="sub-card" onclick="goPage('page-water-supp')">
+      <div class="sub-card" data-feat-sub="food_water"   onclick="goPage('page-water-supp')">
         <div class="sub-icon" style="background:#FFF8E8;">💊</div>
         <div class="sub-card-info">
           <div class="sub-card-title">喝水水・保健品</div>
@@ -2378,7 +2374,7 @@
         </div>
         <div class="sub-card-arrow">›</div>
       </div>
-      <div class="sub-card" onclick="goPage('page-foodstage')">
+      <div class="sub-card" data-feat-sub="food_stage"   onclick="goPage('page-foodstage')">
         <div class="sub-icon" style="background:#FFF0F8;">🥣</div>
         <div class="sub-card-info">
           <div class="sub-card-title">進食階段紀錄</div>
@@ -2430,6 +2426,7 @@
       <div>
         <div class="rec-title">今日建議奶量</div>
         <div class="rec-desc">依據體重 <b id="rec-weight-display">--</b>，今日建議攝取</div>
+        <div class="advice-disclaimer">以下數值為參考依據，每位寶寶個體差異大，請以寶寶實際需求為主；如有疑慮請諮詢兒科醫師，建議不能取代專業醫療診斷。</div>
         <div class="rec-range" id="rec-range-display">-- cc</div>
         <div class="rec-desc" style="margin-top:3px;">公式：體重(kg) × 100~150cc</div>
       </div>
@@ -2646,6 +2643,12 @@
         </div>
       </div>
     </div>
+    <!-- Sticky save button for profile page -->
+    <div style="position:sticky;bottom:calc(72px + env(safe-area-inset-bottom));padding:10px 16px;z-index:50;pointer-events:none;">
+      <button onclick="saveProfile()" style="width:100%;padding:15px;border-radius:50px;border:none;background:linear-gradient(135deg,#E060B0,#C040A0);color:white;font-size:15px;font-weight:900;cursor:pointer;font-family:inherit;box-shadow:0 6px 20px rgba(192,64,160,.35);pointer-events:auto;">
+        💾 儲存寶寶資料
+      </button>
+    </div>
 
     <!-- 最新成長數據 (synced from growth chart) -->
     <div style="margin:12px 16px 0;" id="profile-growth-card">
@@ -2674,36 +2677,16 @@
       </div>
     </div>
 
-    <!-- 📦 資料備份與還原 -->
+    <!-- 功能顯示管理 -->
     <div style="margin:12px 16px 0;">
-      <div style="font-size:11px;font-weight:800;color:#9A8A90;padding:8px 4px 4px;letter-spacing:1px;">📦 資料備份與還原</div>
+      <div style="font-size:11px;font-weight:800;color:#9A8A90;padding:8px 4px 4px;letter-spacing:1px;">👁️ 功能顯示管理</div>
       <div style="background:white;border-radius:16px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.06);">
-
-        <!-- Export -->
-        <div onclick="dbExport()" style="display:flex;align-items:center;padding:16px 16px;border-bottom:1px solid #F0FFF4;cursor:pointer;active:opacity:.7;">
-          <div style="width:40px;height:40px;border-radius:12px;background:linear-gradient(135deg,#A8F0C0,#60D090);display:flex;align-items:center;justify-content:center;font-size:20px;margin-right:14px;flex-shrink:0;">📤</div>
-          <div style="flex:1;">
-            <div style="font-size:14px;font-weight:800;color:#1A7A40;">匯出全部資料</div>
-            <div style="font-size:11px;color:#5A9A70;font-weight:600;margin-top:2px;">儲存成 .json 檔案到手機</div>
-          </div>
-          <div style="font-size:1.2rem;color:#A0D0B0;">›</div>
+        <div style="padding:12px 16px;border-bottom:1px solid #F5EFF8;">
+          <div style="font-size:13px;font-weight:700;color:var(--text-dark);margin-bottom:4px;">自訂要顯示的功能</div>
+          <div style="font-size:11px;color:var(--text-light);font-weight:600;">關閉後該功能卡片在首頁隱藏，可隨時重新開啟</div>
         </div>
-
-        <!-- Import -->
-        <div onclick="dbImportTrigger()" style="display:flex;align-items:center;padding:16px 16px;cursor:pointer;">
-          <div style="width:40px;height:40px;border-radius:12px;background:linear-gradient(135deg,#A0C8FF,#6090E0);display:flex;align-items:center;justify-content:center;font-size:20px;margin-right:14px;flex-shrink:0;">📥</div>
-          <div style="flex:1;">
-            <div style="font-size:14px;font-weight:800;color:#1A4A8A;">匯入備份資料</div>
-            <div style="font-size:11px;color:#5A70A0;font-weight:600;margin-top:2px;">從 .json 檔案還原所有記錄</div>
-          </div>
-          <div style="font-size:1.2rem;color:#A0B8D0;">›</div>
-        </div>
-        <!-- Hidden file input -->
-        <input type="file" id="db-import-file" accept=".json,application/json" style="display:none;" onchange="dbImportFile(this)">
+        <div id="feature-toggle-list"></div>
       </div>
-
-      <!-- Last backup info -->
-      <div style="font-size:11px;color:#B0A0C0;font-weight:600;text-align:center;padding:8px 0 0;" id="db-last-export-label"></div>
     </div>
 
     <!-- 應用設定 -->
@@ -3267,7 +3250,7 @@
       <div class="section-sub">睡眠追蹤、便便紀錄，一切都記錄好好的！</div>
     </div>
     <div class="sub-list">
-      <div class="sub-card" onclick="goPage('page-sleep')">
+      <div class="sub-card" data-feat-sub="sleep_timer"  onclick="goPage('page-sleep')">
         <div class="sub-icon" style="background:#EEE8FF;">😴</div>
         <div class="sub-card-info">
           <div class="sub-card-title">睡覺覺追蹤</div>
@@ -3275,7 +3258,7 @@
         </div>
         <div class="sub-card-arrow">›</div>
       </div>
-      <div class="sub-card" onclick="goPage('page-diaper')">
+      <div class="sub-card" data-feat-sub="sleep_diaper" onclick="goPage('page-diaper')">
         <div class="sub-icon" style="background:#FFF5E8;">💩</div>
         <div class="sub-card-info">
           <div class="sub-card-title">便便寶寶紀錄</div>
@@ -3283,7 +3266,7 @@
         </div>
         <div class="sub-card-arrow">›</div>
       </div>
-      <div class="sub-card" onclick="goPage('page-care')">
+      <div class="sub-card" data-feat-sub="sleep_care"   onclick="goPage('page-care')">
         <div class="sub-icon" style="background:#FDE8F5;">🛁</div>
         <div class="sub-card-info">
           <div class="sub-card-title">日常護理打卡</div>
@@ -3575,6 +3558,7 @@
     <div class="sl-guide-item">
       <div class="sl-guide-em">🌙</div>
       <div class="sl-guide-tag" style="background:#F0EAFF;color:#6B3FA0;">各月齡建議總睡眠時數</div>
+      <div class="advice-disclaimer" style="margin-top:0;margin-bottom:8px;">以下為參考資訊，不能取代專業醫療診斷。如寶寶睡眠有異常，請諮詢兒科醫師。</div>
       <div class="sl-guide-body">
         <b>新生兒（0–3個月）</b>：14–17 小時，無日夜分別，片段睡眠<br>
         <b>嬰兒（4–11個月）</b>：12–15 小時，開始建立夜間長睡<br>
@@ -3670,6 +3654,7 @@
       <button class="rc-range-btn"    id="rcr-7days"  onclick="rcSetRange('7days',this)">過去7天</button>
       <button class="rc-range-btn"    id="rcr-month"  onclick="rcSetRange('month',this)">當月</button>
       <button class="rc-range-btn"    id="rcr-custom" onclick="rcSetRange('custom',this)">自訂</button>
+      <button class="rc-range-btn" onclick="rcSetRange('today',document.getElementById('rcr-today'))" style="background:#F0F8FF;color:#4080C0;border-color:#90C0E8;" title="回到今天">🏠今</button>
     </div>
     <div id="rc-custom-date" style="display:none;padding:8px 16px;background:white;gap:8px;align-items:center;">
       <input type="date" id="rc-date-from" style="flex:1;padding:8px 10px;border:2px solid #B0CCEE;border-radius:10px;font-family:inherit;font-size:13px;font-weight:700;color:var(--text-dark);">
@@ -4383,7 +4368,7 @@
       <div class="section-sub">疫苗行事曆、生長曲線、用藥紀錄，健康管理一站搞定！</div>
     </div>
     <div class="sub-list">
-      <div class="sub-card" onclick="goPage('page-vaccine')">
+      <div class="sub-card" data-feat-sub="health_vax"    onclick="goPage('page-vaccine')">
         <div class="sub-icon" style="background:#EDFAF3;">💉</div>
         <div class="sub-card-info">
           <div class="sub-card-title">疫苗接種行事曆</div>
@@ -4391,7 +4376,7 @@
         </div>
         <div class="sub-card-arrow">›</div>
       </div>
-      <div class="sub-card" onclick="goPage('page-growth')">
+      <div class="sub-card" data-feat-sub="health_growth"  onclick="goPage('page-growth')">
         <div class="sub-icon" style="background:#EEF5FF;">📈</div>
         <div class="sub-card-info">
           <div class="sub-card-title">生長曲線圖</div>
@@ -4399,7 +4384,7 @@
         </div>
         <div class="sub-card-arrow">›</div>
       </div>
-      <div class="sub-card" onclick="goPage('page-illness')">
+      <div class="sub-card" data-feat-sub="health_ill"     onclick="goPage('page-illness')">
         <div class="sub-icon" style="background:#FFF0F5;">🩺</div>
         <div class="sub-card-info">
           <div class="sub-card-title">疾病與用藥紀錄</div>
@@ -4407,7 +4392,7 @@
         </div>
         <div class="sub-card-arrow">›</div>
       </div>
-      <div class="sub-card" onclick="goPage('page-tooth')">
+      <div class="sub-card" data-feat-sub="health_tooth"   onclick="goPage('page-tooth')">
         <div class="sub-icon" style="background:#EEF4FF;">🦷</div>
         <div class="sub-card-info">
           <div class="sub-card-title">牙齒發育圖鑑</div>
@@ -5487,7 +5472,7 @@
       <div class="section-sub">四大領域評估、里程碑徽章，見證每一步成長！</div>
     </div>
     <div class="sub-list">
-      <div class="sub-card" onclick="goPage('page-assess')">
+      <div class="sub-card" data-feat-sub="dev_assess"    onclick="goPage('page-assess')">
         <div class="sub-icon" style="background:#F3EAFF;">🌱</div>
         <div class="sub-card-info">
           <div class="sub-card-title">四大發展領域評估</div>
@@ -5495,7 +5480,7 @@
         </div>
         <div class="sub-card-arrow">›</div>
       </div>
-      <div class="sub-card" onclick="goPage('page-badge')">
+      <div class="sub-card" data-feat-sub="dev_milestone"  onclick="goPage('page-badge')">
         <div class="sub-icon" style="background:#FFF8E0;">🏅</div>
         <div class="sub-card-info">
           <div class="sub-card-title">里程碑徽章牆</div>
@@ -5503,7 +5488,7 @@
         </div>
         <div class="sub-card-arrow">›</div>
       </div>
-      <div class="sub-card" onclick="goPage('page-outdoor')">
+      <div class="sub-card" data-feat-sub="dev_outdoor"    onclick="goPage('page-outdoor')">
         <div class="sub-icon" style="background:#EDFAF3;">🗺️</div>
         <div class="sub-card-info">
           <div class="sub-card-title">戶外活動與足跡地圖</div>
@@ -5511,7 +5496,7 @@
         </div>
         <div class="sub-card-arrow">›</div>
       </div>
-      <div class="sub-card" onclick="goPage('page-diary')">
+      <div class="sub-card" data-feat-sub="dev_diary"      onclick="goPage('page-diary')">
         <div class="sub-icon" style="background:#FFF8E8;">📔</div>
         <div class="sub-card-info">
           <div class="sub-card-title">成長日記</div>
@@ -7055,49 +7040,51 @@
   <!-- SHARE PANEL -->
   <div id="fam-panel-share" style="display:none;flex:1;overflow-y:auto;padding:12px 16px calc(80px + env(safe-area-inset-bottom));scrollbar-width:none;">
 
-    <!-- Share code -->
-    <div class="share-code-box">
-      <div style="font-size:13px;font-weight:900;color:#7030A0;margin-bottom:4px;">🔗 家庭邀請碼</div>
-      <div class="share-code-display" id="fam-invite-code">------</div>
-      <div class="share-code-hint">將此邀請碼分享給家人，<br>讓他們一起參與寶寶的照護紀錄！</div>
-      <div style="display:flex;gap:8px;margin-top:14px;">
-        <button onclick="famCopyCode()" style="flex:1;padding:11px;border-radius:50px;border:2px solid #C090E0;background:white;font-size:12px;font-weight:800;color:#7030A0;cursor:pointer;font-family:inherit;">📋 複製邀請碼</button>
-        <button onclick="famRegenerateCode()" style="flex:1;padding:11px;border-radius:50px;border:2px solid #C090E0;background:white;font-size:12px;font-weight:800;color:#7030A0;cursor:pointer;font-family:inherit;">🔄 重新產生</button>
+    <!-- Share link -->
+    <div style="background:linear-gradient(135deg,#F3EAFF,#E8D0FF);border-radius:20px;padding:18px;box-shadow:0 4px 14px rgba(112,48,160,.1);margin-bottom:12px;">
+      <div style="font-size:13px;font-weight:900;color:#7030A0;margin-bottom:6px;">🔗 分享紀錄連結給家人</div>
+      <div style="font-size:11px;font-weight:600;color:#9050B0;line-height:1.7;margin-bottom:14px;">
+        點擊下方按鈕，產生包含最新紀錄的連結，<br>透過 LINE / 訊息傳給家人，對方點開即可合併紀錄。
       </div>
+      <button onclick="famShareLink()" style="width:100%;padding:14px;border-radius:50px;border:none;background:linear-gradient(135deg,#B070E0,#7030A0);color:white;font-size:14px;font-weight:900;cursor:pointer;font-family:inherit;box-shadow:0 4px 14px rgba(112,48,160,.3);">🔗 產生並分享紀錄連結</button>
     </div>
 
     <!-- How to share instructions -->
     <div style="background:white;border-radius:20px;padding:14px 18px;box-shadow:0 4px 14px rgba(112,48,160,.07);margin-bottom:10px;">
-      <div style="font-size:13px;font-weight:800;color:var(--text-dark);margin-bottom:10px;">📖 如何讓家人一起使用？</div>
+      <div style="font-size:13px;font-weight:800;color:var(--text-dark);margin-bottom:10px;">📖 如何與家人共同使用？</div>
       <div style="font-size:12px;font-weight:600;color:var(--text-mid);line-height:2;">
         <div style="display:flex;gap:10px;align-items:flex-start;margin-bottom:8px;">
           <div style="width:24px;height:24px;border-radius:50%;background:#9050C8;color:white;font-size:11px;font-weight:900;display:flex;align-items:center;justify-content:center;flex-shrink:0;">1</div>
-          <div>將此頁面的<b>連結或邀請碼</b>用 LINE / 通訊軟體傳給家人</div>
+          <div>點擊「🔗 產生並分享紀錄連結」，系統自動複製或開啟分享</div>
         </div>
         <div style="display:flex;gap:10px;align-items:flex-start;margin-bottom:8px;">
           <div style="width:24px;height:24px;border-radius:50%;background:#9050C8;color:white;font-size:11px;font-weight:900;display:flex;align-items:center;justify-content:center;flex-shrink:0;">2</div>
-          <div>家人用手機瀏覽器開啟，<b>加入主畫面</b>安裝 APP</div>
+          <div>把連結透過 <b>LINE / 訊息</b> 傳給家人</div>
         </div>
         <div style="display:flex;gap:10px;align-items:flex-start;margin-bottom:8px;">
           <div style="width:24px;height:24px;border-radius:50%;background:#9050C8;color:white;font-size:11px;font-weight:900;display:flex;align-items:center;justify-content:center;flex-shrink:0;">3</div>
-          <div>進入「家庭共同照護」輸入邀請碼加入家庭</div>
+          <div>家人點開連結 → App 自動顯示確認框 → 點確定合併紀錄</div>
         </div>
         <div style="display:flex;gap:10px;align-items:flex-start;">
           <div style="width:24px;height:24px;border-radius:50%;background:#9050C8;color:white;font-size:11px;font-weight:900;display:flex;align-items:center;justify-content:center;flex-shrink:0;">4</div>
-          <div>依設定的<b>權限</b>即可共同記錄、查看寶寶紀錄</div>
+          <div>也可用「我的 → 匯出資料」傳 .json 檔，讓家人「匯入」還原</div>
         </div>
       </div>
     </div>
 
-    <!-- Join with code -->
+    <!-- Receive share link from family -->
     <div style="background:white;border-radius:20px;padding:14px 18px;box-shadow:0 4px 14px rgba(112,48,160,.07);">
-      <div style="font-size:13px;font-weight:800;color:var(--text-dark);margin-bottom:10px;">🔑 輸入邀請碼加入家庭</div>
+      <div style="font-size:13px;font-weight:800;color:var(--text-dark);margin-bottom:6px;">📲 收到家人的分享連結？</div>
+      <div style="font-size:11px;font-weight:600;color:var(--text-light);margin-bottom:10px;">貼上家人傳來的連結，合併他們的紀錄到你的 App</div>
       <div style="display:flex;gap:8px;">
-        <input id="fam-join-code-inp" maxlength="8" placeholder="輸入6碼邀請碼"
-          style="flex:1;padding:11px 14px;border:2px solid #D0C0F0;border-radius:14px;font-family:monospace;font-size:1.2rem;font-weight:900;background:#F8F4FF;outline:none;text-align:center;letter-spacing:4px;text-transform:uppercase;">
-        <button onclick="famJoinFamily()" style="padding:11px 18px;border-radius:50px;border:none;background:#9050C8;color:white;font-size:13px;font-weight:800;cursor:pointer;font-family:inherit;">加入</button>
+        <input id="fam-join-code-inp" maxlength="2000" placeholder="貼上家人傳來的連結…"
+          style="flex:1;padding:11px 14px;border:2px solid #D0C0F0;border-radius:14px;font-family:inherit;font-size:12px;font-weight:700;background:#F8F4FF;outline:none;">
+        <button onclick="famJoinFamily()" style="padding:11px 18px;border-radius:50px;border:none;background:#9050C8;color:white;font-size:13px;font-weight:800;cursor:pointer;font-family:inherit;white-space:nowrap;">匯入合併</button>
       </div>
-      <div style="font-size:10px;color:var(--text-light);font-weight:600;margin-top:8px;">⚠️ 目前為單機版 APP，完整雲端同步功能開發中</div>
+      <div style="font-size:10px;color:var(--text-light);font-weight:600;margin-top:8px;line-height:1.6;">
+        💡 紀錄會以<b>合併</b>方式加入，不會覆蓋你現有的資料。<br>
+        也可透過「我的 → 匯入備份資料」選取 .json 檔案匯入。
+      </div>
     </div>
   </div>
 
@@ -7651,14 +7638,14 @@ function goPage(id) {
   // always sync growth data on any page open
   updateHomeDisplay();
   if (id === 'page-sleep-section') { if(typeof slUpdateWW==='function') slUpdateWW(); }
-  if (id === 'page-profile') { updateProfileForm(); nfyUpdatePills(); dbUpdateExportLabel(); }
+  if (id === 'page-profile') { updateProfileForm(); nfyUpdatePills(); try{dbUpdateExportLabel();}catch(e){} try{featRenderList();}catch(e){} }
   if (id === 'page-solids') { sRender(); buildStarFilterChips(); }
   if (id === 'page-milk')   { renderMilkLog(); renderChart(); updateMilkRecommendation(); }
   if (id === 'page-records') {
     rcViewTab('timeline');
   }
   if (id === 'page-diaper') dpUpdatePills();
-  if (id === 'page-care') careBuildToday();
+  if (id === 'page-care') { careBuildToday(); setTimeout(injectDisclaimers, 200); }
   if (id === 'page-vaccine') { vaxBuildTimeline(); }
   if (id === 'page-growth') { grUpdatePills(); grRenderChart(); grInit(); }
   if (id === 'page-assess') { assInit(); }
@@ -8822,10 +8809,47 @@ function slSetType(type) {
 }
 
 // ---- Timer ----
+const SL_TIMER_KEY = 'baby_sl_timer_state';
+
+function slPersistTimer() {
+  if (slRunning) {
+    localStorage.setItem(SL_TIMER_KEY, JSON.stringify({ slStartMs, slType, slRunning: true }));
+  } else {
+    localStorage.removeItem(SL_TIMER_KEY);
+  }
+}
+
+function slRestoreTimer() {
+  try {
+    const saved = localStorage.getItem(SL_TIMER_KEY);
+    if (!saved) return;
+    const s = JSON.parse(saved);
+    if (!s.slRunning || !s.slStartMs) return;
+    // Only restore if less than 14 hours ago (avoid ancient stale timers)
+    if (Date.now() - s.slStartMs > 14 * 3600000) { localStorage.removeItem(SL_TIMER_KEY); return; }
+    slRunning  = true;
+    slStartMs  = s.slStartMs;
+    slType     = s.slType || 'nap';
+    const startTime = new Date(slStartMs);
+    const startEl = document.getElementById('sl-start-btn');
+    if (startEl) { startEl.className='sl-start-btn running'; startEl.textContent='⏹️'; }
+    const labelEl = document.getElementById('sl-timer-label');
+    if (labelEl) labelEl.textContent = slType==='nap' ? '小睡中…' : '夜間長睡中…';
+    const hintEl = document.getElementById('sl-btn-hint');
+    if (hintEl) hintEl.textContent = '點擊結束並儲存';
+    const sinceEl = document.getElementById('sl-timer-since');
+    if (sinceEl) sinceEl.textContent = `開始時間 ${String(startTime.getHours()).padStart(2,'0')}:${String(startTime.getMinutes()).padStart(2,'0')} （計時中）`;
+    slInterval = setInterval(slTickTimer, 1000);
+    slTickTimer();
+    showVoice('⏱️ 睡眠計時器已恢復！');
+  } catch(e) { localStorage.removeItem(SL_TIMER_KEY); }
+}
+
 function slToggleTimer() {
   if (!slRunning) {
     slRunning = true;
     slStartMs = Date.now();
+    slPersistTimer();
     document.getElementById('sl-start-btn').className = 'sl-start-btn running';
     document.getElementById('sl-start-btn').textContent = '⏹️';
     document.getElementById('sl-timer-label').textContent = slType==='nap'?'小睡中…':'夜間長睡中…';
@@ -8843,14 +8867,15 @@ function slToggleTimer() {
 function slTickTimer() {
   const elapsed = Math.floor((Date.now() - slStartMs) / 1000);
   const h = Math.floor(elapsed/3600), m = Math.floor((elapsed%3600)/60), s = elapsed%60;
-  document.getElementById('sl-timer-display').textContent =
-    `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+  const el = document.getElementById('sl-timer-display');
+  if (el) el.textContent = `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
 }
 
 function slStopTimer() {
   if (!slRunning) return;
   clearInterval(slInterval);
   slRunning = false;
+  localStorage.removeItem(SL_TIMER_KEY);
   const endMs = Date.now();
   const durationMins = Math.round((endMs - slStartMs) / 60000);
   slSaveLog(slType, slStartMs, endMs, durationMins);
@@ -8863,6 +8888,7 @@ function slStopTimer() {
   document.getElementById('sl-timer-display').textContent = '00:00:00';
   slUpdateSweetSpot();
   slUpdatePills();
+  dbAutosave();
   showVoice(`🌙 睡了 ${slFmtDur(durationMins)}，寶寶睡得好棒！記得記錄下次醒來時間 😊`);
 }
 
@@ -9976,6 +10002,169 @@ function rcWeekRender() {
     </div>`;
 }
 
+// =====================================================
+// FEATURE VISIBILITY MANAGER  (granular sub-item level)
+// =====================================================
+const FEATURE_ITEMS = [
+  {
+    id: 'food', label: '🍎 吃飯飯・營養紀錄', emoji: '🍼',
+    menuCard: '[data-feat="food"]',
+    children: [
+      { id: 'food_milk',   label: '🍼 喝奶奶紀錄',    subCard: '[data-feat-sub="food_milk"]' },
+      { id: 'food_solid',  label: '🥕 副食品食材庫',   subCard: '[data-feat-sub="food_solid"]' },
+      { id: 'food_water',  label: '💊 喝水水・保健品',  subCard: '[data-feat-sub="food_water"]' },
+      { id: 'food_stage',  label: '🥣 進食階段紀錄',   subCard: '[data-feat-sub="food_stage"]' },
+      { id: 'food_grocery',label: '🛒 食材採購清單',   subCard: '[data-feat-sub="food_grocery"]' },
+    ]
+  },
+  {
+    id: 'sleep', label: '😴 睡覺覺・作息管理', emoji: '😴',
+    menuCard: '[data-feat="sleep"]',
+    children: [
+      { id: 'sleep_timer', label: '😴 睡覺覺追蹤',    subCard: '[data-feat-sub="sleep_timer"]' },
+      { id: 'sleep_diaper',label: '💩 便便寶寶紀錄',  subCard: '[data-feat-sub="sleep_diaper"]' },
+      { id: 'sleep_care',  label: '🛁 日常護理打卡',  subCard: '[data-feat-sub="sleep_care"]' },
+    ]
+  },
+  {
+    id: 'health', label: '💉 健康寶寶・醫療紀錄', emoji: '💉',
+    menuCard: '[data-feat="health"]',
+    children: [
+      { id: 'health_vax',    label: '💉 疫苗接種追蹤',  subCard: '[data-feat-sub="health_vax"]' },
+      { id: 'health_growth', label: '📈 生長曲線',       subCard: '[data-feat-sub="health_growth"]' },
+      { id: 'health_ill',    label: '🤒 生病紀錄',       subCard: '[data-feat-sub="health_ill"]' },
+      { id: 'health_tooth',  label: '🦷 牙齒發育',       subCard: '[data-feat-sub="health_tooth"]' },
+      { id: 'health_allergy',label: '🔴 過敏紀錄',       subCard: '[data-feat-sub="health_allergy"]' },
+    ]
+  },
+  {
+    id: 'develop', label: '🌟 成長成長・發展評估', emoji: '🌟',
+    menuCard: '[data-feat="develop"]',
+    children: [
+      { id: 'dev_milestone', label: '🏆 里程碑記錄',    subCard: '[data-feat-sub="dev_milestone"]' },
+      { id: 'dev_assess',    label: '📋 發展評估',      subCard: '[data-feat-sub="dev_assess"]' },
+      { id: 'dev_outdoor',   label: '🌿 戶外活動',      subCard: '[data-feat-sub="dev_outdoor"]' },
+      { id: 'dev_diary',     label: '📔 成長日記',      subCard: '[data-feat-sub="dev_diary"]' },
+    ]
+  },
+  {
+    id: 'cloth', label: '👗 穿穿美美・衣物管理', emoji: '👗',
+    menuCard: '[data-feat="cloth"]',
+    children: [
+      { id: 'cloth_size',     label: '📐 尺寸推薦',     subCard: '[data-feat-sub="cloth_size"]' },
+      { id: 'cloth_wardrobe', label: '👚 衣物衣櫃',     subCard: '[data-feat-sub="cloth_wardrobe"]' },
+      { id: 'cloth_inv',      label: '📦 庫存管理',     subCard: '[data-feat-sub="cloth_inv"]' },
+      { id: 'cloth_budget',   label: '💰 育兒預算',     subCard: '[data-feat-sub="cloth_budget"]' },
+    ]
+  },
+  {
+    id: 'family', label: '👨‍👩‍👧 一家人・共享空間', emoji: '👨‍👩‍👧',
+    menuCard: '[data-feat="family"]', children: []
+  },
+  {
+    id: 'record', label: '📋 紀錄中心', emoji: '📋',
+    menuCard: null, children: []
+  },
+  {
+    id: 'notify', label: '🔔 通知提醒', emoji: '🔔',
+    menuCard: null, children: []
+  },
+];
+let featureVisible = {};
+
+function featInit() {
+  FEATURE_ITEMS.forEach(f => {
+    if (featureVisible[f.id] === undefined) featureVisible[f.id] = true;
+    (f.children || []).forEach(c => {
+      if (featureVisible[c.id] === undefined) featureVisible[c.id] = true;
+    });
+  });
+}
+
+function featApply() {
+  FEATURE_ITEMS.forEach(f => {
+    const parentOn = featureVisible[f.id] !== false;
+    // Show/hide home menu card
+    if (f.menuCard) {
+      const card = document.querySelector(f.menuCard);
+      if (card) card.style.display = parentOn ? '' : 'none';
+    }
+    // If parent hidden, hide all children too; else respect individual settings
+    (f.children || []).forEach(c => {
+      const childOn = parentOn && featureVisible[c.id] !== false;
+      if (c.subCard) {
+        document.querySelectorAll(c.subCard).forEach(el => {
+          el.style.display = childOn ? '' : 'none';
+        });
+      }
+    });
+    // If all children hidden, hide section menu card too? Only if no children remain
+    if (f.children && f.children.length > 0 && f.menuCard && parentOn) {
+      const anyChildOn = f.children.some(c => featureVisible[c.id] !== false);
+      const card = document.querySelector(f.menuCard);
+      if (card) card.style.display = anyChildOn ? '' : 'none';
+    }
+  });
+}
+
+function featRenderList() {
+  const el = document.getElementById('feature-toggle-list');
+  if (!el) return;
+  let html = '';
+  FEATURE_ITEMS.forEach((f, fi) => {
+    const parentOn = featureVisible[f.id] !== false;
+    const border = fi < FEATURE_ITEMS.length-1 ? 'border-bottom:1.5px solid #F0EAF8;' : '';
+    // Parent row
+    html += `<div style="${border}">
+      <div style="display:flex;align-items:center;padding:13px 16px;background:#FDFAFF;">
+        <div style="font-size:1.2rem;margin-right:10px;">${f.emoji}</div>
+        <div style="flex:1;font-size:13px;font-weight:800;color:var(--text-dark);">${f.label}</div>
+        <div onclick="featToggle('${f.id}',${!parentOn})"
+          style="width:44px;height:24px;border-radius:50px;background:${parentOn?'#C040A0':'#D0C0D0'};cursor:pointer;position:relative;transition:background .2s;flex-shrink:0;">
+          <div style="position:absolute;top:3px;left:${parentOn?'23':'3'}px;width:18px;height:18px;background:white;border-radius:50%;transition:left .2s;box-shadow:0 1px 4px rgba(0,0,0,.2);"></div>
+        </div>
+      </div>`;
+    // Children rows (indented)
+    if (f.children && f.children.length > 0 && parentOn) {
+      f.children.forEach((c, ci) => {
+        const childOn = featureVisible[c.id] !== false;
+        const cBorder = ci < f.children.length-1 ? 'border-bottom:1px solid #F8F2FF;' : '';
+        html += `<div style="display:flex;align-items:center;padding:10px 16px 10px 46px;background:#FAF5FF;${cBorder}">
+          <div style="flex:1;font-size:12px;font-weight:700;color:${childOn?'var(--text-dark)':'#C0B0D0'};">${c.label}</div>
+          <div onclick="featToggle('${c.id}',${!childOn})"
+            style="width:36px;height:20px;border-radius:50px;background:${childOn?'#A060C0':'#D8C8E8'};cursor:pointer;position:relative;transition:background .2s;flex-shrink:0;">
+            <div style="position:absolute;top:2px;left:${childOn?'18':'2'}px;width:16px;height:16px;background:white;border-radius:50%;transition:left .2s;box-shadow:0 1px 3px rgba(0,0,0,.18);"></div>
+          </div>
+        </div>`;
+      });
+    }
+    html += '</div>';
+  });
+  el.innerHTML = html;
+}
+
+function featToggle(id, visible) {
+  featureVisible[id] = visible;
+  // If parent toggled off, also respect but don't force-change children settings
+  featApply(); featRenderList(); dbAutosave();
+  // Find label
+  let label = id;
+  FEATURE_ITEMS.forEach(f => {
+    if (f.id === id) label = f.label;
+    (f.children||[]).forEach(c => { if (c.id === id) label = c.label; });
+  });
+  sShowToast(visible ? `✅ ${label} 已顯示` : `🙈 ${label} 已隱藏`);
+}
+
+// ── Disclaimer helper ─────────────────────────────────────────
+const ADVICE_DISCLAIMER_HTML = `<div class="advice-disclaimer">以上內容僅供參考，不能取代專業醫療診斷。如有健康疑慮請諮詢兒科醫師或相關專業人員。</div>`;
+
+function injectDisclaimers() {
+  document.querySelectorAll('.care-guide-card, .sl-guide-item, .know-card, .bm-guide-card').forEach(el => {
+    if (!el.querySelector('.advice-disclaimer')) el.insertAdjacentHTML('beforeend', ADVICE_DISCLAIMER_HTML);
+  });
+}
+
 function rcWeekStaticTips(dayStats) {
   const tips = [];
   const avgMilk  = dayStats.reduce((s,d)=>s+d.milkCc,0)/7;
@@ -9993,8 +10182,9 @@ function rcWeekStaticTips(dayStats) {
   const variance = Math.max(...dayStats.map(d=>d.milkCc)) - Math.min(...dayStats.filter(d=>d.milkCc>0).map(d=>d.milkCc));
   if (variance > 300 && avgMilk > 0) tips.push('📈 本週奶量波動較大（差距 '+variance+'ml），可觀察是否與活動量或情緒有關');
 
-  return tips.map(t => `<div style="font-size:12px;font-weight:600;color:var(--text-dark);padding:6px 0;border-bottom:1px solid #F0E8FF;line-height:1.7;">${t}</div>`).join('') ||
+  const tipsHtml = tips.map(t => `<div style="font-size:12px;font-weight:600;color:var(--text-dark);padding:6px 0;border-bottom:1px solid #F0E8FF;line-height:1.7;">${t}</div>`).join('') ||
     '<div style="font-size:12px;color:var(--text-light);padding:10px 0;text-align:center;">紀錄數量不足，無法進行分析</div>';
+  return tipsHtml + ADVICE_DISCLAIMER_HTML;
 }
 
 // ── Monthly Analysis ──────────────────────────────────
@@ -10096,7 +10286,7 @@ function rcMonthStaticTips(monthStats, daysWithData) {
   if (lowSleepDays > 3) tips.push(`😟 有 ${lowSleepDays} 天睡眠不足 10h，可調整就寢時間或睡眠環境`);
   if (noRecordDays > 7) tips.push(`📝 還有 ${noRecordDays} 天沒有紀錄，完整記錄有助於掌握寶寶規律`);
   if (avgSleep >= 12) tips.push('✅ 本月睡眠整體良好！繼續保持穩定的作息規律');
-  return tips.map(t => `<div style="font-size:12px;font-weight:600;color:var(--text-dark);padding:6px 0;border-bottom:1px solid #F0E8FF;line-height:1.7;">${t}</div>`).join('');
+  return tips.map(t => `<div style="font-size:12px;font-weight:600;color:var(--text-dark);padding:6px 0;border-bottom:1px solid #F0E8FF;line-height:1.7;">${t}</div>`).join('') + ADVICE_DISCLAIMER_HTML;
 }
 
 // ── AI Analysis ────────────────────────────────────────
@@ -10152,7 +10342,7 @@ async function rcLoadWeekAI() {
     const data = await resp.json();
     const text = data.content?.map(c=>c.text||'').join('') || '';
     if (!text) throw new Error('empty');
-    content.innerHTML = text.split('\n').filter(l=>l.trim()).map(l=>`<div style="padding:5px 0;border-bottom:1px solid rgba(100,60,200,.1);line-height:1.7;">${l}</div>`).join('');
+    content.innerHTML = text.split('\n').filter(l=>l.trim()).map(l=>`<div style="padding:5px 0;border-bottom:1px solid rgba(100,60,200,.1);line-height:1.7;">${l}</div>`).join('') + ADVICE_DISCLAIMER_HTML;
     btn.textContent = '🔄 重新生成'; btn.disabled = false;
   } catch(e) {
     content.innerHTML = '<div style="color:#C04040;font-size:12px;">⚠️ AI 分析暫時無法使用，請稍後再試。<br><span style="color:#9A80CC;">您仍可參考上方的靜態分析建議。</span></div>';
@@ -10192,7 +10382,7 @@ async function rcLoadMonthAI() {
     const data = await resp.json();
     const text = data.content?.map(c=>c.text||'').join('') || '';
     if (!text) throw new Error('empty');
-    content.innerHTML = text.split('\n').filter(l=>l.trim()).map(l=>`<div style="padding:5px 0;border-bottom:1px solid rgba(26,90,138,.1);line-height:1.7;">${l}</div>`).join('');
+    content.innerHTML = text.split('\n').filter(l=>l.trim()).map(l=>`<div style="padding:5px 0;border-bottom:1px solid rgba(26,90,138,.1);line-height:1.7;">${l}</div>`).join('') + ADVICE_DISCLAIMER_HTML;
     btn.textContent = '🔄 重新生成'; btn.disabled = false;
   } catch(e) {
     content.innerHTML = '<div style="color:#C04040;font-size:12px;">⚠️ AI 分析暫時無法使用，請稍後再試。<br><span style="color:#2A7AAA;">您仍可參考上方的靜態分析建議。</span></div>';
@@ -14145,6 +14335,7 @@ function outRebuildCountyGrid() {
 function outRebuildWeatherChips() {
   const el = document.getElementById('out-weather-chips');
   if (!el) return;
+  el.innerHTML = ''; // ← 必須先清空，否則每次呼叫都會追加新按鈕
   ['☀️','⛅','🌧️','🌨️','💨'].forEach(w => {
     const btn = document.createElement('button');
     btn.textContent = w; btn.title = w;
@@ -14892,60 +15083,72 @@ function szInit() {
 
 // ── Current size calc ─────────────────────────────────
 function szGetCurrentSize() {
-  // Use latest measurement or babyData
-  const meas = szMeasurements.length ?
-    szMeasurements.reduce((a,b) => new Date(a.date)>new Date(b.date)?a:b) : null;
-  const h = parseFloat(meas?.height || babyData.height || 0);
-  const w = parseFloat(meas?.weight || babyData.weight || 0);
+  // Priority: szMeasurements → growthLogs → babyData
+  const meas = szMeasurements.length
+    ? szMeasurements.reduce((a,b) => new Date(a.date)>new Date(b.date)?a:b) : null;
+
+  const latestGr = (typeof growthLogs!=='undefined' && growthLogs.length)
+    ? growthLogs.reduce((a,b) => new Date(a.date)>new Date(b.date)?a:b) : null;
+
+  const h = parseFloat(meas?.height || latestGr?.height || babyData.height || 0);
+  const w = parseFloat(meas?.weight || latestGr?.weight || babyData.weight || 0);
   if (!h && !w) return null;
 
-  // Find size index by height
+  const TABLE = SIZE_TABLE_TW;
+
+  // ── Find matching size index by HEIGHT ──────────────
   let hIdx = 0;
   if (h) {
-    for (let i = SIZE_TABLE_TW.length-1; i >= 0; i--) {
-      const hMin = parseFloat(SIZE_TABLE_TW[i].h.split('–')[0]);
+    for (let i = TABLE.length-1; i >= 0; i--) {
+      const hMin = parseFloat(TABLE[i].h.split('–')[0]);
       if (h >= hMin) { hIdx = i; break; }
     }
   }
-  // Find size index by weight — choose the LARGER index (more conservative fit)
+
+  // ── Find matching size index by WEIGHT ──────────────
   let wIdx = 0;
   if (w) {
-    for (let i = SIZE_TABLE_TW.length-1; i >= 0; i--) {
-      const wMin = parseFloat(SIZE_TABLE_TW[i].w.split('–')[0]);
+    for (let i = TABLE.length-1; i >= 0; i--) {
+      const wMin = parseFloat(TABLE[i].w.split('–')[0]);
       if (w >= wMin) { wIdx = i; break; }
     }
   }
-  // Use whichever dimension gives the bigger size
+
+  // ── Use the LARGER index (more conservative / safer fit) ──
   const idx = Math.max(hIdx, wIdx);
-  const row = SIZE_TABLE_TW[idx];
-  const dominatedBy = (h && w) ? (wIdx >= hIdx ? 'weight' : 'height') : (h ? 'height' : 'weight');
-  return { row, idx, dominatedBy };
+  const row = TABLE[idx];
+  const dominatedBy = (!h) ? 'weight' : (!w) ? 'height' : (wIdx >= hIdx ? 'weight' : 'height');
+  return { row, idx, dominatedBy, h, w, hIdx, wIdx };
 }
 
 function szUpdateCurrentSize() {
   const result = szGetCurrentSize();
-  const el = document.getElementById('sz-current-card');
-  const pill = document.getElementById('sz-current-size');
+  const pill     = document.getElementById('sz-current-size');
   const nextPill = document.getElementById('sz-next-size');
+  const el       = document.getElementById('sz-current-card');
   if (!result) {
     if (pill) pill.textContent = '--';
     if (nextPill) nextPill.textContent = '--';
+    if (el) { const d=el.querySelector('#sz-current-desc'); if(d) d.innerHTML='<span style="color:#9A8090;">請先在「成長」頁面輸入身高體重紀錄</span>'; }
     return;
   }
-  const {row, idx, dominatedBy} = result;
+  const {row, idx, dominatedBy, h, w, hIdx, wIdx} = result;
   if (pill) pill.textContent = row.sz;
   const next = SIZE_TABLE_TW[idx+1];
   if (nextPill) nextPill.textContent = next ? next.sz : '🎉';
   if (el) {
+    const desc = el.querySelector('#sz-current-desc');
+    if (!desc) return;
     const ageText = babyData.birthday ? (() => {
-      const m = Math.floor((new Date()-new Date(babyData.birthday))/(30.44*86400000));
+      const m = Math.floor((Date.now()-new Date(babyData.birthday))/(30.44*86400000));
       return `${babyData.name||'寶寶'}現在 ${m} 個月・`;
     })() : '';
     const domLabel = dominatedBy === 'weight'
-      ? '<span style="color:#E06040;font-size:11px;">（以體重為主 ⚖️ 較保守）</span>'
-      : '<span style="color:#2A80C0;font-size:11px;">（以身高為主 📏）</span>';
-    el.querySelector('#sz-current-desc').innerHTML =
+      ? `<span style="color:#E06040;font-size:11px;">（依體重 ${w}kg 推薦，較保守 ⚖️）</span>`
+      : `<span style="color:#2A80C0;font-size:11px;">（依身高 ${h}cm 推薦 📏）</span>`;
+    desc.innerHTML =
       `${ageText}推薦穿 <b style="font-size:1.4rem;color:#A02080;">${row.sz}</b> 號 ${domLabel}<br>` +
+      `<span style="font-size:11px;color:#9A8090;">參考依據：身高 ${h||'未知'}cm（→${SIZE_TABLE_TW[hIdx]?.sz}） ／ 體重 ${w||'未知'}kg（→${SIZE_TABLE_TW[wIdx]?.sz}）→ 取較大值</span><br>` +
       `適合身高 ${row.h} cm・體重 ${row.w} kg<br>` +
       (next ? `<span style="color:#8A4080;">下一個尺寸：${next.sz}（${next.h} cm 時換）</span>` : '');
   }
@@ -16324,8 +16527,6 @@ function famInit() {
   if (!Object.keys(famPermSettings).length) {
     FAM_PERM_ITEMS.forEach(p => { famPermSettings[p.id] = p.id !== 'budget'; });
   }
-  // Init invite code
-  if (!famInviteCode) famInviteCode = famGenCode();
 
   // Sync self name from babyData caregiver
   if (!famSelf.name) famSelf.name = '主要照護者';
@@ -16336,7 +16537,6 @@ function famInit() {
   famUpdatePills();
   famUpdateSumDate(new Date().toISOString().slice(0,10));
   famBuildPermControls();
-  document.getElementById('fam-invite-code').textContent = famInviteCode;
 }
 
 // ── Tab ──────────────────────────────────────────────
@@ -16634,29 +16834,114 @@ function famRenderActivityLog() {
 }
 
 // ── Invite code ───────────────────────────────────────
-function famGenCode() {
-  const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
-  let code = '';
-  for (let i=0; i<6; i++) code += chars[Math.floor(Math.random()*chars.length)];
-  return code;
-}
-function famCopyCode() {
-  const code = document.getElementById('fam-invite-code')?.textContent || famInviteCode;
-  navigator.clipboard?.writeText(code);
-  sShowToast(`📋 邀請碼 ${code} 已複製！`);
-}
-function famRegenerateCode() {
-  famInviteCode = famGenCode();
-  const el = document.getElementById('fam-invite-code');
-  if (el) el.textContent = famInviteCode;
-  sShowToast('🔄 已產生新的邀請碼');
-}
 function famJoinFamily() {
-  const code = document.getElementById('fam-join-code-inp')?.value.trim().toUpperCase();
-  if (!code || code.length<4) { sShowToast('請輸入有效的邀請碼！'); return; }
-  sShowToast('✅ 邀請碼已送出！（單機版）');
-  showVoice('歡迎加入！一起守護寶寶的每一天 💜');
+  const code = document.getElementById('fam-join-code-inp')?.value.trim();
+  if (!code) { sShowToast('請貼上家人傳來的分享連結！'); return; }
+
+  // Check if it's a URL (contains http or ?)
+  if (code.startsWith('http') || code.includes('?share=')) {
+    const url = code.startsWith('http') ? code : ('?' + code.split('?')[1]);
+    let param = '';
+    try { param = new URL(code).searchParams.get('share'); } catch(e) {
+      const m = code.match(/[?&]share=([^&]+)/);
+      param = m ? m[1] : '';
+    }
+    if (param) { famImportFromShareParam(param); return; }
+  }
+
+  // Check if it matches our own invite code
+  if (code.toUpperCase() === famInviteCode?.toUpperCase()) {
+    sShowToast('❗ 這是你自己的邀請碼！請讓其他家人掃描或輸入此碼。');
+    return;
+  }
+
+  // Short code — show instructions since this is a local-only app
+  customConfirm(
+    `邀請碼「${code.toUpperCase()}」已收到！\n\n` +
+    `此 App 為單機版，要與家人共享資料，請請對方：\n` +
+    `① 進入「我的」→「匯出全部資料」\n` +
+    `② 把 .json 檔傳給你（LINE / AirDrop）\n` +
+    `③ 你點「匯入備份資料」即可合併\n\n` +
+    `或使用「分享今日小結」分享當日紀錄給家人。`,
+    () => { goPage('page-profile'); },
+    '📲'
+  );
 }
+
+function famShareLink() {
+  // Encode current data as a compressed share URL
+  try {
+    const safe = v => (typeof v !== 'undefined') ? v : null;
+    const shareData = {
+      _v: 'share1',
+      babyData: safe(babyData),
+      milkLogs: (milkLogs||[]).slice(0,50),   // last 50 records
+      slLogs:   (slLogs  ||[]).slice(0,50),
+      diaperLogs:(diaperLogs||[]).slice(0,50),
+      growthLogs: safe(growthLogs),
+    };
+    const json    = JSON.stringify(shareData);
+    const encoded = btoa(encodeURIComponent(json));
+    const baseUrl = window.location.href.split('?')[0];
+    const shareUrl = `${baseUrl}?share=${encoded}`;
+
+    if (navigator.share) {
+      navigator.share({
+        title: `${babyData.name||'寶寶'}的育兒紀錄`,
+        text:  `來看看${babyData.name||'寶寶'}的最新紀錄！`,
+        url:   shareUrl,
+      }).catch(()=>{});
+    } else {
+      navigator.clipboard?.writeText(shareUrl);
+      sShowToast('📋 分享連結已複製！貼給家人打開即可匯入');
+    }
+  } catch(e) {
+    sShowToast('⚠️ 產生連結失敗：' + e.message);
+  }
+}
+
+function famImportFromShareParam(param) {
+  try {
+    const json = decodeURIComponent(atob(param));
+    const d    = JSON.parse(json);
+    if (!d._v || !d.babyData) { sShowToast('⚠️ 連結格式不對'); return; }
+    const name = d.babyData?.name || '寶寶';
+    customConfirm(
+      `收到${name}的育兒紀錄分享！\n\n` +
+      `喝奶：${(d.milkLogs||[]).length} 筆\n` +
+      `睡眠：${(d.slLogs||[]).length} 筆\n` +
+      `換尿布：${(d.diaperLogs||[]).length} 筆\n\n` +
+      `要匯入這份紀錄嗎？\n（會合併到你目前的資料中）`,
+      () => {
+        // Merge records (not overwrite)
+        if (d.milkLogs)   milkLogs   = [...(d.milkLogs||[]), ...milkLogs].filter((x,i,a)=>a.findIndex(y=>y.id===x.id)===i);
+        if (d.slLogs)     slLogs     = [...(d.slLogs||[]),   ...slLogs  ].filter((x,i,a)=>a.findIndex(y=>y.id===x.id)===i);
+        if (d.diaperLogs) diaperLogs = [...(d.diaperLogs||[]),...diaperLogs].filter((x,i,a)=>a.findIndex(y=>y.id===x.id)===i);
+        if (d.growthLogs) growthLogs = [...(d.growthLogs||[]),...growthLogs].filter((x,i,a)=>a.findIndex(y=>y.id===x.id)===i);
+        dbSave(); updateHomeDisplay();
+        try { renderMilkLog(); renderChart(); } catch(e){}
+        try { grUpdatePills(); grRenderChart(); grRenderLog(); } catch(e){}
+        try { slUpdatePills(); } catch(e){}
+        // Clear ?share= from URL
+        window.history.replaceState({}, '', window.location.pathname);
+        sShowToast('✅ 家人紀錄已合併成功！');
+        showVoice('家人的紀錄合併完成，一起守護' + (babyData.name||'寶寶') + ' 💜');
+      }, '📲'
+    );
+  } catch(e) {
+    sShowToast('⚠️ 無法解析分享連結：' + e.message);
+  }
+}
+
+// Check for ?share= param on load
+(function famCheckShareOnLoad() {
+  const param = new URLSearchParams(window.location.search).get('share');
+  if (param) {
+    window.addEventListener('load', () => {
+      setTimeout(() => famImportFromShareParam(param), 1500);
+    });
+  }
+})();
 
 // ── Copy / share summary ──────────────────────────────
 function famCopySummary() {
@@ -17023,10 +17308,18 @@ function nfyStartScheduler() {
     const pad = n=>String(n).padStart(2,'0');
     const curr = `${pad(now.getHours())}:${pad(now.getMinutes())}`;
     if (curr === nfySettings.daily.time) {
-      const name = babyData.name || '寶寶';
-      const mlk = typeof milkLogs!=='undefined' ? milkLogs.filter(l=>l.ts&&new Date(l.ts).toDateString()===now.toDateString()).length : 0;
-      const slp = typeof slLogs !=='undefined' ? slLogs.filter(l=>l.startMs&&new Date(l.startMs).toDateString()===now.toDateString()).length : 0;
-      showLocalNotification(`📋 ${name} 今日小結`, `喝奶 ${mlk} 次・睡覺 ${slp} 段。點擊查看完整報告。`, null, 'daily-summary');
+      const name  = babyData.name || '寶寶';
+      const today = now.toDateString();
+      const todayMilk = typeof milkLogs!=='undefined' ? milkLogs.filter(l=>l.ts&&new Date(l.ts).toDateString()===today) : [];
+      const mlkCount  = todayMilk.length;
+      const mlkCc     = todayMilk.reduce((s,l)=>s+(l.cc||0),0);
+      const slpLogs   = typeof slLogs!=='undefined' ? slLogs.filter(l=>l.startMs&&new Date(l.startMs).toDateString()===today&&l.endMs) : [];
+      const slpMins   = slpLogs.reduce((s,l)=>s+(l.durationMins||0),0);
+      const slpH      = Math.floor(slpMins/60), slpM = slpMins%60;
+      const slpStr    = slpH>0 ? `${slpH}h${slpM>0?slpM+'m':''}` : (slpMins>0?`${slpMins}m`:'未記錄');
+      const poop      = typeof diaperLogs!=='undefined' ? diaperLogs.filter(l=>l.type==='poop'&&new Date(l.ts).toDateString()===today).length : 0;
+      const body = `🍼 喝奶 ${mlkCount} 次${mlkCc>0?' ('+mlkCc+'cc)':''}・😴 睡眠 ${slpStr}・💩 便便 ${poop} 次`;
+      showLocalNotification(`📋 ${name} 今日小結`, body, null, 'daily-summary');
       nfySentToday++;
       nfyUpdatePills();
     }
@@ -19118,27 +19411,77 @@ let rIdx = 0;
 
 let _voiceHideTimer = null;
 
+let _voiceRecog = null;
+
 function toggleVoice() {
   const bubble = document.getElementById('voice-bubble');
   const btn    = document.getElementById('voice-btn');
   if (!bubble || !btn) return;
-  voiceOpen = !voiceOpen;
+
+  // If already open, close
   if (voiceOpen) {
-    const msg = voiceResponses[rIdx % voiceResponses.length];
-    rIdx++;
-    document.getElementById('voice-text').textContent = msg;
-    bubble.classList.add('show');
-    btn.textContent = '🎙️';
-    btn.classList.add('listening');
-    setTimeout(() => { btn.classList.remove('listening'); btn.textContent = '🌸'; }, 600);
-    clearTimeout(_voiceHideTimer);
-    _voiceHideTimer = setTimeout(() => { bubble.classList.remove('show'); voiceOpen = false; }, 6000);
-  } else {
     bubble.classList.remove('show');
     btn.classList.remove('listening');
     btn.textContent = '🌸';
     clearTimeout(_voiceHideTimer);
+    if (_voiceRecog) { try { _voiceRecog.stop(); } catch(e){} _voiceRecog = null; }
+    voiceOpen = false;
+    return;
   }
+
+  voiceOpen = true;
+  btn.textContent = '🎙️';
+  btn.classList.add('listening');
+
+  // Try Web Speech API first
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if (SR) {
+    const recog = new SR();
+    _voiceRecog = recog;
+    recog.lang = 'zh-TW';
+    recog.interimResults = false;
+    recog.maxAlternatives = 1;
+
+    document.getElementById('voice-text').textContent = '🎙️ 請說話…（例如：記錄喝奶、開始睡覺）';
+    bubble.classList.add('show');
+
+    recog.onresult = e => {
+      const said = e.results[0][0].transcript;
+      handleVoiceCommand(said);
+    };
+    recog.onerror = () => {
+      showVoice('語音辨識失敗，請重試或直接點選功能 🌸');
+      btn.classList.remove('listening'); btn.textContent = '🌸';
+      voiceOpen = false; _voiceRecog = null;
+    };
+    recog.onend = () => {
+      btn.classList.remove('listening'); btn.textContent = '🌸';
+      _voiceRecog = null;
+      clearTimeout(_voiceHideTimer);
+      _voiceHideTimer = setTimeout(() => { bubble.classList.remove('show'); voiceOpen = false; }, 5000);
+    };
+    recog.start();
+  } else {
+    // Fallback: show text suggestions
+    const msg = voiceResponses[rIdx % voiceResponses.length]; rIdx++;
+    document.getElementById('voice-text').textContent = msg;
+    bubble.classList.add('show');
+    setTimeout(() => { btn.classList.remove('listening'); btn.textContent = '🌸'; }, 600);
+    clearTimeout(_voiceHideTimer);
+    _voiceHideTimer = setTimeout(() => { bubble.classList.remove('show'); voiceOpen = false; }, 6000);
+  }
+}
+
+function handleVoiceCommand(text) {
+  const t = text.toLowerCase().replace(/\s/g,'');
+  if (t.includes('喝奶')||t.includes('餵奶')||t.includes('瓶餵'))   { showVoice(`好的！帶你去記錄喝奶 🍼`); goPage('page-milk'); return; }
+  if (t.includes('睡覺')||t.includes('睡眠')||t.includes('開始睡')) { showVoice(`好的！幫你開始睡眠計時 🌙`); goPage('page-sleep'); return; }
+  if (t.includes('換尿布')||t.includes('便便')||t.includes('尿布')) { showVoice(`好的！帶你去記錄換尿布 💩`); goPage('page-diaper'); return; }
+  if (t.includes('副食品')||t.includes('吃飯'))                     { showVoice(`帶你去副食品記錄！`); goPage('page-solids'); return; }
+  if (t.includes('成長')||t.includes('身高')||t.includes('體重'))   { showVoice(`帶你去成長曲線！`); goPage('page-growth'); return; }
+  if (t.includes('備份')||t.includes('匯出'))                       { showVoice(`好的！幫你匯出備份 💾`); setTimeout(dbExport,500); return; }
+  // Fallback
+  showVoice(`我聽到了「${text}」，目前支援：喝奶、睡覺、換尿布、副食品、成長、備份 🌸`);
 }
 
 function showVoice(text) {
@@ -19206,194 +19549,6 @@ function showVoice(text) {
 })();
 
 // =====================================================
-// EXPORT / IMPORT — 一鍵備份與還原
-// =====================================================
-
-function dbExport() {
-  try {
-    // Build the same payload as dbSave
-    const safe = v => (typeof v !== 'undefined') ? v : undefined;
-    const data = {
-      _version: 'baby_diary_v2',
-      _exportedAt: new Date().toISOString(),
-      _appName: '寶貝日記',
-      babyData: safe(babyData),
-      milkLogs: safe(milkLogs), sTrials: safe(sTrials),
-      wgLogs: safe(wgLogs), suppLogs: safe(suppLogs),
-      slLogs: safe(slLogs), diaperLogs: safe(diaperLogs), careLogs: safe(careLogs),
-      illEpisodes: safe(illEpisodes), illFeverLogs: safe(illFeverLogs), illMeds: safe(illMeds),
-      growthLogs: safe(growthLogs), vaxRecords: safe(vaxRecords), vaxSkipped: safe(vaxSkipped),
-      allergyRecords: safe(allergyRecords), dentalRecords: safe(dentalRecords),
-      vaxAppointments: safe(vaxAppointments),
-      toothRecords: safe(toothRecords), badgeRecords: safe(badgeRecords),
-      msRecords: safe(msRecords), msCustomItems: safe(msCustomItems),
-      assHistory: safe(assHistory),
-      outActivities: safe(outActivities), assResults: safe(assResults),
-      szWardrobeItems: safe(szWardrobeItems), szMeasurements: safe(szMeasurements),
-      szShoppingList: safe(szShoppingList),
-      invItems: safe(invItems), bgtExpenses: safe(bgtExpenses),
-      bgtMonthBudget: safe(bgtMonthBudget), bgtCatBudgets: safe(bgtCatBudgets),
-      famMembers: safe(famMembers), famSelf: safe(famSelf), famInviteCode: safe(famInviteCode),
-      nfySettings: safe(nfySettings), nfyHistory: safe(nfyHistory),
-      fsMealLogs: safe(fsMealLogs), fsCurrentStage: safe(fsCurrentStage),
-      glCustomItems: safe(glCustomItems), glGeneratedItems: safe(glGeneratedItems),
-      diaryEntries: safe(diaryEntries), boardMessages: safe(boardMessages),
-      outChecklistItems: safe(outChecklistItems), outChecklistChecked: safe(outChecklistChecked),
-      packChecked: safe(packChecked), packCustomItems: safe(packCustomItems), packFavorites: safe(packFavorites),
-    };
-
-    const json = JSON.stringify(data, null, 2);
-    const blob = new Blob([json], { type: 'application/json' });
-    const url  = URL.createObjectURL(blob);
-
-    // Generate filename with date
-    const d = new Date();
-    const pad = n => String(n).padStart(2, '0');
-    const fname = `寶貝日記備份_${d.getFullYear()}${pad(d.getMonth()+1)}${pad(d.getDate())}_${pad(d.getHours())}${pad(d.getMinutes())}.json`;
-
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = fname;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    setTimeout(() => URL.revokeObjectURL(url), 3000);
-
-    // Update last export label
-    expLastExport = new Date().toISOString();
-    dbAutosave();
-    dbUpdateExportLabel();
-    sShowToast('✅ 備份成功！檔案已儲存到手機');
-    if (navigator.vibrate) navigator.vibrate([50, 30, 50]);
-
-  } catch(e) {
-    sShowToast('⚠️ 匯出失敗：' + e.message);
-  }
-}
-
-function dbImportTrigger() {
-  document.getElementById('db-import-file').value = '';
-  document.getElementById('db-import-file').click();
-}
-
-function dbImportFile(input) {
-  const file = input.files[0];
-  if (!file) return;
-
-  const reader = new FileReader();
-  reader.onload = function(e) {
-    try {
-      const d = JSON.parse(e.target.result);
-
-      // Validate it's our backup file
-      if (!d._version || !d.babyData) {
-        sShowToast('⚠️ 檔案格式不對，請選擇寶貝日記的備份檔');
-        return;
-      }
-
-      // Count records for confirmation message
-      const milkCount  = (d.milkLogs  || []).length;
-      const sleepCount = (d.slLogs    || []).length;
-      const dpCount    = (d.diaperLogs|| []).length;
-      const grCount    = (d.growthLogs|| []).length;
-      const exportDate = d._exportedAt ? new Date(d._exportedAt).toLocaleString('zh-TW') : '未知';
-
-      const msg = `確定要還原這份備份嗎？\n\n` +
-        `📅 備份時間：${exportDate}\n` +
-        `🍼 喝奶：${milkCount} 筆\n` +
-        `😴 睡眠：${sleepCount} 筆\n` +
-        `💧 尿布：${dpCount} 筆\n` +
-        `📈 成長：${grCount} 筆\n\n` +
-        `⚠️ 這會覆蓋目前手機裡的所有資料！`;
-
-      customConfirm(msg, () => {
-        try {
-          // Restore all fields using dbLoad logic
-          if (d.babyData && typeof d.babyData === 'object') Object.assign(babyData, d.babyData);
-          if (babyData.bloodType === undefined) babyData.bloodType = '';
-          if (d.milkLogs)      milkLogs      = d.milkLogs;
-          if (d.sTrials)       sTrials       = d.sTrials;
-          if (d.wgLogs)        wgLogs        = d.wgLogs;
-          if (d.suppLogs)      suppLogs      = d.suppLogs;
-          if (d.slLogs)        slLogs        = d.slLogs;
-          if (d.diaperLogs)    diaperLogs    = d.diaperLogs;
-          if (d.careLogs)      careLogs      = d.careLogs;
-          if (d.illEpisodes)   illEpisodes   = d.illEpisodes;
-          if (d.illFeverLogs)  illFeverLogs  = d.illFeverLogs;
-          if (d.illMeds)       illMeds       = d.illMeds;
-          if (d.growthLogs)    growthLogs    = d.growthLogs;
-          if (d.vaxRecords)    vaxRecords    = d.vaxRecords;
-          if (d.vaxSkipped && typeof d.vaxSkipped === 'object') Object.assign(vaxSkipped, d.vaxSkipped);
-          if (d.allergyRecords)  allergyRecords  = d.allergyRecords;
-          if (d.dentalRecords)   dentalRecords   = d.dentalRecords;
-          if (d.vaxAppointments && typeof d.vaxAppointments === 'object') Object.assign(vaxAppointments, d.vaxAppointments);
-          if (d.toothRecords)    toothRecords    = d.toothRecords;
-          if (d.badgeRecords)    badgeRecords    = d.badgeRecords;
-          if (d.msRecords && typeof d.msRecords === 'object') Object.assign(msRecords, d.msRecords);
-          if (d.msCustomItems)   msCustomItems   = d.msCustomItems;
-          if (d.assHistory)      assHistory      = d.assHistory;
-          if (d.outActivities)   outActivities   = d.outActivities;
-          if (d.assResults)      assResults      = d.assResults;
-          if (d.szWardrobeItems) szWardrobeItems = d.szWardrobeItems;
-          if (d.szMeasurements)  szMeasurements  = d.szMeasurements;
-          if (d.szShoppingList)  szShoppingList  = d.szShoppingList;
-          if (d.invItems)        invItems        = d.invItems;
-          if (d.bgtExpenses)     bgtExpenses     = d.bgtExpenses;
-          if (d.bgtMonthBudget)  bgtMonthBudget  = d.bgtMonthBudget;
-          if (d.bgtCatBudgets)   bgtCatBudgets   = d.bgtCatBudgets;
-          if (d.famMembers)      famMembers      = d.famMembers;
-          if (d.famSelf && typeof d.famSelf === 'object') Object.assign(famSelf, d.famSelf);
-          if (d.famInviteCode)   famInviteCode   = d.famInviteCode;
-          if (d.nfySettings && typeof d.nfySettings === 'object') Object.assign(nfySettings, d.nfySettings);
-          if (d.nfyHistory)      nfyHistory      = d.nfyHistory;
-          if (d.fsMealLogs)      fsMealLogs      = d.fsMealLogs;
-          if (d.fsCurrentStage)  fsCurrentStage  = d.fsCurrentStage;
-          if (d.glCustomItems)   glCustomItems   = d.glCustomItems;
-          if (d.glGeneratedItems) glGeneratedItems = d.glGeneratedItems;
-          if (d.diaryEntries)    diaryEntries    = d.diaryEntries;
-          if (d.boardMessages)   boardMessages   = d.boardMessages;
-          if (d.outChecklistItems) outChecklistItems = d.outChecklistItems;
-          if (d.outChecklistChecked && typeof d.outChecklistChecked === 'object') Object.assign(outChecklistChecked, d.outChecklistChecked);
-          if (d.packChecked && typeof d.packChecked === 'object') Object.assign(packChecked, d.packChecked);
-          if (d.packCustomItems) packCustomItems = d.packCustomItems;
-          if (d.packFavorites)   packFavorites   = d.packFavorites;
-
-          // Persist and refresh UI
-          dbSave();
-          updateHomeDisplay();
-          updateProfileForm();
-          try { renderMilkLog(); } catch(e){}
-          try { renderChart();   } catch(e){}
-          try { grUpdatePills(); grRenderChart(); grRenderLog(); } catch(e){}
-          try { slUpdatePills(); } catch(e){}
-          try { szUpdateCurrentSize(); } catch(e){}
-          if (navigator.vibrate) navigator.vibrate([50, 30, 100]);
-          sShowToast('✅ 資料還原成功！共 ' + (milkCount + sleepCount + dpCount) + ' 筆紀錄已恢復');
-          showVoice('備份資料還原完成！所有紀錄都回來了 🎉');
-        } catch(err) {
-          sShowToast('⚠️ 還原失敗：' + err.message);
-        }
-      }, '📥');
-
-    } catch(err) {
-      sShowToast('⚠️ 讀取檔案失敗，請確認是正確的備份檔');
-    }
-  };
-  reader.readAsText(file, 'UTF-8');
-}
-
-function dbUpdateExportLabel() {
-  const el = document.getElementById('db-last-export-label');
-  if (!el) return;
-  if (typeof expLastExport !== 'undefined' && expLastExport) {
-    const d = new Date(expLastExport);
-    el.textContent = '上次備份：' + d.toLocaleString('zh-TW');
-  } else {
-    el.textContent = '尚未備份過';
-  }
-}
-
-// =====================================================
 // DATA PERSISTENCE — localStorage
 // =====================================================
 const DB_KEY = 'baby_diary_v2';
@@ -19428,6 +19583,7 @@ function dbSave() {
       boardMessages: safe(boardMessages),
       outChecklistItems: safe(outChecklistItems), outChecklistChecked: safe(outChecklistChecked),
       packChecked: safe(packChecked), packCustomItems: safe(packCustomItems), packFavorites: safe(packFavorites),
+      featureVisible: safe(featureVisible),
       _saved: Date.now()
     };
     localStorage.setItem(DB_KEY, JSON.stringify(data));
@@ -19490,6 +19646,7 @@ function dbLoad() {
     if (d.packChecked && typeof d.packChecked==='object') Object.assign(packChecked, d.packChecked);
     if (d.packCustomItems) packCustomItems = d.packCustomItems;
     if (d.packFavorites)   packFavorites   = d.packFavorites;
+    if (d.featureVisible && typeof d.featureVisible === 'object') Object.assign(featureVisible, d.featureVisible);
     if (d.outChecklistChecked && typeof d.outChecklistChecked === 'object') try { Object.assign(outChecklistChecked, d.outChecklistChecked); } catch(e){}
     console.log('[Baby Diary] Data loaded from localStorage ✅');
     return true;
@@ -19511,7 +19668,9 @@ window.onload = function() {
   try {
   // ── Load persisted data first ──
   const hadData = dbLoad();
-  try { dbUpdateExportLabel(); } catch(e) {}
+  try { if(typeof dbUpdateExportLabel==='function') dbUpdateExportLabel(); } catch(e){}
+  try { if(typeof featInit==='function'){ featInit(); featApply(); } } catch(e){}
+  try { if(typeof slRestoreTimer==='function') slRestoreTimer(); } catch(e){}
 
   const now = new Date();
   const pad = n => String(n).padStart(2,'0');
@@ -19545,29 +19704,5 @@ window.onload = function() {
   } catch(e) { console.error('onload error:', e); }
 };
 </script>
-
-<!-- ══ Service Worker（離線功能）══════════════════════════════ -->
-<script>
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('./sw.js')
-      .then(reg => {
-        reg.addEventListener('updatefound', () => {
-          const w = reg.installing;
-          w.addEventListener('statechange', () => {
-            if (w.state === 'installed' && navigator.serviceWorker.controller) {
-              if (confirm('💡 App 有新版本！點確定重新整理以更新')) window.location.reload();
-            }
-          });
-        });
-      }).catch(() => {});
-  });
-}
-let __deferredInstall = null;
-window.addEventListener('beforeinstallprompt', e => { e.preventDefault(); __deferredInstall = e; });
-window.__triggerInstall = () => { if(__deferredInstall){ __deferredInstall.prompt(); __deferredInstall=null; } };
-document.addEventListener('touchmove', e => { if(e.target===document.body) e.preventDefault(); }, {passive:false});
-</script>
-<!-- ══════════════════════════════════════════════════════════ -->
 </body>
 </html>
