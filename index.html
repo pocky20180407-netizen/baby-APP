@@ -471,7 +471,7 @@
   .chart-bar-val { font-size: 0.65rem; color: var(--text-mid); font-weight: 700; }
 
   /* Scroll helper */
-  .scroll-content { overflow-y: auto; max-height: calc(100vh - 60px); }
+  .scroll-content { overflow-y: auto; max-height: calc(100vh - 60px); padding-bottom: calc(160px + env(safe-area-inset-bottom)); }
 
   /* Animations */
   .slide-in { animation: slideIn 0.3s ease; }
@@ -2217,7 +2217,7 @@
 
 <!-- ===== HOME PAGE ===== -->
 <div class="page active" id="page-home">
-  <div class="scroll-content">
+  <div class="scroll-content" style="padding-bottom:calc(160px + env(safe-area-inset-bottom))">
     <div class="home-header">
       <span class="app-logo">🍼</span>
       <div class="app-name">寶貝日記</div>
@@ -2333,7 +2333,7 @@
       </div>
     </div>
 
-    <div style="height:20px;"></div>
+    <div style="height:4px;"></div>
   </div>
 </div>
 
@@ -2590,7 +2590,7 @@
     <div class="topbar-title">👤 我的</div>
     <div style="width:38px"></div>
   </div>
-  <div class="scroll-content" style="padding-bottom:100px;background:#FBF5FF;">
+  <div class="scroll-content" style="padding-bottom:160px;background:#FBF5FF;">
 
     <!-- Baby card -->
     <div style="margin:16px 16px 0;background:linear-gradient(135deg,var(--pink),var(--peach));border-radius:var(--radius);padding:20px;text-align:center;box-shadow:var(--card-shadow);">
@@ -2972,7 +2972,7 @@
   </div>
 
   <!-- Water Panel -->
-  <div id="ws-panel-water" style="flex:1;overflow-y:auto;padding-bottom:calc(80px + env(safe-area-inset-bottom));scrollbar-width:none;">
+  <div id="ws-panel-water" style="flex:1;overflow-y:auto;padding-bottom:calc(160px + env(safe-area-inset-bottom));scrollbar-width:none;">
 
     <!-- Gauge card -->
     <div class="water-gauge-card">
@@ -3051,7 +3051,7 @@
   </div>
 
   <!-- Supplement Panel -->
-  <div id="ws-panel-supp" style="display:none;flex:1;overflow-y:auto;padding-bottom:calc(80px + env(safe-area-inset-bottom));scrollbar-width:none;">
+  <div id="ws-panel-supp" style="display:none;flex:1;overflow-y:auto;padding-bottom:calc(160px + env(safe-area-inset-bottom));scrollbar-width:none;">
 
     <!-- Today overview -->
     <div style="margin:14px 16px 0;background:white;border-radius:20px;padding:14px 18px;box-shadow:0 4px 14px rgba(60,120,180,.08);">
@@ -3094,7 +3094,7 @@
   </div>
 
   <!-- Guide Panel -->
-  <div id="ws-panel-guide" style="display:none;flex:1;overflow-y:auto;padding:14px 16px calc(80px + env(safe-area-inset-bottom));scrollbar-width:none;">
+  <div id="ws-panel-guide" style="display:none;flex:1;overflow-y:auto;padding:14px 16px calc(160px + env(safe-area-inset-bottom));scrollbar-width:none;">
 
     <!-- Vit D -->
     <div style="background:linear-gradient(135deg,#FFF8E0,#FFF0A0);border-radius:20px;padding:18px;margin-bottom:12px;box-shadow:0 4px 14px rgba(200,160,0,.1);">
@@ -3308,7 +3308,7 @@
   </div>
 
   <!-- ===== TIMER PANEL ===== -->
-  <div id="sl-panel-timer" style="flex:1;overflow-y:auto;padding-bottom:calc(80px + env(safe-area-inset-bottom));scrollbar-width:none;">
+  <div id="sl-panel-timer" style="flex:1;overflow-y:auto;padding-bottom:calc(160px + env(safe-area-inset-bottom));scrollbar-width:none;">
 
     <!-- Main timer card -->
     <div class="sl-timer-card">
@@ -3392,7 +3392,7 @@
   </div>
 
   <!-- ===== LOG PANEL ===== -->
-  <div id="sl-panel-log" style="display:none;flex:1;overflow-y:auto;padding-bottom:calc(80px + env(safe-area-inset-bottom));scrollbar-width:none;">
+  <div id="sl-panel-log" style="display:none;flex:1;overflow-y:auto;padding-bottom:calc(160px + env(safe-area-inset-bottom));scrollbar-width:none;">
 
     <!-- Date range filter -->
     <div style="display:flex;gap:7px;padding:12px 16px 0;overflow-x:auto;scrollbar-width:none;">
@@ -3500,7 +3500,7 @@
   </div>
 
   <!-- ===== WAKE WINDOW PANEL ===== -->
-  <div id="sl-panel-ww" style="display:none;flex:1;overflow-y:auto;padding:14px 16px calc(80px + env(safe-area-inset-bottom));scrollbar-width:none;">
+  <div id="sl-panel-ww" style="display:none;flex:1;overflow-y:auto;padding:14px 16px calc(160px + env(safe-area-inset-bottom));scrollbar-width:none;">
 
     <!-- Current WW card -->
     <div style="background:linear-gradient(135deg,#2D1B69,#6B3FA0);border-radius:20px;padding:18px;margin-bottom:12px;box-shadow:0 6px 20px rgba(60,30,120,.25);">
@@ -3553,7 +3553,7 @@
   </div>
 
   <!-- ===== GUIDE PANEL ===== -->
-  <div id="sl-panel-guide" style="display:none;flex:1;overflow-y:auto;padding:14px 16px calc(80px + env(safe-area-inset-bottom));scrollbar-width:none;">
+  <div id="sl-panel-guide" style="display:none;flex:1;overflow-y:auto;padding:14px 16px calc(160px + env(safe-area-inset-bottom));scrollbar-width:none;">
 
     <div class="sl-guide-item">
       <div class="sl-guide-em">🌙</div>
@@ -3629,7 +3629,7 @@
   </div>
 
   <!-- ===== TIMELINE PANEL ===== -->
-  <div id="rc-panel-timeline" style="flex:1;overflow-y:auto;padding-bottom:calc(80px + env(safe-area-inset-bottom));scrollbar-width:none;">
+  <div id="rc-panel-timeline" style="flex:1;overflow-y:auto;padding-bottom:calc(160px + env(safe-area-inset-bottom));scrollbar-width:none;">
     <!-- Date navigation -->
     <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 16px 0;background:white;">
       <button onclick="rcTimelineDay(-1)" style="width:36px;height:36px;border-radius:50%;border:2px solid #E0D0F0;background:white;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#6A40A0;">‹</button>
@@ -3646,7 +3646,7 @@
   </div>
 
   <!-- ===== RECORDS LIST PANEL ===== -->
-  <div id="rc-panel-records" style="display:none;flex:1;overflow-y:auto;padding-bottom:calc(80px + env(safe-area-inset-bottom));scrollbar-width:none;">
+  <div id="rc-panel-records" style="display:none;flex:1;overflow-y:auto;padding-bottom:calc(160px + env(safe-area-inset-bottom));scrollbar-width:none;">
     <!-- Range filter -->
     <div class="rc-range-row" style="margin-top:4px;">
       <button class="rc-range-btn on" id="rcr-today"  onclick="rcSetRange('today',this)">今天</button>
@@ -3688,12 +3688,12 @@
   </div>
 
   <!-- ===== WEEK ANALYSIS PANEL ===== -->
-  <div id="rc-panel-week" style="display:none;flex:1;overflow-y:auto;padding:10px 16px calc(80px + env(safe-area-inset-bottom));scrollbar-width:none;">
+  <div id="rc-panel-week" style="display:none;flex:1;overflow-y:auto;padding:10px 16px calc(160px + env(safe-area-inset-bottom));scrollbar-width:none;">
     <div id="rc-week-content"></div>
   </div>
 
   <!-- ===== MONTH ANALYSIS PANEL ===== -->
-  <div id="rc-panel-month" style="display:none;flex:1;overflow-y:auto;padding:10px 16px calc(80px + env(safe-area-inset-bottom));scrollbar-width:none;">
+  <div id="rc-panel-month" style="display:none;flex:1;overflow-y:auto;padding:10px 16px calc(160px + env(safe-area-inset-bottom));scrollbar-width:none;">
     <div id="rc-month-content"></div>
   </div>
 
@@ -3744,7 +3744,7 @@
   </div>
 
   <!-- ===== RECORD PANEL ===== -->
-  <div id="dp-panel-record" style="flex:1;overflow-y:auto;padding-bottom:calc(80px + env(safe-area-inset-bottom));scrollbar-width:none;">
+  <div id="dp-panel-record" style="flex:1;overflow-y:auto;padding-bottom:calc(160px + env(safe-area-inset-bottom));scrollbar-width:none;">
 
     <!-- Quick record -->
     <div class="dp-quick-grid" style="grid-template-columns:1fr 1fr 1fr;">
@@ -3867,7 +3867,7 @@
   </div>
 
   <!-- ===== LOG PANEL ===== -->
-  <div id="dp-panel-log" style="display:none;flex:1;overflow-y:auto;padding-bottom:calc(80px + env(safe-area-inset-bottom));scrollbar-width:none;">
+  <div id="dp-panel-log" style="display:none;flex:1;overflow-y:auto;padding-bottom:calc(160px + env(safe-area-inset-bottom));scrollbar-width:none;">
 
     <!-- Range filter -->
     <div style="display:flex;gap:7px;padding:10px 16px 0;overflow-x:auto;scrollbar-width:none;">
@@ -3899,7 +3899,7 @@
   </div>
 
   <!-- ===== BRISTOL PANEL ===== -->
-  <div id="dp-panel-bristol" style="display:none;flex:1;overflow-y:auto;padding:14px 16px calc(80px + env(safe-area-inset-bottom));scrollbar-width:none;">
+  <div id="dp-panel-bristol" style="display:none;flex:1;overflow-y:auto;padding:14px 16px calc(160px + env(safe-area-inset-bottom));scrollbar-width:none;">
     <div style="background:linear-gradient(135deg,#FFF5E8,#FFE8C0);border-radius:20px;padding:16px;margin-bottom:12px;box-shadow:0 4px 14px rgba(120,80,40,.08);">
       <div style="font-size:14px;font-weight:900;color:#7B4F2E;margin-bottom:8px;">🔬 布里斯托大便分類法</div>
       <div style="font-size:11px;font-weight:600;color:#8A5A30;line-height:1.7;">英國布里斯托大學1997年制定，將人類大便分為7種型態，是世界醫學標準的便便分類法。大便的形狀與在大腸內停留的時間有關，可用來判斷腸道健康狀況。</div>
@@ -3992,7 +3992,7 @@
   </div>
 
   <!-- ===== COLOR CARD PANEL ===== -->
-  <div id="dp-panel-color" style="display:none;flex:1;overflow-y:auto;padding:14px 16px calc(80px + env(safe-area-inset-bottom));scrollbar-width:none;">
+  <div id="dp-panel-color" style="display:none;flex:1;overflow-y:auto;padding:14px 16px calc(160px + env(safe-area-inset-bottom));scrollbar-width:none;">
     <div style="background:linear-gradient(135deg,#FFF5E8,#FFE8C0);border-radius:20px;padding:16px;margin-bottom:12px;box-shadow:0 4px 14px rgba(120,80,40,.08);">
       <div style="font-size:14px;font-weight:900;color:#7B4F2E;margin-bottom:6px;">🎨 國健署「黃金九色卡」</div>
       <div style="font-size:11px;font-weight:600;color:#8A5A30;line-height:1.7;">每次換尿布時，在日光或白色燈光下比對。便便呈黃色或綠色才是正常的。出現灰白色大便是膽道閉鎖警訊，請立即就醫！</div>
@@ -4123,7 +4123,7 @@
   </div>
 
   <!-- ===== TODAY PANEL ===== -->
-  <div id="care-panel-today" style="flex:1;overflow-y:auto;padding-bottom:calc(80px + env(safe-area-inset-bottom));scrollbar-width:none;">
+  <div id="care-panel-today" style="flex:1;overflow-y:auto;padding-bottom:calc(160px + env(safe-area-inset-bottom));scrollbar-width:none;">
 
     <!-- Smart reminder banner -->
     <div id="care-reminder-banner" style="margin:14px 16px 0;"></div>
@@ -4140,7 +4140,7 @@
   </div>
 
   <!-- ===== LOG PANEL ===== -->
-  <div id="care-panel-log" style="display:none;flex:1;overflow-y:auto;padding-bottom:calc(80px + env(safe-area-inset-bottom));scrollbar-width:none;">
+  <div id="care-panel-log" style="display:none;flex:1;overflow-y:auto;padding-bottom:calc(160px + env(safe-area-inset-bottom));scrollbar-width:none;">
 
     <!-- Range filter -->
     <div style="display:flex;gap:7px;padding:10px 16px 0;overflow-x:auto;scrollbar-width:none;">
@@ -4168,7 +4168,7 @@
   </div>
 
   <!-- ===== GUIDE PANEL ===== -->
-  <div id="care-panel-guide" style="display:none;flex:1;overflow-y:auto;padding:14px 16px calc(80px + env(safe-area-inset-bottom));scrollbar-width:none;">
+  <div id="care-panel-guide" style="display:none;flex:1;overflow-y:auto;padding:14px 16px calc(160px + env(safe-area-inset-bottom));scrollbar-width:none;">
 
     <div class="care-guide-card">
       <div class="care-guide-icon">🛁</div>
@@ -4443,7 +4443,7 @@
   </div>
 
   <!-- ===== TIMELINE PANEL ===== -->
-  <div id="vax-panel-timeline" style="flex:1;overflow-y:auto;padding-bottom:calc(80px + env(safe-area-inset-bottom));scrollbar-width:none;">
+  <div id="vax-panel-timeline" style="flex:1;overflow-y:auto;padding-bottom:calc(160px + env(safe-area-inset-bottom));scrollbar-width:none;">
     <!-- filter row -->
     <div style="display:flex;gap:7px;padding:12px 16px 0;flex-wrap:wrap;">
       <button id="vax-f-all"     onclick="vaxFilter('all',this)"     style="flex:1;padding:7px;border-radius:50px;border:2px solid #2E9C58;background:#2E9C58;color:white;font-size:11px;font-weight:800;cursor:pointer;font-family:inherit;">全部</button>
@@ -4467,7 +4467,7 @@
   </div>
 
   <!-- ===== DONE PANEL ===== -->
-  <div id="vax-panel-done" style="display:none;flex:1;overflow-y:auto;padding-bottom:calc(80px + env(safe-area-inset-bottom));scrollbar-width:none;">
+  <div id="vax-panel-done" style="display:none;flex:1;overflow-y:auto;padding-bottom:calc(160px + env(safe-area-inset-bottom));scrollbar-width:none;">
     <div style="margin:14px 16px 0;background:white;border-radius:20px;padding:14px 18px;box-shadow:0 4px 14px rgba(30,100,60,.07);">
       <div style="font-size:13px;font-weight:800;color:var(--text-dark);margin-bottom:12px;">✅ 已接種紀錄</div>
       <div id="vax-done-list"></div>
@@ -4475,7 +4475,7 @@
   </div>
 
   <!-- ===== INFO PANEL ===== -->
-  <div id="vax-panel-info" style="display:none;flex:1;overflow-y:auto;padding:14px 16px calc(80px + env(safe-area-inset-bottom));scrollbar-width:none;">
+  <div id="vax-panel-info" style="display:none;flex:1;overflow-y:auto;padding:14px 16px calc(160px + env(safe-area-inset-bottom));scrollbar-width:none;">
     <div style="background:linear-gradient(135deg,#EDFAF3,#D0F0E0);border-radius:20px;padding:16px;margin-bottom:12px;box-shadow:0 4px 14px rgba(30,100,60,.08);">
       <div style="font-size:14px;font-weight:900;color:#1B6B3A;margin-bottom:6px;">💡 打疫苗注意事項</div>
       <div style="font-size:11px;font-weight:600;color:#2A7A48;line-height:1.75;">
@@ -4614,7 +4614,7 @@
   </div>
 
   <!-- Scrollable content -->
-  <div style="flex:1;overflow-y:auto;padding-bottom:calc(80px + env(safe-area-inset-bottom));scrollbar-width:none;" id="gr-scroll">
+  <div style="flex:1;overflow-y:auto;padding-bottom:calc(160px + env(safe-area-inset-bottom));scrollbar-width:none;" id="gr-scroll">
 
     <!-- Chart card -->
     <div class="gr-chart-card">
@@ -4709,7 +4709,7 @@
   </div>
 
   <!-- EPISODES PANEL (includes allergy section) -->
-  <div id="ill-panel-episodes" style="flex:1;overflow-y:auto;padding-bottom:calc(80px + env(safe-area-inset-bottom));scrollbar-width:none;">
+  <div id="ill-panel-episodes" style="flex:1;overflow-y:auto;padding-bottom:calc(160px + env(safe-area-inset-bottom));scrollbar-width:none;">
     <div style="padding:12px 16px 0;">
 
       <!-- Allergy section at top -->
@@ -4731,7 +4731,7 @@
   </div>
 
   <!-- MEDICATIONS PANEL -->
-  <div id="ill-panel-meds" style="display:none;flex:1;overflow-y:auto;padding-bottom:calc(80px + env(safe-area-inset-bottom));scrollbar-width:none;">
+  <div id="ill-panel-meds" style="display:none;flex:1;overflow-y:auto;padding-bottom:calc(160px + env(safe-area-inset-bottom));scrollbar-width:none;">
     <div style="padding:12px 16px 0;">
       <button onclick="openMedAddModal()" style="width:100%;padding:13px;border-radius:18px;border:2px solid #F0B0C8;background:white;font-size:13px;font-weight:800;color:#C03070;cursor:pointer;font-family:inherit;display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:12px;">
         <span style="font-size:1.1rem;">＋</span> 新增藥物提醒
@@ -4745,7 +4745,7 @@
   </div>
 
   <!-- FEVER PANEL -->
-  <div id="ill-panel-fever" style="display:none;flex:1;overflow-y:auto;padding-bottom:calc(80px + env(safe-area-inset-bottom));scrollbar-width:none;">
+  <div id="ill-panel-fever" style="display:none;flex:1;overflow-y:auto;padding-bottom:calc(160px + env(safe-area-inset-bottom));scrollbar-width:none;">
     <div style="padding:12px 16px 0;">
 
       <!-- Add temp row -->
@@ -4790,7 +4790,7 @@
   <div id="ill-panel-allergy" style="display:none;"></div>
 
   <!-- GUIDE PANEL -->
-  <div id="ill-panel-guide" style="display:none;flex:1;overflow-y:auto;padding:14px 16px calc(80px + env(safe-area-inset-bottom));scrollbar-width:none;">
+  <div id="ill-panel-guide" style="display:none;flex:1;overflow-y:auto;padding:14px 16px calc(160px + env(safe-area-inset-bottom));scrollbar-width:none;">
 
     <div style="background:linear-gradient(135deg,#FFE8F0,#FFD0E4);border-radius:20px;padding:16px;margin-bottom:12px;box-shadow:0 4px 14px rgba(138,32,80,.08);">
       <div style="font-size:14px;font-weight:900;color:#8A2050;margin-bottom:6px;">🚨 立即就醫警示</div>
@@ -5237,7 +5237,7 @@
   </div>
 
   <!-- MAP PANEL -->
-  <div id="tooth-panel-map" style="flex:1;overflow-y:auto;padding-bottom:calc(80px + env(safe-area-inset-bottom));scrollbar-width:none;">
+  <div id="tooth-panel-map" style="flex:1;overflow-y:auto;padding-bottom:calc(160px + env(safe-area-inset-bottom));scrollbar-width:none;">
 
     <!-- Mouth diagram -->
     <div class="mouth-wrap">
@@ -5285,7 +5285,7 @@
   </div>
 
   <!-- LOG PANEL -->
-  <div id="tooth-panel-log" style="display:none;flex:1;overflow-y:auto;padding-bottom:calc(80px + env(safe-area-inset-bottom));scrollbar-width:none;">
+  <div id="tooth-panel-log" style="display:none;flex:1;overflow-y:auto;padding-bottom:calc(160px + env(safe-area-inset-bottom));scrollbar-width:none;">
     <div style="padding:14px 16px 0;">
 
       <!-- Stats summary -->
@@ -5300,7 +5300,7 @@
   </div>
 
   <!-- DENTAL PANEL — 設計仿就醫紀錄 -->
-  <div id="tooth-panel-dental" style="display:none;flex:1;overflow-y:auto;padding-bottom:calc(80px + env(safe-area-inset-bottom));scrollbar-width:none;">
+  <div id="tooth-panel-dental" style="display:none;flex:1;overflow-y:auto;padding-bottom:calc(160px + env(safe-area-inset-bottom));scrollbar-width:none;">
 
     <!-- Stats summary row (compact, like illness record pills) -->
     <div style="display:flex;gap:8px;padding:12px 16px 0;">
@@ -5346,7 +5346,7 @@
   </div>
 
   <!-- CARE PANEL -->
-  <div id="tooth-panel-care" style="display:none;flex:1;overflow-y:auto;padding:14px 16px calc(80px + env(safe-area-inset-bottom));scrollbar-width:none;">
+  <div id="tooth-panel-care" style="display:none;flex:1;overflow-y:auto;padding:14px 16px calc(160px + env(safe-area-inset-bottom));scrollbar-width:none;">
 
     <div class="tooth-tip-card">
       <div class="tooth-tip-em">🤱</div>
@@ -5662,17 +5662,17 @@
   </div>
 
   <!-- LIST VIEW -->
-  <div id="ms-panel-list" style="flex:1;overflow-y:auto;padding:10px 16px calc(80px + env(safe-area-inset-bottom));scrollbar-width:none;">
+  <div id="ms-panel-list" style="flex:1;overflow-y:auto;padding:10px 16px calc(160px + env(safe-area-inset-bottom));scrollbar-width:none;">
     <div id="ms-list-content"></div>
   </div>
 
   <!-- TIMELINE VIEW -->
-  <div id="ms-panel-timeline" style="display:none;flex:1;overflow-y:auto;padding:10px 16px calc(80px + env(safe-area-inset-bottom));scrollbar-width:none;">
+  <div id="ms-panel-timeline" style="display:none;flex:1;overflow-y:auto;padding:10px 16px calc(160px + env(safe-area-inset-bottom));scrollbar-width:none;">
     <div id="ms-timeline-content"></div>
   </div>
 
   <!-- BADGE WALL VIEW -->
-  <div id="ms-panel-badge" style="display:none;flex:1;overflow-y:auto;padding:10px 16px calc(80px + env(safe-area-inset-bottom));scrollbar-width:none;">
+  <div id="ms-panel-badge" style="display:none;flex:1;overflow-y:auto;padding:10px 16px calc(160px + env(safe-area-inset-bottom));scrollbar-width:none;">
     <div id="ms-badge-content"></div>
   </div>
 </div><!-- end page-badge -->
@@ -5744,6 +5744,7 @@
     <div class="out-tabs">
       <button class="otat on" id="otat-map"       onclick="outTab('map')">🗺️ 足跡地圖</button>
       <button class="otat"    id="otat-log"       onclick="outTab('log')">📋 活動紀錄</button>
+      <button class="otat"    id="otat-wishlist"  onclick="outTab('wishlist')">📌 待去景點</button>
       <button class="otat"    id="otat-album"     onclick="outTab('album')">📷 電子相冊</button>
       <button class="otat"    id="otat-checklist" onclick="outTab('checklist')">✅ 出門清單</button>
       <button class="otat"    id="otat-stats"     onclick="outTab('stats')">📊 統計分析</button>
@@ -5751,7 +5752,7 @@
   </div>
 
   <!-- MAP PANEL -->
-  <div id="out-panel-map" style="flex:1;overflow-y:auto;padding-bottom:calc(80px + env(safe-area-inset-bottom));scrollbar-width:none;">
+  <div id="out-panel-map" style="flex:1;overflow-y:auto;padding-bottom:calc(160px + env(safe-area-inset-bottom));scrollbar-width:none;">
 
     <!-- Taiwan Map -->
     <div style="margin:12px 16px 0;">
@@ -5786,7 +5787,7 @@
   </div>
 
   <!-- LOG PANEL -->
-  <div id="out-panel-log" style="display:none;flex:1;overflow-y:auto;padding-bottom:calc(80px + env(safe-area-inset-bottom));scrollbar-width:none;">
+  <div id="out-panel-log" style="display:none;flex:1;overflow-y:auto;padding-bottom:calc(160px + env(safe-area-inset-bottom));scrollbar-width:none;">
     <!-- Category filter -->
     <div style="padding:10px 16px 0;display:flex;gap:7px;overflow-x:auto;scrollbar-width:none;" id="out-cat-filter"></div>
     <!-- Log list -->
@@ -5892,7 +5893,93 @@
     </div>
   </div>
 
+  <!-- WISHLIST PANEL — 待去景點 -->
+  <div id="out-panel-wishlist" style="display:none;flex:1;overflow-y:auto;padding-bottom:calc(160px + env(safe-area-inset-bottom));scrollbar-width:none;">
+    <div style="padding:14px 16px 0;">
+
+      <!-- Header + Add button -->
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
+        <div>
+          <div style="font-size:15px;font-weight:900;color:var(--text-dark);">📌 待去景點清單</div>
+          <div style="font-size:11px;color:var(--text-light);font-weight:600;margin-top:2px;">收藏 FB、IG、Threads 上看到的好地方</div>
+        </div>
+        <button onclick="outWishOpenAdd()" style="width:38px;height:38px;border-radius:50%;border:none;background:linear-gradient(135deg,#38B860,#1A6040);color:white;font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(26,96,64,.25);">＋</button>
+      </div>
+
+      <!-- Category filter chips -->
+      <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px;" id="wish-cat-filter">
+        <button class="wish-cat-btn on" data-cat="all"      onclick="outWishFilterCat('all',this)"      style="padding:5px 12px;border-radius:50px;border:2px solid #38B860;background:#38B860;color:white;font-size:11px;font-weight:800;cursor:pointer;font-family:inherit;">全部</button>
+        <button class="wish-cat-btn"    data-cat="park"     onclick="outWishFilterCat('park',this)"     style="padding:5px 12px;border-radius:50px;border:2px solid #A0D8B0;background:white;color:#1A6040;font-size:11px;font-weight:800;cursor:pointer;font-family:inherit;">🌳 公園</button>
+        <button class="wish-cat-btn"    data-cat="museum"   onclick="outWishFilterCat('museum',this)"   style="padding:5px 12px;border-radius:50px;border:2px solid #A0D8B0;background:white;color:#1A6040;font-size:11px;font-weight:800;cursor:pointer;font-family:inherit;">🏛️ 博物館</button>
+        <button class="wish-cat-btn"    data-cat="food"     onclick="outWishFilterCat('food',this)"     style="padding:5px 12px;border-radius:50px;border:2px solid #A0D8B0;background:white;color:#1A6040;font-size:11px;font-weight:800;cursor:pointer;font-family:inherit;">🍽️ 親子餐廳</button>
+        <button class="wish-cat-btn"    data-cat="nature"   onclick="outWishFilterCat('nature',this)"   style="padding:5px 12px;border-radius:50px;border:2px solid #A0D8B0;background:white;color:#1A6040;font-size:11px;font-weight:800;cursor:pointer;font-family:inherit;">🌊 自然景點</button>
+        <button class="wish-cat-btn"    data-cat="indoor"   onclick="outWishFilterCat('indoor',this)"   style="padding:5px 12px;border-radius:50px;border:2px solid #A0D8B0;background:white;color:#1A6040;font-size:11px;font-weight:800;cursor:pointer;font-family:inherit;">🏠 室內設施</button>
+        <button class="wish-cat-btn"    data-cat="other"    onclick="outWishFilterCat('other',this)"    style="padding:5px 12px;border-radius:50px;border:2px solid #A0D8B0;background:white;color:#1A6040;font-size:11px;font-weight:800;cursor:pointer;font-family:inherit;">📍 其他</button>
+      </div>
+
+      <!-- Search bar -->
+      <div style="display:flex;gap:8px;margin-bottom:12px;">
+        <input id="wish-search-inp" placeholder="搜尋景點名稱、地點、標籤…" oninput="outWishRender()"
+          style="flex:1;padding:9px 12px;border:2px solid #B0D8B8;border-radius:12px;font-family:inherit;font-size:13px;font-weight:700;background:#F5FDF7;outline:none;">
+        <button onclick="outWishRender()" style="padding:9px 14px;border-radius:50px;border:none;background:#38B860;color:white;font-size:12px;font-weight:800;cursor:pointer;font-family:inherit;">🔍</button>
+      </div>
+
+      <!-- Wishlist items -->
+      <div id="wish-list"></div>
+
+      <!-- Empty state -->
+      <div id="wish-empty" style="text-align:center;padding:36px 20px;display:none;">
+        <div style="font-size:3rem;margin-bottom:10px;">📌</div>
+        <div style="font-size:14px;font-weight:800;color:var(--text-dark);margin-bottom:6px;">還沒有待去景點</div>
+        <div style="font-size:12px;color:var(--text-light);font-weight:600;margin-bottom:16px;">把 Facebook、IG、Threads<br>上看到的好地方存進來！</div>
+        <button onclick="outWishOpenAdd()" style="padding:11px 28px;border-radius:50px;border:none;background:linear-gradient(135deg,#38B860,#1A6040);color:white;font-size:13px;font-weight:800;cursor:pointer;font-family:inherit;">＋ 新增第一個景點</button>
+      </div>
+
+    </div>
+  </div>
+
 </div><!-- end page-outdoor -->
+
+<!-- WISHLIST ADD/EDIT MODAL -->
+<div class="out-modal-bg" id="wish-add-modal" onclick="if(event.target===this)outWishCloseAdd()" style="opacity:0;pointer-events:none;">
+  <div class="out-modal" id="wish-add-box" style="transform:translateY(100%);">
+    <div class="om-handle"></div>
+    <div style="font-size:17px;font-weight:900;color:#1A6040;text-align:center;margin-bottom:4px;" id="wish-modal-title">📌 新增待去景點</div>
+    <div style="font-size:11px;color:#5A9A70;font-weight:600;text-align:center;margin-bottom:16px;">把 FB、IG、Threads 的景點影片連結貼進來</div>
+
+    <div style="font-size:12px;font-weight:800;color:var(--text-dark);margin-bottom:6px;">🔗 景點連結（必填）</div>
+    <input id="wish-inp-url" type="url" placeholder="https://www.instagram.com/…" oninput="wishPreviewPlatform()"
+      style="width:100%;padding:11px 14px;border:2px solid #B0D8B8;border-radius:14px;font-family:inherit;font-size:13px;font-weight:700;background:#F5FDF7;outline:none;margin-bottom:4px;">
+    <div id="wish-platform-badge" style="font-size:11px;font-weight:700;color:#3A8050;margin-bottom:10px;min-height:14px;"></div>
+
+    <div style="font-size:12px;font-weight:800;color:var(--text-dark);margin-bottom:6px;">📍 景點名稱（必填）</div>
+    <input id="wish-inp-name" placeholder="例如：台北市立動物園、宜蘭海洋博覽館…"
+      style="width:100%;padding:11px 14px;border:2px solid #B0D8B8;border-radius:14px;font-family:inherit;font-size:13px;font-weight:700;background:#F5FDF7;outline:none;margin-bottom:10px;">
+
+    <div style="font-size:12px;font-weight:800;color:var(--text-dark);margin-bottom:6px;">🏷️ 分類</div>
+    <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px;" id="wish-cat-chips">
+      <button class="wish-cat-chip on" data-cat="park"    onclick="wishSetCat('park',this)"    style="padding:6px 12px;border-radius:50px;border:2px solid #38B860;background:#38B860;color:white;font-size:11px;font-weight:800;cursor:pointer;font-family:inherit;">🌳 公園</button>
+      <button class="wish-cat-chip"    data-cat="museum"  onclick="wishSetCat('museum',this)"  style="padding:6px 12px;border-radius:50px;border:2px solid #A0D8B0;background:white;color:#1A6040;font-size:11px;font-weight:800;cursor:pointer;font-family:inherit;">🏛️ 博物館</button>
+      <button class="wish-cat-chip"    data-cat="food"    onclick="wishSetCat('food',this)"    style="padding:6px 12px;border-radius:50px;border:2px solid #A0D8B0;background:white;color:#1A6040;font-size:11px;font-weight:800;cursor:pointer;font-family:inherit;">🍽️ 親子餐廳</button>
+      <button class="wish-cat-chip"    data-cat="nature"  onclick="wishSetCat('nature',this)"  style="padding:6px 12px;border-radius:50px;border:2px solid #A0D8B0;background:white;color:#1A6040;font-size:11px;font-weight:800;cursor:pointer;font-family:inherit;">🌊 自然景點</button>
+      <button class="wish-cat-chip"    data-cat="indoor"  onclick="wishSetCat('indoor',this)"  style="padding:6px 12px;border-radius:50px;border:2px solid #A0D8B0;background:white;color:#1A6040;font-size:11px;font-weight:800;cursor:pointer;font-family:inherit;">🏠 室內設施</button>
+      <button class="wish-cat-chip"    data-cat="other"   onclick="wishSetCat('other',this)"   style="padding:6px 12px;border-radius:50px;border:2px solid #A0D8B0;background:white;color:#1A6040;font-size:11px;font-weight:800;cursor:pointer;font-family:inherit;">📍 其他</button>
+    </div>
+
+    <div style="font-size:12px;font-weight:800;color:var(--text-dark);margin-bottom:6px;">📍 地點標籤（選填）</div>
+    <input id="wish-inp-tags" placeholder="例如：台北、宜蘭、室內（逗號分隔）"
+      style="width:100%;padding:10px 14px;border:2px solid #B0D8B8;border-radius:14px;font-family:inherit;font-size:13px;font-weight:700;background:#F5FDF7;outline:none;margin-bottom:10px;">
+
+    <div style="font-size:12px;font-weight:800;color:var(--text-dark);margin-bottom:6px;">📝 備註（選填）</div>
+    <textarea id="wish-inp-note" rows="2" placeholder="例如：適合6個月以上、有哺乳室、停車方便…"
+      style="width:100%;padding:10px 14px;border:2px solid #B0D8B8;border-radius:14px;font-family:inherit;font-size:13px;font-weight:600;resize:none;outline:none;background:#F5FDF7;margin-bottom:14px;"></textarea>
+
+    <button onclick="outWishSave()" style="width:100%;padding:14px;border-radius:50px;border:none;background:linear-gradient(135deg,#38B860,#1A6040);color:white;font-size:15px;font-weight:900;cursor:pointer;font-family:inherit;box-shadow:0 5px 16px rgba(26,96,64,.28);margin-bottom:10px;">
+      📌 儲存景點
+    </button>
+    <button onclick="outWishCloseAdd()" style="width:100%;padding:12px;border-radius:50px;border:2px solid #B0D8B8;background:white;color:#3A8050;font-size:13px;font-weight:800;cursor:pointer;font-family:inherit;">取消</button>
+  </div>
+</div>
 
 <!-- ADD ACTIVITY MODAL -->
 <div class="out-modal-bg" id="out-add-modal" onclick="outModalBg(event)">
@@ -5928,6 +6015,18 @@
     <textarea id="out-inp-note" rows="2" placeholder="例如：第一次看到大象！寶寶一直指著說「咧咧咧」超可愛～"
       style="width:100%;padding:10px 14px;border:2px solid #C0E0C8;border-radius:14px;font-family:inherit;font-size:13px;font-weight:600;resize:none;outline:none;background:#F5FDF7;margin-bottom:10px;"></textarea>
 
+    <!-- Social video link -->
+    <div style="font-size:13px;font-weight:800;color:var(--text-dark);margin-bottom:6px;">🎥 活動影片連結（選填）</div>
+    <div style="font-size:11px;font-weight:600;color:#5A9A70;margin-bottom:6px;">可貼上 Facebook、IG、Threads 的活動影片連結</div>
+    <input id="out-inp-videourl" type="url" placeholder="https://www.instagram.com/…" oninput="outPreviewVideoLink()"
+      style="width:100%;padding:10px 14px;border:2px solid #C0E0C8;border-radius:14px;font-family:inherit;font-size:13px;font-weight:700;background:#F5FDF7;outline:none;margin-bottom:4px;">
+    <div id="out-video-platform-badge" style="font-size:11px;font-weight:700;color:#3A8050;margin-bottom:10px;min-height:14px;"></div>
+
+    <!-- Place tags for search -->
+    <div style="font-size:13px;font-weight:800;color:var(--text-dark);margin-bottom:6px;">🏷️ 地點標籤（選填，方便搜尋）</div>
+    <input id="out-inp-placetags" placeholder="例如：動物園、親子餐廳、海邊（逗號分隔）"
+      style="width:100%;padding:10px 14px;border:2px solid #C0E0C8;border-radius:14px;font-family:inherit;font-size:13px;font-weight:700;background:#F5FDF7;outline:none;margin-bottom:10px;">
+
     <div id="out-location-display" style="display:none;background:#EDFAF3;border-radius:12px;padding:9px 13px;margin-bottom:10px;font-size:11px;font-weight:700;color:#2A7040;"></div>
 
     <!-- Photo upload -->
@@ -5953,7 +6052,7 @@
     <div class="topbar-title">🥣 進食階段紀錄</div>
     <div style="width:38px"></div>
   </div>
-  <div class="scroll-content" style="padding-bottom:100px;">
+  <div class="scroll-content" style="padding-bottom:160px;">
     <!-- Stage selector -->
     <div style="padding:16px 20px 0;">
       <div style="font-size:15px;font-weight:900;color:var(--text-dark);margin-bottom:12px;">🥣 目前進食階段</div>
@@ -6060,7 +6159,7 @@
     <div class="topbar-title">🛒 一週買菜清單</div>
     <div style="width:38px"></div>
   </div>
-  <div class="scroll-content" style="padding-bottom:100px;">
+  <div class="scroll-content" style="padding-bottom:160px;">
     <!-- Age-based generator -->
     <div style="padding:16px 20px 0;">
       <div style="background:linear-gradient(135deg,#EDFAF3,#C8F0D8);border-radius:20px;padding:14px 16px;margin-bottom:14px;">
@@ -6102,40 +6201,106 @@
 <div class="page" id="page-recipes">
   <div class="topbar">
     <button class="back-btn" onclick="goPage('page-food-section')">←</button>
-    <div class="topbar-title">👨‍🍳 食譜推薦</div>
-    <div style="width:38px"></div>
+    <div class="topbar-title">👨‍🍳 食譜收藏</div>
+    <button onclick="recOpenAddLink()" style="width:36px;height:36px;border-radius:50%;border:none;background:linear-gradient(135deg,#F0B040,#C08000);color:white;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;">＋</button>
   </div>
-  <div class="scroll-content" style="padding-bottom:100px;">
+  <div class="scroll-content" style="padding-bottom:160px;">
     <div style="padding:16px 20px 0;">
-      <!-- Filter by stage and ingredient -->
-      <div style="background:white;border-radius:18px;padding:14px 16px;box-shadow:0 4px 14px rgba(120,60,0,.07);margin-bottom:12px;">
-        <div style="font-size:13px;font-weight:800;color:var(--text-dark);margin-bottom:8px;">🔍 搜尋食譜</div>
-        <div style="font-size:11px;font-weight:700;color:var(--text-light);margin-bottom:6px;">進食階段：</div>
-        <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px;">
-          <button class="rec-stage-btn on" id="rsg-all"    onclick="recStage('all',this)"    style="padding:6px 12px;border-radius:50px;border:2px solid #F0B040;background:#F0B040;color:white;font-size:11px;font-weight:800;cursor:pointer;font-family:inherit;">全部</button>
-          <button class="rec-stage-btn"    id="rsg-puree"  onclick="recStage('puree',this)"  style="padding:6px 12px;border-radius:50px;border:2px solid #E0C080;background:white;color:#8A6000;font-size:11px;font-weight:800;cursor:pointer;font-family:inherit;">泥狀</button>
-          <button class="rec-stage-btn"    id="rsg-mash"   onclick="recStage('mash',this)"   style="padding:6px 12px;border-radius:50px;border:2px solid #E0C080;background:white;color:#8A6000;font-size:11px;font-weight:800;cursor:pointer;font-family:inherit;">軟爛</button>
-          <button class="rec-stage-btn"    id="rsg-finger" onclick="recStage('finger',this)" style="padding:6px 12px;border-radius:50px;border:2px solid #E0C080;background:white;color:#8A6000;font-size:11px;font-weight:800;cursor:pointer;font-family:inherit;">手指</button>
-          <button class="rec-stage-btn"    id="rsg-self"   onclick="recStage('self',this)"   style="padding:6px 12px;border-radius:50px;border:2px solid #E0C080;background:white;color:#8A6000;font-size:11px;font-weight:800;cursor:pointer;font-family:inherit;">自主</button>
+
+      <!-- Tab: 我的收藏 / AI推薦 -->
+      <div style="display:flex;gap:0;background:#F5EFE0;border-radius:14px;padding:3px;margin-bottom:14px;">
+        <button id="rec-tab-saved" onclick="recSwitchTab('saved')" style="flex:1;padding:9px;border-radius:11px;border:none;background:white;font-size:13px;font-weight:800;color:#8A5000;cursor:pointer;font-family:inherit;box-shadow:0 2px 6px rgba(140,80,0,.12);">🔖 我的收藏</button>
+        <button id="rec-tab-ai"    onclick="recSwitchTab('ai')"    style="flex:1;padding:9px;border-radius:11px;border:none;background:transparent;font-size:13px;font-weight:800;color:#A07040;cursor:pointer;font-family:inherit;">✨ AI推薦</button>
+      </div>
+
+      <!-- ── 我的收藏 tab ── -->
+      <div id="rec-panel-saved">
+        <!-- Search + filter -->
+        <div style="background:white;border-radius:18px;padding:14px 16px;box-shadow:0 4px 14px rgba(120,60,0,.07);margin-bottom:12px;">
+          <!-- Category filter -->
+          <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px;" id="rec-cat-filter">
+            <button class="rec-cat-btn on" data-cat="all"     onclick="recFilterCat('all',this)"    style="padding:5px 12px;border-radius:50px;border:2px solid #F0B040;background:#F0B040;color:white;font-size:11px;font-weight:800;cursor:pointer;font-family:inherit;">全部</button>
+            <button class="rec-cat-btn"   data-cat="puree"    onclick="recFilterCat('puree',this)"  style="padding:5px 12px;border-radius:50px;border:2px solid #E0C080;background:white;color:#8A6000;font-size:11px;font-weight:800;cursor:pointer;font-family:inherit;">🥣 泥狀</button>
+            <button class="rec-cat-btn"   data-cat="mash"     onclick="recFilterCat('mash',this)"   style="padding:5px 12px;border-radius:50px;border:2px solid #E0C080;background:white;color:#8A6000;font-size:11px;font-weight:800;cursor:pointer;font-family:inherit;">🍲 軟爛</button>
+            <button class="rec-cat-btn"   data-cat="finger"   onclick="recFilterCat('finger',this)" style="padding:5px 12px;border-radius:50px;border:2px solid #E0C080;background:white;color:#8A6000;font-size:11px;font-weight:800;cursor:pointer;font-family:inherit;">👆 手指食物</button>
+            <button class="rec-cat-btn"   data-cat="self"     onclick="recFilterCat('self',this)"   style="padding:5px 12px;border-radius:50px;border:2px solid #E0C080;background:white;color:#8A6000;font-size:11px;font-weight:800;cursor:pointer;font-family:inherit;">🍽️ 自主進食</button>
+            <button class="rec-cat-btn"   data-cat="ingredient" onclick="recFilterCat('ingredient',this)" style="padding:5px 12px;border-radius:50px;border:2px solid #E0C080;background:white;color:#8A6000;font-size:11px;font-weight:800;cursor:pointer;font-family:inherit;">🥕 食材</button>
+            <button class="rec-cat-btn"   data-cat="snack"    onclick="recFilterCat('snack',this)"  style="padding:5px 12px;border-radius:50px;border:2px solid #E0C080;background:white;color:#8A6000;font-size:11px;font-weight:800;cursor:pointer;font-family:inherit;">🍪 點心</button>
+            <button class="rec-cat-btn"   data-cat="other"    onclick="recFilterCat('other',this)"  style="padding:5px 12px;border-radius:50px;border:2px solid #E0C080;background:white;color:#8A6000;font-size:11px;font-weight:800;cursor:pointer;font-family:inherit;">📌 其他</button>
+          </div>
+          <!-- Search bar -->
+          <div style="display:flex;gap:8px;">
+            <input id="rec-link-search" placeholder="搜尋食譜名稱、食材或標籤…" oninput="recRenderLinks()"
+              style="flex:1;padding:9px 12px;border:2px solid #E0C080;border-radius:12px;font-family:inherit;font-size:13px;font-weight:700;background:#FFFBF0;outline:none;">
+            <button onclick="recRenderLinks()" style="padding:9px 14px;border-radius:50px;border:none;background:#F0B040;color:white;font-size:12px;font-weight:800;cursor:pointer;font-family:inherit;">🔍</button>
+          </div>
         </div>
-        <div style="display:flex;gap:8px;">
-          <input id="rec-search-inp" placeholder="搜尋食材或料理名稱…" style="flex:1;padding:9px 12px;border:2px solid #E0C080;border-radius:12px;font-family:inherit;font-size:13px;font-weight:700;background:#FFFBF0;outline:none;">
-          <button onclick="recSearch()" style="padding:9px 16px;border-radius:50px;border:none;background:#F0B040;color:white;font-size:12px;font-weight:800;cursor:pointer;font-family:inherit;">搜尋</button>
+        <!-- Saved link list -->
+        <div id="rec-link-list" style="margin-bottom:8px;"></div>
+        <!-- Empty state -->
+        <div id="rec-link-empty" style="text-align:center;padding:32px 20px;display:none;">
+          <div style="font-size:2.5rem;margin-bottom:10px;">👨‍🍳</div>
+          <div style="font-size:14px;font-weight:800;color:var(--text-dark);margin-bottom:6px;">還沒有收藏的食譜</div>
+          <div style="font-size:12px;color:var(--text-light);font-weight:600;margin-bottom:16px;">點右上角 ＋ 把 Facebook、IG、Threads<br>的食譜影片連結存進來！</div>
+          <button onclick="recOpenAddLink()" style="padding:11px 28px;border-radius:50px;border:none;background:linear-gradient(135deg,#F0B040,#C08000);color:white;font-size:13px;font-weight:800;cursor:pointer;font-family:inherit;">＋ 新增第一個食譜</button>
         </div>
       </div>
 
-      <!-- AI recipe search -->
-      <div style="background:linear-gradient(135deg,#FFF8E8,#FFE8C0);border-radius:18px;padding:14px 16px;box-shadow:0 4px 14px rgba(180,100,0,.07);margin-bottom:12px;">
-        <div style="font-size:13px;font-weight:800;color:#8A5000;margin-bottom:6px;">✨ AI 推薦食譜</div>
-        <div style="font-size:11px;font-weight:600;color:#B07000;margin-bottom:10px;">根據寶寶月齡和已嘗試食材，AI 為您推薦適合的食譜</div>
-        <button onclick="recAIRecommend()" style="width:100%;padding:11px;border-radius:50px;border:none;background:linear-gradient(135deg,#F0B040,#A07000);color:white;font-size:13px;font-weight:900;cursor:pointer;font-family:inherit;box-shadow:0 4px 14px rgba(160,112,0,.3);">
-          🌟 AI 推薦今週食譜
-        </button>
+      <!-- ── AI推薦 tab ── -->
+      <div id="rec-panel-ai" style="display:none;">
+        <div style="background:linear-gradient(135deg,#FFF8E8,#FFE8C0);border-radius:18px;padding:14px 16px;box-shadow:0 4px 14px rgba(180,100,0,.07);margin-bottom:12px;">
+          <div style="font-size:13px;font-weight:800;color:#8A5000;margin-bottom:6px;">✨ AI 推薦食譜</div>
+          <div style="font-size:11px;font-weight:600;color:#B07000;margin-bottom:10px;">根據寶寶月齡和已嘗試食材，AI 為您推薦適合的食譜</div>
+          <button onclick="recAIRecommend()" style="width:100%;padding:11px;border-radius:50px;border:none;background:linear-gradient(135deg,#F0B040,#A07000);color:white;font-size:13px;font-weight:900;cursor:pointer;font-family:inherit;box-shadow:0 4px 14px rgba(160,112,0,.3);">
+            🌟 AI 推薦今週食譜
+          </button>
+        </div>
+        <div id="rec-cards-list"></div>
       </div>
 
-      <!-- Recipe cards -->
-      <div id="rec-cards-list"></div>
     </div>
+  </div>
+</div>
+
+<!-- ===== ADD RECIPE LINK MODAL ===== -->
+<div class="out-modal-bg" id="rec-add-link-modal" onclick="if(event.target===this){recCloseAddLink();}">
+  <div class="out-modal" id="rec-add-link-box">
+    <div class="om-handle"></div>
+    <div style="font-size:18px;font-weight:900;color:#8A5000;margin-bottom:4px;text-align:center;" id="rec-link-modal-title">🔖 收藏食譜連結</div>
+    <div style="font-size:11px;color:#A07040;font-weight:600;text-align:center;margin-bottom:16px;">把 Facebook、IG、Threads 的食譜影片連結貼進來</div>
+
+    <div style="font-size:12px;font-weight:800;color:var(--text-dark);margin-bottom:6px;">🔗 食譜連結（必填）</div>
+    <input id="rec-link-url" type="url" placeholder="https://www.instagram.com/…" oninput="recPreviewLink()"
+      style="width:100%;padding:11px 14px;border:2px solid #E0C080;border-radius:14px;font-family:inherit;font-size:13px;font-weight:700;background:#FFFBF0;outline:none;margin-bottom:4px;">
+    <div id="rec-link-platform-badge" style="font-size:11px;font-weight:700;color:#A07040;margin-bottom:10px;min-height:16px;"></div>
+
+    <div style="font-size:12px;font-weight:800;color:var(--text-dark);margin-bottom:6px;">📝 食譜名稱（必填）</div>
+    <input id="rec-link-name" placeholder="例如：南瓜地瓜泥、雞肉蔬菜粥…"
+      style="width:100%;padding:11px 14px;border:2px solid #E0C080;border-radius:14px;font-family:inherit;font-size:13px;font-weight:700;background:#FFFBF0;outline:none;margin-bottom:10px;">
+
+    <div style="font-size:12px;font-weight:800;color:var(--text-dark);margin-bottom:6px;">🏷️ 分類</div>
+    <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px;" id="rec-link-cat-chips">
+      <button class="rec-cat-chip on" data-cat="puree"      onclick="recLinkSetCat('puree',this)"     style="padding:6px 12px;border-radius:50px;border:2px solid #F0B040;background:#F0B040;color:white;font-size:11px;font-weight:800;cursor:pointer;font-family:inherit;">🥣 泥狀</button>
+      <button class="rec-cat-chip"    data-cat="mash"       onclick="recLinkSetCat('mash',this)"      style="padding:6px 12px;border-radius:50px;border:2px solid #E0C080;background:white;color:#8A6000;font-size:11px;font-weight:800;cursor:pointer;font-family:inherit;">🍲 軟爛</button>
+      <button class="rec-cat-chip"    data-cat="finger"     onclick="recLinkSetCat('finger',this)"    style="padding:6px 12px;border-radius:50px;border:2px solid #E0C080;background:white;color:#8A6000;font-size:11px;font-weight:800;cursor:pointer;font-family:inherit;">👆 手指食物</button>
+      <button class="rec-cat-chip"    data-cat="self"       onclick="recLinkSetCat('self',this)"      style="padding:6px 12px;border-radius:50px;border:2px solid #E0C080;background:white;color:#8A6000;font-size:11px;font-weight:800;cursor:pointer;font-family:inherit;">🍽️ 自主進食</button>
+      <button class="rec-cat-chip"    data-cat="ingredient" onclick="recLinkSetCat('ingredient',this)" style="padding:6px 12px;border-radius:50px;border:2px solid #E0C080;background:white;color:#8A6000;font-size:11px;font-weight:800;cursor:pointer;font-family:inherit;">🥕 食材</button>
+      <button class="rec-cat-chip"    data-cat="snack"      onclick="recLinkSetCat('snack',this)"     style="padding:6px 12px;border-radius:50px;border:2px solid #E0C080;background:white;color:#8A6000;font-size:11px;font-weight:800;cursor:pointer;font-family:inherit;">🍪 點心</button>
+      <button class="rec-cat-chip"    data-cat="other"      onclick="recLinkSetCat('other',this)"     style="padding:6px 12px;border-radius:50px;border:2px solid #E0C080;background:white;color:#8A6000;font-size:11px;font-weight:800;cursor:pointer;font-family:inherit;">📌 其他</button>
+    </div>
+
+    <div style="font-size:12px;font-weight:800;color:var(--text-dark);margin-bottom:6px;">🥕 食材標籤（選填，可多個）</div>
+    <input id="rec-link-tags" placeholder="例如：南瓜、地瓜、雞肉（用逗號分隔）"
+      style="width:100%;padding:10px 14px;border:2px solid #E0C080;border-radius:14px;font-family:inherit;font-size:13px;font-weight:700;background:#FFFBF0;outline:none;margin-bottom:10px;">
+
+    <div style="font-size:12px;font-weight:800;color:var(--text-dark);margin-bottom:6px;">📝 備註（選填）</div>
+    <textarea id="rec-link-note" rows="2" placeholder="例如：寶寶很愛！下次加一點薑…"
+      style="width:100%;padding:10px 14px;border:2px solid #E0C080;border-radius:14px;font-family:inherit;font-size:13px;font-weight:600;resize:none;outline:none;background:#FFFBF0;margin-bottom:14px;"></textarea>
+
+    <button onclick="recSaveLink()" style="width:100%;padding:14px;border-radius:50px;border:none;background:linear-gradient(135deg,#F0B040,#A07000);color:white;font-size:15px;font-weight:900;cursor:pointer;font-family:inherit;box-shadow:0 5px 16px rgba(160,112,0,.3);margin-bottom:10px;">
+      🔖 儲存食譜連結
+    </button>
+    <button onclick="recCloseAddLink()" style="width:100%;padding:12px;border-radius:50px;border:2px solid #E0C080;background:white;color:#A07040;font-size:13px;font-weight:800;cursor:pointer;font-family:inherit;">取消</button>
   </div>
 </div>
 
@@ -6146,7 +6311,7 @@
     <div class="topbar-title">📔 成長日記</div>
     <div style="width:38px"></div>
   </div>
-  <div class="scroll-content" style="padding-bottom:100px;">
+  <div class="scroll-content" style="padding-bottom:160px;">
     <!-- Hero stats -->
     <div style="background:linear-gradient(145deg,#FFD4A8,#FFBE8A,#FFA870);padding:24px 20px 20px;border-radius:0 0 28px 28px;margin-bottom:14px;">
       <div style="display:flex;justify-content:space-between;align-items:center;">
@@ -6298,7 +6463,7 @@
   </div>
 
   <!-- CHART PANEL -->
-  <div id="sz-panel-chart" style="flex:1;overflow-y:auto;padding-bottom:calc(80px + env(safe-area-inset-bottom));scrollbar-width:none;">
+  <div id="sz-panel-chart" style="flex:1;overflow-y:auto;padding-bottom:calc(160px + env(safe-area-inset-bottom));scrollbar-width:none;">
 
     <!-- Current size highlight card -->
     <div style="margin:12px 16px 0;background:linear-gradient(135deg,#FFE8F8,#FFD0EE);border-radius:20px;padding:16px 18px;box-shadow:0 4px 16px rgba(160,32,128,.12);" id="sz-current-card">
@@ -6335,7 +6500,7 @@
   </div>
 
   <!-- WARDROBE PANEL -->
-  <div id="sz-panel-wardrobe" style="display:none;flex:1;overflow-y:auto;padding-bottom:calc(80px + env(safe-area-inset-bottom));scrollbar-width:none;">
+  <div id="sz-panel-wardrobe" style="display:none;flex:1;overflow-y:auto;padding-bottom:calc(160px + env(safe-area-inset-bottom));scrollbar-width:none;">
 
     <!-- Type filter row -->
     <div style="padding:10px 16px 4px;display:flex;gap:7px;overflow-x:auto;scrollbar-width:none;" id="sz-wardrobe-filter"></div>
@@ -6364,7 +6529,7 @@
   </div>
 
   <!-- MEASURE PANEL -->
-  <div id="sz-panel-measure" style="display:none;flex:1;overflow-y:auto;padding-bottom:calc(80px + env(safe-area-inset-bottom));scrollbar-width:none;">
+  <div id="sz-panel-measure" style="display:none;flex:1;overflow-y:auto;padding-bottom:calc(160px + env(safe-area-inset-bottom));scrollbar-width:none;">
 
     <!-- Add measurement -->
     <div class="meas-card" style="margin:12px 16px 0;">
@@ -6595,7 +6760,7 @@
   </div>
 
   <!-- STOCK PANEL -->
-  <div id="inv-panel-stock" style="flex:1;overflow-y:auto;padding-bottom:calc(80px + env(safe-area-inset-bottom));scrollbar-width:none;">
+  <div id="inv-panel-stock" style="flex:1;overflow-y:auto;padding-bottom:calc(160px + env(safe-area-inset-bottom));scrollbar-width:none;">
 
     <!-- Alert banner -->
     <div id="inv-alert-banner" style="padding:10px 16px 0;"></div>
@@ -6771,7 +6936,7 @@
   </div>
 
   <!-- RECORD PANEL -->
-  <div id="bgt-panel-record" style="flex:1;overflow-y:auto;padding-bottom:calc(80px + env(safe-area-inset-bottom));scrollbar-width:none;">
+  <div id="bgt-panel-record" style="flex:1;overflow-y:auto;padding-bottom:calc(160px + env(safe-area-inset-bottom));scrollbar-width:none;">
 
     <!-- Month nav -->
     <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 20px 0;">
@@ -7001,7 +7166,7 @@
   </div>
 
   <!-- FAMILY MESSAGE BOARD PANEL -->
-  <div id="fam-panel-board" style="display:none;flex:1;overflow-y:auto;padding-bottom:calc(80px + env(safe-area-inset-bottom));scrollbar-width:none;">
+  <div id="fam-panel-board" style="display:none;flex:1;overflow-y:auto;padding-bottom:calc(160px + env(safe-area-inset-bottom));scrollbar-width:none;">
     <div style="padding:12px 16px 0;">
       <button onclick="boardOpenNew()" style="width:100%;padding:12px;border-radius:16px;border:2px dashed #F0C0A0;background:white;font-size:13px;font-weight:800;color:#C07000;cursor:pointer;font-family:inherit;display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:10px;">💬 新增留言</button>
       <div style="display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;padding-bottom:2px;" id="board-type-filter">
@@ -7913,13 +8078,7 @@ function changeCC(delta) { currentCC=Math.max(10,Math.min(500,currentCC+delta));
 
 // ===== SAVE MILK =====
 // Unified milk log array
-let milkLogs = [
-  {id:1001,type:'breast',leftSecs:500,rightSecs:310,ts:new Date().setHours(6,30,0,0),dateStr:new Date().toDateString(),note:''},
-  {id:1002,type:'bottle',cc:150,brand:'惠氏啟賦',ts:new Date().setHours(10,15,0,0),dateStr:new Date().toDateString(),note:''},
-  {id:1003,type:'bottle',cc:180,brand:'惠氏啟賦',ts:new Date().setHours(14,0,0,0),dateStr:new Date().toDateString(),note:''},
-  {id:1004,type:'breast',leftSecs:600,rightSecs:450,ts:new Date().setHours(17,45,0,0),dateStr:new Date().toDateString(),note:''},
-  {id:1005,type:'bottle',cc:120,brand:'親餵母乳（瓶餵）',ts:new Date().setHours(21,0,0,0),dateStr:new Date().toDateString(),note:''},
-];
+let milkLogs = [];
 
 function saveBreastfeed() {
   const ls=timers.left.secs, rs=timers.right.secs;
@@ -12178,14 +12337,6 @@ function illDept(btn, dept) {
 }
 
 // Also fix illSetStatus and illToggleSym to ensure they work
-function illSetStatus(status, btn) {
-  document.querySelectorAll('#ill-add-modal .sym-chip[id^="ill-status"]').forEach(b => {
-    b.style.background='white'; b.classList.remove('on');
-  });
-  if (btn) { btn.style.background='#F0B0C8'; btn.classList.add('on'); }
-  document.getElementById('ill-sel-status')?.setAttribute('data-val', status);
-}
-
 // ── Dental Record Functions ───────────────────────────
 let dentalFSel = 'yes'; // yes | no
 let dentalSelSyms = []; // selected dental symptoms
@@ -14396,8 +14547,163 @@ function outCountyClick(county) {
   sShowToast('📍 已選擇 ' + county);
 }
 
+// ── Wishlist (待去景點) ───────────────────────────────
+let outWishlist = [];        // {id,url,name,cat,tags,note,platform,visited,savedAt}
+let outWishSelCat = 'park';
+let outWishFilterCurCat = 'all';
+let outWishEditId = null;
+
+const WISH_CAT_LABEL = {park:'🌳 公園',museum:'🏛️ 博物館',food:'🍽️ 親子餐廳',nature:'🌊 自然景點',indoor:'🏠 室內設施',other:'📍 其他'};
+
+function wishPreviewPlatform() {
+  const url = document.getElementById('wish-inp-url')?.value.trim()||'';
+  const badge = document.getElementById('wish-platform-badge');
+  if (badge) badge.textContent = url ? (typeof recDetectPlatform==='function' ? recDetectPlatform(url) : '🔗 連結') : '';
+}
+
+function wishSetCat(cat, btn) {
+  outWishSelCat = cat;
+  document.querySelectorAll('#wish-cat-chips .wish-cat-chip').forEach(b=>{
+    const on = b.dataset.cat===cat;
+    b.style.background   = on?'#38B860':'white';
+    b.style.borderColor  = on?'#38B860':'#A0D8B0';
+    b.style.color        = on?'white':'#1A6040';
+  });
+}
+
+function outWishFilterCat(cat, btn) {
+  outWishFilterCurCat = cat;
+  document.querySelectorAll('#wish-cat-filter .wish-cat-btn').forEach(b=>{
+    const on = b.dataset.cat===cat;
+    b.style.background  = on?'#38B860':'white';
+    b.style.borderColor = on?'#38B860':'#A0D8B0';
+    b.style.color       = on?'white':'#1A6040';
+  });
+  outWishRender();
+}
+
+function outWishOpenAdd(editId) {
+  outWishEditId = editId||null;
+  const titleEl = document.getElementById('wish-modal-title');
+  if (titleEl) titleEl.textContent = editId ? '✏️ 編輯待去景點' : '📌 新增待去景點';
+  if (editId) {
+    const r = outWishlist.find(x=>x.id===editId);
+    if (r) {
+      document.getElementById('wish-inp-url').value  = r.url||'';
+      document.getElementById('wish-inp-name').value = r.name||'';
+      document.getElementById('wish-inp-tags').value = (r.tags||[]).join('、');
+      document.getElementById('wish-inp-note').value = r.note||'';
+      wishSetCat(r.cat||'park',null);
+      wishPreviewPlatform();
+    }
+  } else {
+    document.getElementById('wish-inp-url').value  = '';
+    document.getElementById('wish-inp-name').value = '';
+    document.getElementById('wish-inp-tags').value = '';
+    document.getElementById('wish-inp-note').value = '';
+    wishSetCat('park',null);
+    const badge = document.getElementById('wish-platform-badge');
+    if (badge) badge.textContent='';
+  }
+  const modal = document.getElementById('wish-add-modal');
+  modal.style.opacity='1'; modal.style.pointerEvents='auto';
+  document.getElementById('wish-add-box').style.transform='translateY(0)';
+}
+
+function outWishCloseAdd() {
+  const modal = document.getElementById('wish-add-modal');
+  modal.style.opacity='0'; modal.style.pointerEvents='none';
+  document.getElementById('wish-add-box').style.transform='translateY(100%)';
+}
+
+function outWishSave() {
+  const url  = document.getElementById('wish-inp-url').value.trim();
+  const name = document.getElementById('wish-inp-name').value.trim();
+  if (!url)  { sShowToast('請貼上景點連結！'); return; }
+  if (!name) { sShowToast('請輸入景點名稱！'); return; }
+  const tagsRaw = document.getElementById('wish-inp-tags').value.trim();
+  const tags = tagsRaw ? tagsRaw.split(/[，,、\s]+/).filter(Boolean) : [];
+  const note = document.getElementById('wish-inp-note').value.trim();
+  const platform = typeof recDetectPlatform==='function' ? recDetectPlatform(url) : '🔗 連結';
+  const rec = { id: outWishEditId||Date.now(), url, name, cat: outWishSelCat, tags, note, platform, visited: false, savedAt: new Date().toISOString() };
+  if (outWishEditId) {
+    const idx = outWishlist.findIndex(x=>x.id===outWishEditId);
+    if (idx>=0) outWishlist[idx] = {...outWishlist[idx], ...rec};
+  } else {
+    outWishlist.unshift(rec);
+  }
+  outWishEditId = null;
+  outWishCloseAdd();
+  outWishRender();
+  dbAutosave();
+  sShowToast('✅ 景點已收藏！');
+  showVoice('待去景點加進來囉 📌 期待帶寶寶一起去！');
+}
+
+function outWishToggleVisited(id) {
+  const r = outWishlist.find(x=>x.id===id);
+  if (r) { r.visited = !r.visited; outWishRender(); dbAutosave(); sShowToast(r.visited?'✅ 已去過！':'📌 標回待去'); }
+}
+
+function outWishDelete(id) {
+  customConfirm('確定刪除這個待去景點？', ()=>{
+    outWishlist = outWishlist.filter(x=>x.id!==id);
+    outWishRender(); dbAutosave(); sShowToast('已刪除');
+  }, '🗑️');
+}
+
+function outWishRender() {
+  const listEl  = document.getElementById('wish-list');
+  const emptyEl = document.getElementById('wish-empty');
+  if (!listEl) return;
+  const q   = (document.getElementById('wish-search-inp')?.value||'').trim().toLowerCase();
+  const cat = outWishFilterCurCat;
+  const items = outWishlist.filter(r=>{
+    const catOk = cat==='all'||r.cat===cat;
+    const qOk   = !q||r.name.toLowerCase().includes(q)||(r.tags||[]).some(t=>t.toLowerCase().includes(q))||(r.note||'').toLowerCase().includes(q);
+    return catOk && qOk;
+  });
+  if (!items.length) {
+    listEl.innerHTML='';
+    if (emptyEl) {
+      emptyEl.style.display='';
+      if (outWishlist.length>0 && (q||cat!=='all')) {
+        emptyEl.innerHTML=`<div style="font-size:2rem;margin-bottom:8px;">🔍</div><div style="font-size:14px;font-weight:800;color:var(--text-dark);">找不到符合的景點</div><div style="font-size:12px;color:var(--text-light);font-weight:600;margin-top:6px;">換個分類或清空搜尋試試</div>`;
+      }
+    }
+    return;
+  }
+  if (emptyEl) emptyEl.style.display='none';
+  // Sort: unvisited first, then visited
+  const sorted = [...items].sort((a,b)=>Number(a.visited)-Number(b.visited));
+  listEl.innerHTML = sorted.map(r=>{
+    const catLabel = WISH_CAT_LABEL[r.cat]||r.cat;
+    const tagHtml  = (r.tags||[]).map(t=>`<span style="background:#EDFAF3;color:#1A6040;border-radius:50px;padding:2px 8px;font-size:10px;font-weight:700;">${t}</span>`).join(' ');
+    const visitedStyle = r.visited ? 'opacity:.65;' : '';
+    const visitedBadge = r.visited ? `<span style="background:#E8F8EE;color:#1A7040;border-radius:50px;padding:2px 8px;font-size:10px;font-weight:800;margin-left:6px;">✅ 已去</span>` : '';
+    return `<div style="background:white;border-radius:16px;padding:14px 16px;box-shadow:0 3px 10px rgba(26,96,64,.08);margin-bottom:10px;border-left:4px solid ${r.visited?'#B0D8B8':'#38B860'};${visitedStyle}">
+      <div style="display:flex;align-items:flex-start;gap:10px;">
+        <div style="flex:1;min-width:0;">
+          <div style="font-size:13px;font-weight:900;color:var(--text-dark);margin-bottom:3px;">${r.name}${visitedBadge}</div>
+          <div style="font-size:11px;font-weight:700;color:#5A9A70;margin-bottom:4px;">${r.platform} · ${catLabel}</div>
+          ${tagHtml?`<div style="display:flex;flex-wrap:wrap;gap:4px;margin-bottom:6px;">${tagHtml}</div>`:''}
+          ${r.note?`<div style="font-size:11px;color:var(--text-light);font-weight:600;">${r.note}</div>`:''}
+        </div>
+        <div style="display:flex;flex-direction:column;gap:5px;flex-shrink:0;align-items:flex-end;">
+          <button onclick="window.open('${r.url.replace(/'/g,"\\'")}','_blank')" style="padding:6px 12px;border-radius:50px;border:none;background:linear-gradient(135deg,#38B860,#1A6040);color:white;font-size:11px;font-weight:800;cursor:pointer;font-family:inherit;white-space:nowrap;">▶ 開啟</button>
+          <div style="display:flex;gap:4px;">
+            <button onclick="outWishToggleVisited(${r.id})" title="${r.visited?'標為待去':'標為已去'}" style="width:28px;height:28px;border-radius:50%;border:none;background:${r.visited?'#F0FFF4':'#EDFAF3'};color:${r.visited?'#888':'#1A7040'};font-size:13px;cursor:pointer;">✅</button>
+            <button onclick="outWishOpenAdd(${r.id})" style="width:28px;height:28px;border-radius:50%;border:none;background:#F5FDF7;color:#3A8050;font-size:13px;cursor:pointer;">✏️</button>
+            <button onclick="outWishDelete(${r.id})" style="width:28px;height:28px;border-radius:50%;border:none;background:#FFF5F5;color:#C04040;font-size:13px;cursor:pointer;">🗑</button>
+          </div>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
 function outTab(tab) {
-  ['map','log','album','checklist','stats'].forEach(t => {
+  ['map','log','wishlist','album','checklist','stats'].forEach(t => {
     const btn = document.getElementById('otat-'+t);
     const pnl = document.getElementById('out-panel-'+t);
     if(btn) btn.classList.toggle('on', t===tab);
@@ -14407,6 +14713,7 @@ function outTab(tab) {
   if (tab==='stats')     outRenderStats();
   if (tab==='checklist') outChecklistInit();
   if (tab==='album')     outRenderAlbum();
+  if (tab==='wishlist')  outWishRender();
   if (tab==='map')       { outRenderMap(); setTimeout(()=>_leafletMap?.invalidateSize(),300); }
 }
 
@@ -14709,13 +15016,71 @@ function outRenderRecentList() {
 }
 
 // ── Log list ──────────────────────────────────────────
+function outPreviewVideoLink() {
+  const url = document.getElementById('out-inp-videourl')?.value.trim()||'';
+  const badge = document.getElementById('out-video-platform-badge');
+  if (!badge) return;
+  if (!url) { badge.textContent=''; return; }
+  const p = recDetectPlatform ? recDetectPlatform(url) : '🔗 連結';
+  badge.textContent = p;
+}
+
+function outOpenEdit(id) {
+  const a = outActivities.find(x=>x.id===id);
+  if (!a) return;
+  outEditId = id;
+  outSelCat = a.cat; outSelCounty = a.county||'';
+  outSelWeather = a.weather||'☀️'; outSelMood = a.mood||'😄';
+  document.getElementById('out-inp-place').value = a.place||'';
+  document.getElementById('out-inp-date').value  = a.date||'';
+  document.getElementById('out-inp-note').value  = a.note||'';
+  const vuEl = document.getElementById('out-inp-videourl');
+  if (vuEl) vuEl.value = a.videoUrl||'';
+  const ptEl = document.getElementById('out-inp-placetags');
+  if (ptEl) ptEl.value = (a.placeTags||[]).join('、');
+  outPreviewVideoLink();
+  outCurrentPhoto = a.photo||null;
+  const prev = document.getElementById('out-photo-preview');
+  const img  = document.getElementById('out-photo-img');
+  if (prev && img && outCurrentPhoto) { img.src=outCurrentPhoto; prev.style.display=''; }
+  outRebuildCatChips(); outRebuildCountyGrid(); outRebuildWeatherChips(); outRebuildMoodChips();
+  document.getElementById('out-modal-title').textContent='✏️ 編輯活動紀錄';
+  document.getElementById('out-add-modal').classList.add('open');
+}
+
+// out log list search state
+let outLogSearchQ = '';
+let outLogPlaceTagFilter = '';
+
 function outRenderLogList() {
   const el = document.getElementById('out-log-list');
   if (!el) return;
-  const filtered = outLogCatFilter==='all' ? outActivities : outActivities.filter(a=>a.cat===outLogCatFilter);
-  const sorted   = [...filtered].sort((a,b)=>new Date(b.date)-new Date(a.date));
+  // Build search + filter UI header if not already there
+  let searchBar = document.getElementById('out-log-search-bar');
+  if (!searchBar) {
+    searchBar = document.createElement('div');
+    searchBar.id = 'out-log-search-bar';
+    searchBar.style.cssText = 'margin-bottom:10px;';
+    searchBar.innerHTML = `
+      <div style="display:flex;gap:8px;margin-bottom:8px;">
+        <input id="out-log-q" placeholder="搜尋地點、備註、標籤…" oninput="outLogSearch()"
+          style="flex:1;padding:9px 12px;border:2px solid #C0E0C8;border-radius:12px;font-family:inherit;font-size:13px;font-weight:700;background:#F5FDF7;outline:none;">
+        <button onclick="outLogSearch()" style="padding:9px 14px;border-radius:50px;border:none;background:#40C070;color:white;font-size:12px;font-weight:800;cursor:pointer;font-family:inherit;">🔍</button>
+      </div>
+      <div id="out-placetag-filter" style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:4px;"></div>
+    `;
+    el.parentNode.insertBefore(searchBar, el);
+    // Build place tag cloud
+    outRebuildPlaceTagCloud();
+  }
+  const q    = outLogSearchQ.toLowerCase();
+  const ptag = outLogPlaceTagFilter;
+  let filtered = outLogCatFilter==='all' ? outActivities : outActivities.filter(a=>a.cat===outLogCatFilter);
+  if (q)    filtered = filtered.filter(a => (a.place||'').toLowerCase().includes(q)||(a.note||'').toLowerCase().includes(q)||(a.placeTags||[]).some(t=>t.toLowerCase().includes(q)));
+  if (ptag) filtered = filtered.filter(a => (a.placeTags||[]).includes(ptag));
+  const sorted = [...filtered].sort((a,b)=>new Date(b.date)-new Date(a.date));
   if (!sorted.length) {
-    el.innerHTML='<div style="text-align:center;padding:30px;color:var(--text-light);font-size:13px;font-weight:700;">沒有符合的活動紀錄</div>';
+    el.innerHTML='<div style="text-align:center;padding:30px;color:var(--text-light);font-size:13px;font-weight:700;">' + (q||ptag?'找不到符合的紀錄':'還沒有活動紀錄') + '</div>';
     return;
   }
   let lastDate='';
@@ -14725,12 +15090,16 @@ function outRenderLogList() {
     const isNew  = lastDate!==a.date;
     lastDate = a.date;
     const hdr = isNew ? `<div style="font-size:11px;font-weight:800;color:var(--text-light);padding:8px 0 4px;">${a.date}</div>` : '';
+    const tagHtml = (a.placeTags||[]).map(t=>`<span onclick="outFilterByTag('${t}')" style="background:#EDFAF3;color:#1A7040;border-radius:50px;padding:2px 8px;font-size:10px;font-weight:700;cursor:pointer;">${t}</span>`).join(' ');
+    const videoBtn = a.videoUrl ? `<button onclick="window.open('${a.videoUrl.replace(/'/g,"\\'")}','_blank')" style="margin-top:4px;padding:4px 10px;border-radius:50px;border:none;background:linear-gradient(135deg,#40C070,#1A6A30);color:white;font-size:10px;font-weight:800;cursor:pointer;font-family:inherit;">▶ 看影片</button>` : '';
     return `${hdr}<div class="act-card">
       <div class="act-icon" style="background:${cat?.bg||'#EEE'};">${cat?.em||'📍'}</div>
-      <div class="act-info">
+      <div class="act-info" style="min-width:0;flex:1;">
         <div class="act-name">${a.place||cat?.name||'戶外活動'}</div>
         <div class="act-loc">${county?county.name:''}${a.weather?' '+a.weather:''}${a.mood?' '+a.mood:''}</div>
         ${a.note?`<div style="font-size:10px;color:var(--text-light);margin-top:2px;">${a.note}</div>`:''}
+        ${tagHtml?`<div style="display:flex;flex-wrap:wrap;gap:3px;margin-top:4px;">${tagHtml}</div>`:''}
+        ${videoBtn}
       </div>
       <div class="act-right">
         <span class="act-cat-badge" style="background:${cat?.bg||'#EEE'};color:${cat?.color||'#666'};">${cat?.name||''}</span>
@@ -14740,6 +15109,28 @@ function outRenderLogList() {
         </div>
       </div>
     </div>`;
+  }).join('');
+}
+
+function outLogSearch() {
+  outLogSearchQ = document.getElementById('out-log-q')?.value||'';
+  outRenderLogList();
+}
+
+function outFilterByTag(tag) {
+  outLogPlaceTagFilter = outLogPlaceTagFilter===tag ? '' : tag;
+  outRebuildPlaceTagCloud();
+  outRenderLogList();
+}
+
+function outRebuildPlaceTagCloud() {
+  const el = document.getElementById('out-placetag-filter');
+  if (!el) return;
+  const allTags = [...new Set(outActivities.flatMap(a=>a.placeTags||[]))];
+  if (!allTags.length) { el.innerHTML=''; return; }
+  el.innerHTML = allTags.map(t => {
+    const on = outLogPlaceTagFilter===t;
+    return `<span onclick="outFilterByTag('${t}')" style="padding:4px 10px;border-radius:50px;border:2px solid ${on?'#40C070':'#C0E0C8'};background:${on?'#40C070':'white'};color:${on?'white':'#1A6040'};font-size:11px;font-weight:800;cursor:pointer;">${t}</span>`;
   }).join('');
 }
 
@@ -14852,13 +15243,15 @@ function openOutModal(editId) {
   const outBox = document.querySelector('#out-add-modal .out-modal');
   if (outBox) try { outBox.scrollTop = 0; } catch(e) {}
 }
-function outOpenEdit(id) { openOutModal(id); }
 function outModalBg(e)   { if(e.target.id==='out-add-modal') document.getElementById('out-add-modal').classList.remove('open'); }
 
 function outSaveActivity() {
   const place = document.getElementById('out-inp-place').value.trim();
   const date  = document.getElementById('out-inp-date').value;
   const note  = document.getElementById('out-inp-note').value.trim();
+  const videoUrl   = document.getElementById('out-inp-videourl')?.value.trim() || '';
+  const placeTagsRaw = document.getElementById('out-inp-placetags')?.value.trim() || '';
+  const placeTags  = placeTagsRaw ? placeTagsRaw.split(/[，,、\s]+/).filter(Boolean) : [];
   if (!date) { sShowToast('請選擇日期！'); return; }
 
   const rec = {
@@ -14867,6 +15260,7 @@ function outSaveActivity() {
     date, weather: outSelWeather, mood: outSelMood, note,
     lat: outGeoLat, lng: outGeoLng,
     photo: outCurrentPhoto || null,
+    videoUrl, placeTags,
   };
 
   if (outEditId) {
@@ -18429,9 +18823,181 @@ const BUILT_IN_RECIPES = {
   ]
 };
 
+// ── Recipe link saved items ───────────────────────────
+let recSavedLinks = [];      // {id,url,name,cat,tags,note,platform,savedAt}
+let recLinkSelCat = 'puree';
+let recFilterCatCur = 'all';
+let recCurTab = 'saved';
+let recEditLinkId = null;
+
+const REC_CAT_MAP = {
+  all:'全部', puree:'🥣 泥狀', mash:'🍲 軟爛', finger:'👆 手指食物',
+  self:'🍽️ 自主進食', ingredient:'🥕 食材', snack:'🍪 點心', other:'📌 其他'
+};
+
+function recDetectPlatform(url) {
+  if (!url) return '';
+  if (url.includes('facebook.com') || url.includes('fb.watch')) return '📘 Facebook';
+  if (url.includes('instagram.com') || url.includes('instagr.am')) return '📸 Instagram';
+  if (url.includes('threads.net')) return '🧵 Threads';
+  if (url.includes('youtube.com') || url.includes('youtu.be')) return '▶️ YouTube';
+  if (url.includes('tiktok.com')) return '🎵 TikTok';
+  if (url.includes('twitter.com') || url.includes('x.com')) return '🐦 X (Twitter)';
+  return '🔗 網頁連結';
+}
+
+function recPreviewLink() {
+  const url = document.getElementById('rec-link-url')?.value.trim() || '';
+  const badge = document.getElementById('rec-link-platform-badge');
+  if (badge) badge.textContent = url ? recDetectPlatform(url) : '';
+}
+
+function recLinkSetCat(cat, btn) {
+  recLinkSelCat = cat;
+  document.querySelectorAll('#rec-link-cat-chips .rec-cat-chip').forEach(b => {
+    const isSel = b.dataset.cat === cat;
+    b.style.background = isSel ? '#F0B040' : 'white';
+    b.style.borderColor = isSel ? '#F0B040' : '#E0C080';
+    b.style.color       = isSel ? 'white'   : '#8A6000';
+  });
+}
+
+function recFilterCat(cat, btn) {
+  recFilterCatCur = cat;
+  document.querySelectorAll('#rec-cat-filter .rec-cat-btn').forEach(b => {
+    const isSel = b.dataset.cat === cat;
+    b.style.background = isSel ? '#F0B040' : 'white';
+    b.style.borderColor = isSel ? '#F0B040' : '#E0C080';
+    b.style.color       = isSel ? 'white'   : '#8A6000';
+  });
+  recRenderLinks();
+}
+
+function recSwitchTab(tab) {
+  recCurTab = tab;
+  document.getElementById('rec-panel-saved').style.display = tab==='saved' ? '' : 'none';
+  document.getElementById('rec-panel-ai').style.display    = tab==='ai'    ? '' : 'none';
+  const btnS = document.getElementById('rec-tab-saved');
+  const btnA = document.getElementById('rec-tab-ai');
+  if (btnS) { btnS.style.background = tab==='saved'?'white':'transparent'; btnS.style.color=tab==='saved'?'#8A5000':'#A07040'; btnS.style.boxShadow=tab==='saved'?'0 2px 6px rgba(140,80,0,.12)':'none'; }
+  if (btnA) { btnA.style.background = tab==='ai'?'white':'transparent';    btnA.style.color=tab==='ai'?'#8A5000':'#A07040';    btnA.style.boxShadow=tab==='ai'?'0 2px 6px rgba(140,80,0,.12)':'none'; }
+}
+
+function recOpenAddLink(editId) {
+  recEditLinkId = editId || null;
+  const titleEl = document.getElementById('rec-link-modal-title');
+  if (titleEl) titleEl.textContent = editId ? '✏️ 編輯食譜連結' : '🔖 收藏食譜連結';
+  if (editId) {
+    const r = recSavedLinks.find(x=>x.id===editId);
+    if (r) {
+      document.getElementById('rec-link-url').value  = r.url  || '';
+      document.getElementById('rec-link-name').value = r.name || '';
+      document.getElementById('rec-link-tags').value = (r.tags||[]).join('、');
+      document.getElementById('rec-link-note').value = r.note || '';
+      recLinkSetCat(r.cat || 'puree', null);
+      recPreviewLink();
+    }
+  } else {
+    document.getElementById('rec-link-url').value  = '';
+    document.getElementById('rec-link-name').value = '';
+    document.getElementById('rec-link-tags').value = '';
+    document.getElementById('rec-link-note').value = '';
+    recLinkSetCat('puree', null);
+    document.getElementById('rec-link-platform-badge').textContent = '';
+  }
+  const modal = document.getElementById('rec-add-link-modal');
+  modal.style.opacity='1'; modal.style.pointerEvents='auto';
+  document.getElementById('rec-add-link-box').style.transform='translateY(0)';
+}
+function recCloseAddLink() {
+  const modal = document.getElementById('rec-add-link-modal');
+  modal.style.opacity='0'; modal.style.pointerEvents='none';
+  document.getElementById('rec-add-link-box').style.transform='translateY(100%)';
+}
+
+function recSaveLink() {
+  const url  = document.getElementById('rec-link-url').value.trim();
+  const name = document.getElementById('rec-link-name').value.trim();
+  if (!url)  { sShowToast('請貼上食譜連結！'); return; }
+  if (!name) { sShowToast('請輸入食譜名稱！'); return; }
+  const tagsRaw = document.getElementById('rec-link-tags').value.trim();
+  const tags = tagsRaw ? tagsRaw.split(/[，,、\s]+/).filter(Boolean) : [];
+  const note = document.getElementById('rec-link-note').value.trim();
+  const rec  = {
+    id: recEditLinkId || Date.now(),
+    url, name, cat: recLinkSelCat,
+    tags, note,
+    platform: recDetectPlatform(url),
+    savedAt: new Date().toISOString(),
+  };
+  if (recEditLinkId) {
+    const idx = recSavedLinks.findIndex(x=>x.id===recEditLinkId);
+    if (idx>=0) recSavedLinks[idx] = rec;
+  } else {
+    recSavedLinks.unshift(rec);
+  }
+  recEditLinkId = null;
+  recCloseAddLink();
+  recRenderLinks();
+  dbAutosave();
+  sShowToast('✅ 食譜已收藏！');
+  showVoice('食譜收藏好了 🍳 點卡片可以直接打開連結！');
+}
+
+function recDeleteLink(id) {
+  customConfirm('確定刪除這個食譜收藏？', () => {
+    recSavedLinks = recSavedLinks.filter(x=>x.id!==id);
+    recRenderLinks(); dbAutosave(); sShowToast('已刪除');
+  }, '🗑️');
+}
+
+function recRenderLinks() {
+  const listEl  = document.getElementById('rec-link-list');
+  const emptyEl = document.getElementById('rec-link-empty');
+  if (!listEl) return;
+  const q   = (document.getElementById('rec-link-search')?.value||'').trim().toLowerCase();
+  const cat = recFilterCatCur;
+  let items = recSavedLinks.filter(r => {
+    const catOk = cat==='all' || r.cat===cat;
+    const qOk   = !q || r.name.toLowerCase().includes(q) || (r.tags||[]).some(t=>t.toLowerCase().includes(q)) || (r.note||'').toLowerCase().includes(q);
+    return catOk && qOk;
+  });
+  if (!items.length) {
+    listEl.innerHTML='';
+    if (emptyEl) emptyEl.style.display = recSavedLinks.length===0 ? '' : 'block';
+    if (emptyEl && recSavedLinks.length>0) {
+      emptyEl.innerHTML=`<div style="font-size:2rem;margin-bottom:8px;">🔍</div><div style="font-size:14px;font-weight:800;color:var(--text-dark);">找不到符合的食譜</div><div style="font-size:12px;color:var(--text-light);font-weight:600;margin-top:6px;">試試換個分類或清空搜尋</div>`;
+    }
+    return;
+  }
+  if (emptyEl) emptyEl.style.display='none';
+  listEl.innerHTML = items.map(r => {
+    const tagHtml = (r.tags||[]).map(t=>`<span style="background:#FFF0C0;color:#8A6000;border-radius:50px;padding:2px 8px;font-size:10px;font-weight:700;">${t}</span>`).join(' ');
+    const catLabel = REC_CAT_MAP[r.cat] || r.cat;
+    return `<div style="background:white;border-radius:16px;padding:14px 16px;box-shadow:0 3px 10px rgba(120,60,0,.08);margin-bottom:10px;border-left:4px solid #F0B040;">
+      <div style="display:flex;align-items:flex-start;gap:10px;">
+        <div style="flex:1;min-width:0;">
+          <div style="font-size:13px;font-weight:900;color:var(--text-dark);margin-bottom:3px;">${r.name}</div>
+          <div style="font-size:11px;font-weight:700;color:#A07040;margin-bottom:4px;">${r.platform} · ${catLabel}</div>
+          ${tagHtml ? `<div style="display:flex;flex-wrap:wrap;gap:4px;margin-bottom:6px;">${tagHtml}</div>` : ''}
+          ${r.note ? `<div style="font-size:11px;color:var(--text-light);font-weight:600;">${r.note}</div>` : ''}
+        </div>
+        <div style="display:flex;gap:6px;flex-shrink:0;">
+          <button onclick="window.open('${r.url.replace(/'/g,"\\'")}','_blank')" style="padding:7px 12px;border-radius:50px;border:none;background:linear-gradient(135deg,#F0B040,#C08000);color:white;font-size:11px;font-weight:800;cursor:pointer;font-family:inherit;">▶ 開啟</button>
+          <button onclick="recOpenAddLink(${r.id})" style="width:30px;height:30px;border-radius:50%;border:none;background:#F5EFE0;color:#8A6000;font-size:13px;cursor:pointer;">✏️</button>
+          <button onclick="recDeleteLink(${r.id})" style="width:30px;height:30px;border-radius:50%;border:none;background:#FFF0F0;color:#C04040;font-size:13px;cursor:pointer;">🗑</button>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
 function recInit() {
-  recCurrentStage = 'all';
-  recRenderCards();
+  recRenderLinks();
+  recSwitchTab('saved');
+  const all = Object.values(BUILT_IN_RECIPES).flat();
+  const el = document.getElementById('rec-cards-list');
+  if (el) el.innerHTML = all.map(r => recCardHTML(r)).join('');
 }
 
 function recStage(stage, el) {
@@ -19037,10 +19603,6 @@ function packRenderFavorites() {
     </div>`).join('');
 }
 
-function checklistRender() { packRender(); } // alias for backward compat
-function checklistToggle(id) { packToggle(id); }
-function checklistDelete(id) { packDeleteCustom(id); }
-
 function checklistRender() {
   const el = document.getElementById('checklist-items-container');
   if (!el) return;
@@ -19549,6 +20111,153 @@ function showVoice(text) {
 })();
 
 // =====================================================
+// =====================================================
+// EXPORT / IMPORT — 一鍵備份與還原
+// =====================================================
+
+function dbExport() {
+  try {
+    const safe = v => (typeof v !== 'undefined') ? v : undefined;
+    const data = {
+      _version: 'baby_diary_v2', _exportedAt: new Date().toISOString(), _appName: '寶貝日記',
+      babyData: safe(babyData),
+      milkLogs: safe(milkLogs), sTrials: safe(sTrials),
+      wgLogs: safe(wgLogs), suppLogs: safe(suppLogs),
+      slLogs: safe(slLogs), diaperLogs: safe(diaperLogs), careLogs: safe(careLogs),
+      illEpisodes: safe(illEpisodes), illFeverLogs: safe(illFeverLogs), illMeds: safe(illMeds),
+      growthLogs: safe(growthLogs), vaxRecords: safe(vaxRecords), vaxSkipped: safe(vaxSkipped),
+      allergyRecords: safe(allergyRecords), dentalRecords: safe(dentalRecords),
+      vaxAppointments: safe(vaxAppointments),
+      toothRecords: safe(toothRecords), badgeRecords: safe(badgeRecords),
+      msRecords: safe(msRecords), msCustomItems: safe(msCustomItems),
+      assHistory: safe(assHistory), outActivities: safe(outActivities), assResults: safe(assResults),
+      szWardrobeItems: safe(szWardrobeItems), szMeasurements: safe(szMeasurements),
+      szShoppingList: safe(szShoppingList),
+      invItems: safe(invItems), bgtExpenses: safe(bgtExpenses),
+      bgtMonthBudget: safe(bgtMonthBudget), bgtCatBudgets: safe(bgtCatBudgets),
+      famMembers: safe(famMembers), famSelf: safe(famSelf), famInviteCode: safe(famInviteCode),
+      nfySettings: safe(nfySettings), nfyHistory: safe(nfyHistory),
+      fsMealLogs: safe(fsMealLogs), fsCurrentStage: safe(fsCurrentStage),
+      glCustomItems: safe(glCustomItems), glGeneratedItems: safe(glGeneratedItems),
+      diaryEntries: safe(diaryEntries), boardMessages: safe(boardMessages),
+      outChecklistItems: safe(outChecklistItems), outChecklistChecked: safe(outChecklistChecked),
+      packChecked: safe(packChecked), packCustomItems: safe(packCustomItems), packFavorites: safe(packFavorites),
+      featureVisible: safe(featureVisible), recSavedLinks: safe(recSavedLinks),
+    };
+    const json = JSON.stringify(data, null, 2);
+    const blob = new Blob([json], { type: 'application/json' });
+    const url  = URL.createObjectURL(blob);
+    const d = new Date();
+    const pad = n => String(n).padStart(2, '0');
+    const fname = `寶貝日記備份_${d.getFullYear()}${pad(d.getMonth()+1)}${pad(d.getDate())}_${pad(d.getHours())}${pad(d.getMinutes())}.json`;
+    const a = document.createElement('a');
+    a.href = url; a.download = fname;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+    setTimeout(() => URL.revokeObjectURL(url), 3000);
+    expLastExport = new Date().toISOString();
+    dbAutosave(); dbUpdateExportLabel();
+    sShowToast('✅ 備份成功！檔案已儲存到手機');
+    if (navigator.vibrate) navigator.vibrate([50, 30, 50]);
+  } catch(e) { sShowToast('⚠️ 匯出失敗：' + e.message); }
+}
+
+function dbImportTrigger() {
+  document.getElementById('db-import-file').value = '';
+  document.getElementById('db-import-file').click();
+}
+
+function dbImportFile(input) {
+  const file = input.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    try {
+      const d = JSON.parse(e.target.result);
+      if (!d._version || !d.babyData) { sShowToast('⚠️ 檔案格式不對，請選擇寶貝日記的備份檔'); return; }
+      const milkCount  = (d.milkLogs  || []).length;
+      const sleepCount = (d.slLogs    || []).length;
+      const dpCount    = (d.diaperLogs|| []).length;
+      const grCount    = (d.growthLogs|| []).length;
+      const exportDate = d._exportedAt ? new Date(d._exportedAt).toLocaleString('zh-TW') : '未知';
+      const msg = `確定要還原這份備份嗎？\n\n📅 備份時間：${exportDate}\n🍼 喝奶：${milkCount} 筆\n😴 睡眠：${sleepCount} 筆\n💧 尿布：${dpCount} 筆\n📈 成長：${grCount} 筆\n\n⚠️ 這會覆蓋目前手機裡的所有資料！`;
+      customConfirm(msg, () => {
+        try {
+          if (d.babyData && typeof d.babyData === 'object') Object.assign(babyData, d.babyData);
+          if (babyData.bloodType === undefined) babyData.bloodType = '';
+          const restore = (key, tgt) => { if (d[key]) { if (typeof tgt === 'object' && !Array.isArray(tgt)) Object.assign(tgt, d[key]); } };
+          if (d.milkLogs)      milkLogs      = d.milkLogs;
+          if (d.sTrials)       sTrials       = d.sTrials;
+          if (d.wgLogs)        wgLogs        = d.wgLogs;
+          if (d.suppLogs)      suppLogs      = d.suppLogs;
+          if (d.slLogs)        slLogs        = d.slLogs;
+          if (d.diaperLogs)    diaperLogs    = d.diaperLogs;
+          if (d.careLogs)      careLogs      = d.careLogs;
+          if (d.illEpisodes)   illEpisodes   = d.illEpisodes;
+          if (d.illFeverLogs)  illFeverLogs  = d.illFeverLogs;
+          if (d.illMeds)       illMeds       = d.illMeds;
+          if (d.growthLogs)    growthLogs    = d.growthLogs;
+          if (d.vaxRecords)    vaxRecords    = d.vaxRecords;
+          if (d.vaxSkipped && typeof d.vaxSkipped==='object') Object.assign(vaxSkipped, d.vaxSkipped);
+          if (d.allergyRecords)  allergyRecords  = d.allergyRecords;
+          if (d.dentalRecords)   dentalRecords   = d.dentalRecords;
+          if (d.vaxAppointments && typeof d.vaxAppointments==='object') Object.assign(vaxAppointments, d.vaxAppointments);
+          if (d.toothRecords)    toothRecords    = d.toothRecords;
+          if (d.badgeRecords)    badgeRecords    = d.badgeRecords;
+          if (d.msRecords && typeof d.msRecords==='object') Object.assign(msRecords, d.msRecords);
+          if (d.msCustomItems)   msCustomItems   = d.msCustomItems;
+          if (d.assHistory)      assHistory      = d.assHistory;
+          if (d.outActivities)   outActivities   = d.outActivities;
+          if (d.assResults)      assResults      = d.assResults;
+          if (d.szWardrobeItems) szWardrobeItems = d.szWardrobeItems;
+          if (d.szMeasurements)  szMeasurements  = d.szMeasurements;
+          if (d.szShoppingList)  szShoppingList  = d.szShoppingList;
+          if (d.invItems)        invItems        = d.invItems;
+          if (d.bgtExpenses)     bgtExpenses     = d.bgtExpenses;
+          if (d.bgtMonthBudget)  bgtMonthBudget  = d.bgtMonthBudget;
+          if (d.bgtCatBudgets)   bgtCatBudgets   = d.bgtCatBudgets;
+          if (d.famMembers)      famMembers      = d.famMembers;
+          if (d.famSelf && typeof d.famSelf==='object') Object.assign(famSelf, d.famSelf);
+          if (d.nfySettings && typeof d.nfySettings==='object') Object.assign(nfySettings, d.nfySettings);
+          if (d.nfyHistory)      nfyHistory      = d.nfyHistory;
+          if (d.fsMealLogs)      fsMealLogs      = d.fsMealLogs;
+          if (d.fsCurrentStage)  fsCurrentStage  = d.fsCurrentStage;
+          if (d.glCustomItems)   glCustomItems   = d.glCustomItems;
+          if (d.glGeneratedItems) glGeneratedItems = d.glGeneratedItems;
+          if (d.diaryEntries)    diaryEntries    = d.diaryEntries;
+          if (d.boardMessages)   boardMessages   = d.boardMessages;
+          if (d.outChecklistItems) outChecklistItems = d.outChecklistItems;
+          if (d.outChecklistChecked && typeof d.outChecklistChecked==='object') Object.assign(outChecklistChecked, d.outChecklistChecked);
+          if (d.packChecked && typeof d.packChecked==='object') Object.assign(packChecked, d.packChecked);
+          if (d.packCustomItems) packCustomItems = d.packCustomItems;
+          if (d.packFavorites)   packFavorites   = d.packFavorites;
+          if (d.featureVisible && typeof d.featureVisible==='object') Object.assign(featureVisible, d.featureVisible);
+          if (d.recSavedLinks)   recSavedLinks   = d.recSavedLinks;
+          dbSave(); updateHomeDisplay(); updateProfileForm();
+          try { renderMilkLog(); renderChart(); } catch(err){}
+          try { grUpdatePills(); grRenderChart(); grRenderLog(); } catch(err){}
+          try { slUpdatePills(); } catch(err){}
+          try { szUpdateCurrentSize(); } catch(err){}
+          try { featInit(); featApply(); } catch(err){}
+          if (navigator.vibrate) navigator.vibrate([50,30,100]);
+          sShowToast('✅ 資料還原成功！共 '+(milkCount+sleepCount+dpCount)+' 筆紀錄已恢復');
+          showVoice('備份資料還原完成！所有紀錄都回來了 🎉');
+        } catch(err) { sShowToast('⚠️ 還原失敗：'+err.message); }
+      }, '📥');
+    } catch(err) { sShowToast('⚠️ 讀取檔案失敗，請確認是正確的備份檔'); }
+  };
+  reader.readAsText(file, 'UTF-8');
+}
+
+function dbUpdateExportLabel() {
+  const el = document.getElementById('db-last-export-label');
+  if (!el) return;
+  if (typeof expLastExport !== 'undefined' && expLastExport) {
+    el.textContent = '上次備份：' + new Date(expLastExport).toLocaleString('zh-TW');
+  } else {
+    el.textContent = '尚未備份過';
+  }
+}
+
 // DATA PERSISTENCE — localStorage
 // =====================================================
 const DB_KEY = 'baby_diary_v2';
@@ -19584,6 +20293,8 @@ function dbSave() {
       outChecklistItems: safe(outChecklistItems), outChecklistChecked: safe(outChecklistChecked),
       packChecked: safe(packChecked), packCustomItems: safe(packCustomItems), packFavorites: safe(packFavorites),
       featureVisible: safe(featureVisible),
+      recSavedLinks: safe(recSavedLinks),
+      outWishlist: safe(outWishlist),
       _saved: Date.now()
     };
     localStorage.setItem(DB_KEY, JSON.stringify(data));
@@ -19647,7 +20358,8 @@ function dbLoad() {
     if (d.packCustomItems) packCustomItems = d.packCustomItems;
     if (d.packFavorites)   packFavorites   = d.packFavorites;
     if (d.featureVisible && typeof d.featureVisible === 'object') Object.assign(featureVisible, d.featureVisible);
-    if (d.outChecklistChecked && typeof d.outChecklistChecked === 'object') try { Object.assign(outChecklistChecked, d.outChecklistChecked); } catch(e){}
+    if (d.recSavedLinks)   recSavedLinks   = d.recSavedLinks;
+    if (d.outWishlist)     outWishlist     = d.outWishlist;
     console.log('[Baby Diary] Data loaded from localStorage ✅');
     return true;
   } catch(e) { console.warn('dbLoad failed:', e); return false; }
@@ -19704,5 +20416,46 @@ window.onload = function() {
   } catch(e) { console.error('onload error:', e); }
 };
 </script>
+<!-- ══ AdMob Banner ══════════════════════════════════════════ -->
+<!-- AdMob SDK (loaded when running as native Android via WebView) -->
+<script>
+(function() {
+  // AdMob App ID: ca-app-pub-6534565052974842~5597518592
+  // Banner Ad Unit ID: ca-app-pub-6534565052974842/5597518592
+  // The banner is rendered natively by Android WebView when packaged with PWABuilder/Bubblewrap.
+  // In browser preview, we show a placeholder so layout is visible.
+  const adBanner = document.getElementById('admob-banner-wrap');
+  if (!adBanner) return;
+
+  // Detect if running inside Android WebView (TWA/Bubblewrap)
+  const isTWA = document.referrer.includes('android-app://') ||
+                window.matchMedia('(display-mode: standalone)').matches ||
+                navigator.userAgent.includes('wv');
+
+  if (!isTWA) {
+    // Browser preview: show placeholder
+    adBanner.innerHTML = `
+      <div style="width:100%;max-width:320px;height:50px;background:#F0F0F0;border:1px dashed #C0C0C0;
+        display:flex;align-items:center;justify-content:center;border-radius:4px;margin:0 auto;">
+        <span style="font-size:10px;color:#A0A0A0;font-weight:700;">廣告位置 (AdMob Banner)</span>
+      </div>`;
+  }
+  // When running in TWA, AdMob renders natively — no JS needed here.
+})();
+</script>
+
+<!-- Fixed AdMob banner container — sits above the nav bar -->
+<div id="admob-banner-wrap" style="
+  position:fixed;
+  bottom:calc(56px + env(safe-area-inset-bottom));
+  left:0; right:0;
+  height:50px;
+  background:white;
+  display:flex;align-items:center;justify-content:center;
+  z-index:90;
+  box-shadow:0 -1px 6px rgba(0,0,0,.08);
+"></div>
+
+<!-- ══════════════════════════════════════════════════════════ -->
 </body>
 </html>
