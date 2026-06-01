@@ -1,15 +1,16 @@
 {
-  "name": "寶寶成長日記",
-  "short_name": "寶寶日記",
-  "description": "一站式寶寶生活紀錄：喝奶、睡眠、換尿布、副食品、成長曲線，讓育兒更輕鬆！",
+  "name": "寶貝日記 Baby Diary",
+  "short_name": "寶貝日記",
+  "description": "專為新手爸媽設計的全功能育兒記錄 App。記錄餵奶、睡眠、換尿布、成長曲線、疫苗、副食品、寶寶日記等，支援離線使用。",
   "start_url": "/index.html",
   "scope": "/",
   "display": "standalone",
   "orientation": "portrait",
-  "background_color": "#FFF0F5",
-  "theme_color": "#C040A0",
+  "background_color": "#FFF8F0",
+  "theme_color": "#FFB3C6",
   "lang": "zh-TW",
-  "categories": ["health", "lifestyle"],
+  "dir": "ltr",
+  "categories": ["health", "lifestyle", "parenting"],
   "icons": [
     {
       "src": "icon-192.png",
@@ -24,23 +25,53 @@
       "purpose": "any maskable"
     }
   ],
+  "screenshots": [
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "form_factor": "narrow"
+    }
+  ],
   "shortcuts": [
     {
-      "name": "記錄喝奶",
-      "short_name": "喝奶",
-      "description": "快速記錄一次喝奶",
+      "name": "記錄餵奶",
+      "short_name": "餵奶",
+      "description": "快速記錄寶寶餵奶時間與奶量",
       "url": "/index.html#milk",
       "icons": [{ "src": "icon-192.png", "sizes": "192x192" }]
     },
     {
       "name": "記錄睡眠",
       "short_name": "睡眠",
-      "description": "開始睡眠計時",
+      "description": "記錄寶寶睡眠時間",
       "url": "/index.html#sleep",
+      "icons": [{ "src": "icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "換尿布",
+      "short_name": "尿布",
+      "description": "記錄換尿布",
+      "url": "/index.html#diaper",
       "icons": [{ "src": "icon-192.png", "sizes": "192x192" }]
     }
   ],
-  "screenshots": [],
   "related_applications": [],
-  "prefer_related_applications": false
+  "prefer_related_applications": false,
+  "iarc_rating_id": "",
+  "permissions": [
+    "notifications",
+    "geolocation",
+    "camera",
+    "storage"
+  ],
+  "share_target": {
+    "action": "/index.html",
+    "method": "GET",
+    "params": {
+      "title": "title",
+      "text": "text",
+      "url": "url"
+    }
+  }
 }
