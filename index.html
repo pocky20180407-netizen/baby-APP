@@ -4,19 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>寶貝日記 🍼</title>
-<!-- ══ PWA 設定 ══════════════════════════════════════════════ -->
-<link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#FFB3C6">
-<meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="apple-mobile-web-app-title" content="寶貝日記">
-<link rel="apple-touch-icon" href="icon-192.png">
-<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
-<link rel="icon" type="image/png" sizes="512x512" href="icon-512.png">
-<meta name="description" content="專為新手爸媽設計的全功能育兒記錄 App。記錄餵奶、睡眠、換尿布、成長曲線、疫苗等，支援離線使用。">
-<!-- ════════════════════════════════════════════════════════════ -->
-
 <!-- Suppress console output so debug panels stay empty -->
 <script>
 (function(){
@@ -14869,57 +14856,6 @@ h1{text-align:center;color:#2E7D32;font-size:24px;}
 </style></head><body>
 <h1>📷 ${babyData.name||'寶寶'}的戶外活動相冊</h1>
 <div class="grid">${withPhotos.map(a=>`<div class="card"><img src="${a.photo}"><div class="info">${a.name||''}<br>${a.date}</div></div>`).join('')}</div>
-
-<!-- ══ Service Worker 註冊 ══════════════════════════════════ -->
-<script>
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', function() {
-    navigator.serviceWorker.register('/sw.js', { scope: '/' })
-      .then(function(reg) {
-        console.log('[PWA] Service Worker 已註冊 ✅ scope:', reg.scope);
-        // 請求通知權限（用於餵奶/睡眠提醒）
-        if ('Notification' in window && Notification.permission === 'default') {
-          setTimeout(() => {
-            Notification.requestPermission().then(perm => {
-              console.log('[PWA] 通知權限:', perm);
-            });
-          }, 3000);
-        }
-      })
-      .catch(function(err) {
-        console.warn('[PWA] Service Worker 註冊失敗:', err);
-      });
-  });
-}
-
-// ── PWA 安裝提示（A2HS）──────────────────────────────────────
-let deferredInstallPrompt = null;
-window.addEventListener('beforeinstallprompt', (e) => {
-  e.preventDefault();
-  deferredInstallPrompt = e;
-  // 顯示自訂安裝按鈕（可選）
-  const installBtn = document.getElementById('pwa-install-btn');
-  if (installBtn) installBtn.style.display = 'flex';
-});
-
-function installPWA() {
-  if (!deferredInstallPrompt) return;
-  deferredInstallPrompt.prompt();
-  deferredInstallPrompt.userChoice.then((choice) => {
-    console.log('[PWA] 安裝選擇:', choice.outcome);
-    deferredInstallPrompt = null;
-    const installBtn = document.getElementById('pwa-install-btn');
-    if (installBtn) installBtn.style.display = 'none';
-  });
-}
-
-window.addEventListener('appinstalled', () => {
-  console.log('[PWA] App 已安裝 ✅');
-  deferredInstallPrompt = null;
-});
-</script>
-<!-- ════════════════════════════════════════════════════════════ -->
-
 </body></html>`;
   const blob = new Blob([html], {type:'text/html'});
   const url = URL.createObjectURL(blob);
