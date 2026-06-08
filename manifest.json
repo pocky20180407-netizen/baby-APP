@@ -2,7 +2,7 @@
   "name": "寶貝日記 Baby Diary",
   "short_name": "寶貝日記",
   "description": "專為新手爸媽設計的全功能育兒記錄 App。記錄餵奶、睡眠、換尿布、成長曲線、疫苗、副食品、寶寶日記等，支援離線使用。",
-  "start_url": "/index.html",
+  "start_url": "https://pocky20180407-netizen.github.io/baby-APP/",
   "scope": "/",
   "display": "standalone",
   "orientation": "portrait",
