@@ -1,0 +1,8 @@
+[{
+      "relation": ["delegate_permission/common.handle_all_urls"],
+      "target": {
+        "namespace": "android_app",
+        "package_name": "app.babydiary.tw",
+        "sha256_cert_fingerprints": ["1D:3F:3F:1C:36:2B:0C:89:C2:6A:F5:0D:EB:0E:68:F0:2C:89:C4:77:97:72:8E:D8:26:46:8B:7E:4B:BD:3B:CD"]
+      }
+    }]
