@@ -3,9 +3,9 @@
 // ║  離線快取 + 背景同步 + 推播通知                           ║
 // ╚══════════════════════════════════════════════════════════╝
 
-const CACHE_NAME = 'babydiary-v5.0.0';
-const STATIC_CACHE = 'babydiary-static-v5';
-const DYNAMIC_CACHE = 'babydiary-dynamic-v5';
+const CACHE_NAME = 'babydiary-v6.0.0';
+const STATIC_CACHE = 'babydiary-static-v6';
+const DYNAMIC_CACHE = 'babydiary-dynamic-v6';
 
 // 核心檔案（必須快取，離線也能用）
 const CORE_ASSETS = [
