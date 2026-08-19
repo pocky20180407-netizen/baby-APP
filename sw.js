@@ -1,11 +1,11 @@
 // ╔══════════════════════════════════════════════════════════╗
-// ║  寶貝日記 Service Worker  —  v9.0.0                      ║
+// ║  寶貝日記 Service Worker  —  v1.0.0                      ║
 // ║  離線快取 + 背景同步 + 推播通知                           ║
 // ╚══════════════════════════════════════════════════════════╝
 
-const CACHE_NAME = 'babydiary-v9.0.0';
-const STATIC_CACHE = 'babydiary-static-v9';
-const DYNAMIC_CACHE = 'babydiary-dynamic-v9';
+const CACHE_NAME = 'babydiary-v1.0.0';
+const STATIC_CACHE = 'babydiary-static-v1';
+const DYNAMIC_CACHE = 'babydiary-dynamic-v1';
 
 // 核心檔案（必須快取，離線也能用）
 const CORE_ASSETS = [
